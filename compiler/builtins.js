@@ -88,7 +88,11 @@ export const BUILTINS = {
   screen_on:  { params: [], ret: "void", c: "gba_screen_on", gbaOnly: true },
   // pal(i,r,g,b) / spr_col(i,r,g,b): set a BG / OBJ palette color at runtime (0..255
   // components). Palette swap, day/night, animated cycling (rotate entries each frame).
-  pal:       { params: [["int", false], ["int", false], ["int", false], ["int", false]], ret: "void", c: "gba_pal", gbaOnly: true },
+  // Genesis pal(): REAL runtime CRAM writes — the headline. pal(c0,c1) remaps
+  // P8 color c0's CRAM slot to P8 color c1's RGB; pal() resets all 16.
+  pal:       { params: [["int", true], ["int", true]], ret: "void", c: "gt_pal", mdOnly: true },
+  // per-scanline horizontal scroll of plane B — the Genesis raster signature.
+  hscroll:   { params: [["int", false], ["int", false]], ret: "void", c: "gt_hscroll", mdOnly: true },
   spr_col:   { params: [["int", false], ["int", false], ["int", false], ["int", false]], ret: "void", c: "gba_spr_col", gbaOnly: true },
   // hgradient(table): per-scanline BACKDROP gradient via the HBlank IRQ. `table` is
   // an array of 160 raw BGR555 colors (fill with rgb()/color numbers, one per line):

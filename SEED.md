@@ -45,3 +45,20 @@ SAT slots per frame; md_endframe() hides stale slots, VDP_linkSprites (link
 byte is load-bearing — 0 = end of list), VDP_updateSprites(DMA_QUEUE),
 md_time_tick, SYS_doVBlankProcess. Input latched in md_vsync (btn/btnp edge).
 P8 buttons: 0-3 = dpad, 4 O→BUTTON_B, 5 X→BUTTON_C.
+
+### Spike 1 — DONE 2026-07-16 (the Genesis flavor, all three proofs)
+- `hscroll(line,x)`: per-scanline H-scroll from Lua — 224-entry table, ONE
+  queued DMA per frame, HSCROLL_LINE mode flipped lazily on first use.
+  Screenshot: checker plane warped into zigzag raster waves. THE signature.
+- `pal(c0,c1)` / `pal()`: live CRAM writes (PAL_setColor) — palette cycling
+  visible. The verb PICO-8 carts blocked on (gtlua: hardware mismatch) is
+  NATIVE here.
+- `music(0)`: XGM2 FM through the Z80 driver from Lua. GOTCHA (cost a cycle):
+  **XGM2 blobs must be 256-byte aligned** (the driver pages in 256B units;
+  rescomp does ALIGN 256) — a plain C array byte-aligns and plays NOTHING.
+  `__attribute__((aligned(256)))` fixes it. Also: audioDebug op:'inspect'
+  CANNOT see XGM2 (Z80 writes the chip directly; 68k-side sampling misses it)
+  — use op:'record' (spike1: silent=false, rms 807 = the reference template's
+  exact profile).
+- Spike verbs added: pal/hscroll (mdOnly builtins), md_music/md_sfx stub,
+  temporary checker plane in md_init (Phase 1 removes).

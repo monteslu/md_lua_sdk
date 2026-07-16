@@ -46,6 +46,20 @@ export async function buildMd(entryLua, outPath, opts = {}) {
     "md_sintab.h": await rd("md_sintab.h"),
   };
 
+  // song bank: md_music references md_song_0. Bake the XGM2 blob when the game
+  // uses music; a 1-byte stub otherwise (keeps the link closed either way).
+  // Spike source: the demo .xgc shipped in the toolchain's SGDK share tree.
+  // The real asset pipeline (VGM -> romdev-xgm2) replaces this in Phase 1.
+  const usesMusic = /\bmd_music\b/.test(res.c);
+  let songC = "const unsigned char md_song_0[1] = {0};\n";
+  if (usesMusic) {
+    const { shareDir } = await import("romdev-toolchain-m68k-gcc");
+    const xgc = await readFile(path.join(shareDir, "lib", "sgdk", "music", "demo.xgc"));
+    const bytes = Array.from(xgc).join(",");
+    songC = `// generated: demo XGM2 blob (spike). XGM2 data MUST be 256-byte aligned\n// (the Z80 driver pages through it in 256-byte units - rescomp does ALIGN 256).\n__attribute__((aligned(256))) const unsigned char md_song_0[${xgc.length}] = {${bytes}};\n`;
+  }
+  sources["md_songs.c"] = songC;
+
   const r = await buildGenesisC({ sources, headers, sgdk: true });
   if (!r.ok) {
     const parsed = parseBuildLog ? parseBuildLog(r.log) : null;

@@ -25,4 +25,11 @@ void md_print_cur_int(int v, int color);
 void md_print_cur_num(long v, int color);
 void md_spr(int n, int x, int y, int w, int h, int flip);
 
+// spike-1 surface: Genesis flavor
+void md_pal(int c0, int c1);           // CRAM remap; c0<0 = reset all 16
+void md_hscroll(int line, int x);      // per-scanline H-scroll of plane B
+void md_music(int n, int loop);        // XGM2 module (FM) via the Z80 driver
+void md_sfx(int n, int ch);            // (stub until PCM lands in Phase 2)
+void md_spike_bg(void);          // temporary checker plane (Phase 1 removes)
+
 #endif

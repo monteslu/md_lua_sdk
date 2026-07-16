@@ -29,6 +29,10 @@ static const u32 spike_tiles[4 * 8] = {
     0xCCCCCCCC, 0xCCCCCCCC, 0xCCCCCCCC, 0xCCCCCCCC, 0xCCCCCCCC, 0xCCCCCCCC, 0xCCCCCCCC, 0xCCCCCCCC,
 };
 
+// per-scanline scroll state (spike-1; flushed in md_endframe)
+static s16 hs_table[224];
+static u16 hs_dirty = 0, hs_mode_on = 0;
+
 // ---- input latch ------------------------------------------------------------
 static u16 joy_cur[2], joy_prev[2];
 
@@ -103,6 +107,7 @@ void md_init(void) {
     VDP_loadTileData(spike_tiles, T_SPR, 4, DMA);
     spr_count = 0; spr_last = 0;
     joy_cur[0] = joy_cur[1] = joy_prev[0] = joy_prev[1] = 0;
+    md_spike_bg();                        // TEMP (spike): checker plane B
 }
 
 void md_vsync(void) {
@@ -125,6 +130,52 @@ void md_endframe(void) {
         VDP_updateSprites(n, DMA_QUEUE);
     }
     spr_last = spr_count;
+    if (hs_dirty) {
+        if (!hs_mode_on) { VDP_setScrollingMode(HSCROLL_LINE, VSCROLL_PLANE); hs_mode_on = 1; }
+        VDP_setHorizontalScrollLine(BG_B, 0, hs_table, 224, DMA_QUEUE);
+        hs_dirty = 0;
+    }
     md_time_tick();
     SYS_doVBlankProcess();
+}
+
+// ---- spike-1: the Genesis flavor ---------------------------------------------
+
+// pal(): REAL palette writes — CRAM is a live 4x16 palette, the thing the
+// GameTank couldn't do at all and the GBA only half-wanted. pal(c0,c1) points
+// P8 color c0's CRAM slot at P8 color c1's RGB; pal() (both args -1) resets.
+void md_pal(int c0, int c1) {
+    u16 i;
+    if (c0 < 0) { for (i = 0; i < 16; i++) PAL_setColor(i, RGB24_TO_VDPCOLOR(P8_RGB[i])); return; }
+    PAL_setColor((u16)(c0 & 15), RGB24_TO_VDPCOLOR(P8_RGB[c1 & 15]));
+}
+
+// per-scanline H-scroll: Lua fills a 224-entry table (one call per line, native
+// 68000 speed); md_endframe() uploads the whole table in ONE queued DMA and
+// flips the VDP into line-scroll mode on first use.
+void md_hscroll(int line, int x) {
+    if ((unsigned int)line >= 224u) return;
+    hs_table[line] = (s16)x;
+    hs_dirty = 1;
+}
+
+// XGM2: FM music through the Z80 driver. Song data is baked by the build
+// (md_songs.c) as md_song_<n>; spike plays bank entry 0.
+extern const u8 md_song_0[];
+static u16 xgm_up = 0;
+void md_music(int n, int loop) {
+    (void)n; (void)loop;                  // bank indexing lands with the asset pipeline
+    if (!xgm_up) { XGM2_loadDriver(TRUE); xgm_up = 1; }
+    XGM2_play(md_song_0);
+}
+void md_sfx(int n, int ch) { (void)n; (void)ch; }   // PCM SFX: Phase 2
+
+// BG_B spike backdrop: checker rows so raster scroll is visible before the
+// real map() plumbing lands (Phase 1 replaces this).
+void md_spike_bg(void) {
+    u16 x, y;
+    for (y = 0; y < 28; y++)
+        for (x = 0; x < 64; x++)
+            if (((x + y) & 1) == 0)
+                VDP_setTileMapXY(BG_B, TILE_ATTR_FULL(PAL0, 0, 0, 0, T_SPR + (y & 3)), x, y);
 }
