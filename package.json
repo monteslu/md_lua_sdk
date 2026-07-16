@@ -1,0 +1,25 @@
+{
+  "name": "mdlua",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "author": "Luis Montes",
+  "bin": {
+    "mdlua": "bin/mdlua.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "romdev-toolchain-m68k-gcc": "0.3.0",
+    "romdev-core-gpgx": "0.13.0",
+    "romdev-xgm2": "0.1.0",
+    "romdev-audio-resampler": "0.1.0"
+  },
+  "optionalDependencies": {
+    "@kmamal/sdl": "^0.11.13"
+  },
+  "scripts": {
+    "test": "node --test 'test/**/*.test.js'"
+  }
+}
