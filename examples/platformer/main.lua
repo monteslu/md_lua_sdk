@@ -44,8 +44,9 @@ local gx = array(6)
 local gy = array(6)
 local ga = array8(6)
 
--- the goal flag, standing on the raised final stretch
-local flagx = 480
+-- the goal flag, standing at the end of the raised final stretch (the player
+-- clamps against the world edge right at it)
+local flagx = 488
 local flagy = 160
 
 -- ---- tile collision --------------------------------------------------------
@@ -130,7 +131,9 @@ function _update60()
   if fadet > 0 then fadet -= 1 end
 
   if state != 0 then
-    fade(mid(0, (30 - fadet) / 30, 1) * 0.6, 1)  -- brighten toward white
+    -- dim the scene toward black (cap at 0.5 so the banner stays readable),
+    -- then wait for O to restart the cart.
+    fade(mid(0, (30 - fadet) / 30, 1) * 0.5, 0)
     if btnp(4) then run() end
     return
   end
@@ -178,8 +181,8 @@ function _update60()
     end
   end
 
-  -- ---- reach the flag -> win ----
-  if flagx - px > -14 and flagx - px < 14 and flagy - py > -20 and flagy - py < 20 then
+  -- ---- reach the flag -> win (generous goal hitbox) ----
+  if flagx - px > -16 and flagx - px < 16 and flagy - py > -24 and flagy - py < 24 then
     state = 1
     fadet = 30
     music(-1)
@@ -190,17 +193,13 @@ function _draw()
   -- no cls(): the tile level is the background. paint the sky via the backdrop.
   backdrop(12)            -- sky blue behind the transparent map cells
 
+  -- The Genesis text path gives white + ONE cached accent color per frame, so
+  -- every screen sticks to white (7) plus a single accent (yellow 10).
+
   -- HUD (window plane - never scrolls)
   print("gem dash", 8, 0, 7)
   print("score", 8, 8, 7)
-  print(score, 56, 8, 10)
-
-  if state != 0 then
-    print("you win!", 130, 90, 11)
-    print("score", 128, 106, 7)
-    print(score, 176, 106, 10)
-    print("press o", 132, 122, 12)
-  end
+  print(score, 64, 8, 10)
 
   -- parallax clouds: drawn in SCREEN space (add camx back) at 1/2 camera speed
   local cl = (camx \ 2) % 400
@@ -226,4 +225,12 @@ function _draw()
     frame = anim(0, 0, 1, 8) * 2 + 2   -- run cycle: cells 2 and 4
   end
   spr(frame, px, py, 2, 2, facing)
+
+  -- win banner over the top of the scene (white + the one yellow accent)
+  if state != 0 then
+    print("you  win", 128, 96, 10)
+    print("score", 132, 112, 7)
+    print(score, 184, 112, 10)
+    print("press o", 132, 128, 7)
+  end
 end

@@ -1,3 +1,7 @@
+// NOTE: mdlua's encodePng writes uncompressed PNGs (large). The shipped
+// level.png/sprites.png are re-compressed 8-bit RGBA:
+//   convert level.png -depth 8 PNG32:level.png
+// (keeps the 8-bit depth mdlua requires; do this after regenerating.)
 // generate-art.mjs - reproducible pixel art for the mdlua platformer example.
 //
 // Produces two PNGs consumed by the build:
