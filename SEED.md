@@ -360,3 +360,16 @@ every future cross-SDK port:
    Fixed the default EVERYWHERE: mdlua run presents a 4:3 rect (nearest,
    height-integer multiple; --square for 1:1 pixel inspection), README
    screenshots render at 640x480, web-IDE plan default flipped to 4:3.
+
+### Aspect-ratio: REVERSED to native 320x224 square pixels (consistency)
+The "Genesis displays 4:3" change above was overreach - chasing the CRT's
+4:3 stretch meant NON-INTEGER scaling (320->426px), which distorts the pixel
+art and is inconsistent with "native resolution". CORRECTED everywhere to the
+single honest model: NATIVE 320x224 (H40/NTSC - md_init sets
+VDP_setScreenWidth320, height 224), SQUARE pixels, INTEGER scaling for the
+window + screenshots. `mdlua run` = 320x224 x3 (960x672), nearest-neighbor,
+largest-whole-multiple-that-fits; --square flag removed (redundant). README
+shots are native 320x224 x3. The web IDE canvas is aspect-ratio 320/224
+square-pixel. VERIFIED numbers: BMP engine is 256x160 (BMP_WIDTH=1<<(5+3)=256,
+BMP_HEIGHT=20*8=160), centered in the 320x224 screen; sprites+tiles get the
+full 320x224.

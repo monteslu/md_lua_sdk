@@ -112,16 +112,14 @@ export async function runRom(romPath, opts = {}) {
   const sampleRate = dv.getFloat64(32, true) || 44100;
 
   // --- window + audio ------------------------------------------------------
-  // A real Genesis displays on a 4:3 CRT: the 320x224 framebuffer's pixels
-  // are NARROWER than square (H40 PAR ~0.93). Default to a 4:3 window and a
-  // 4:3 presentation rect (what the hardware looked like); --square gives
-  // 1:1 pixels for pixel-art inspection.
+  // The Genesis native resolution is 320x224 (H40, NTSC). Present it with
+  // SQUARE pixels at an integer scale (default 3x = 960x672) - crisp, no
+  // stretching. (A real CRT would stretch H40 to ~4:3, but we keep pixels
+  // square + integer for consistency with the docs and screenshots.)
   const scale = opts.scale ?? 3;
-  const winH = 224 * scale;
   const window = sdl.video.createWindow({
     title: opts.title ?? `mdlua - ${path.basename(romPath)}`,
-    width: opts.square ? 320 * scale : Math.round(winH * 4 / 3),
-    height: winH, resizable: true,
+    width: 320 * scale, height: 224 * scale, resizable: true,
   });
   let audioDev = null;
   try {
@@ -154,21 +152,12 @@ export async function runRom(romPath, opts = {}) {
         out[o] = src[s + 2]; out[o + 1] = src[s + 1]; out[o + 2] = src[s]; out[o + 3] = 255; // BGRA->RGBA
       }
     }
-    // Present at the hardware's 4:3 display aspect (default): pick the largest
-    // whole-number VERTICAL multiple that fits, then set the width from the
-    // 4:3 ratio - the horizontal stretch reproduces the CRT's narrow pixels.
-    // --square keeps 1:1 pixels with strict integer scaling instead.
-    // Centered/letterboxed either way; recomputed per frame so resize works.
+    // Present at the largest whole-number scale that fits (SQUARE pixels, no
+    // stretch), centered/letterboxed. Recomputed per frame so resizing stays
+    // integer-crisp. nearest-neighbor keeps the pixel art sharp.
     const ww = window.width, wh = window.height;
-    let dw, dh;
-    if (opts.square) {
-      const mult = Math.max(1, Math.min(Math.floor(ww / width), Math.floor(wh / height)));
-      dw = width * mult; dh = height * mult;
-    } else {
-      const mult = Math.max(1, Math.floor(wh / height));
-      dh = height * mult; dw = Math.round(dh * 4 / 3);
-      if (dw > ww) { dw = ww; dh = Math.round(dw * 3 / 4); }
-    }
+    const mult = Math.max(1, Math.min(Math.floor(ww / width), Math.floor(wh / height)));
+    const dw = width * mult, dh = height * mult;
     const dstRect = { x: Math.floor((ww - dw) / 2), y: Math.floor((wh - dh) / 2), width: dw, height: dh };
     window.render(width, height, width * 4, "rgba32", out, { scaling: "nearest", dstRect });
   };
