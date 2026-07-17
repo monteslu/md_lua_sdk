@@ -10,15 +10,24 @@ import { compile, formatDiagnostics } from "../compiler/index.js";
 const [cmd, ...rest] = process.argv.slice(2);
 const fail = (m) => { console.error(m); process.exit(1); };
 
+// asset flags shared by build + run: --sheet/--map take one path,
+// --sfx/--music take comma-separated lists (bank order = sfx(n)/music(n) n).
+const flag = (name) => { const i = rest.indexOf(name); return i >= 0 ? rest[i + 1] : undefined; };
+const list = (name) => { const v = flag(name); return v ? v.split(",") : undefined; };
+const assetOpts = () => ({
+  sheetPath: flag("--sheet"),
+  mapPath: flag("--map"),
+  sfxPaths: list("--sfx"),
+  musicPaths: list("--music"),
+});
+
 if (cmd === "build") {
   const entry = rest.find((a) => !a.startsWith("-"));
   if (!entry) fail("usage: mdlua build <main.lua> [-o game.bin]");
   const oi = rest.indexOf("-o");
   const out = oi >= 0 ? rest[oi + 1] : path.join(path.dirname(entry), "game.bin");
-  const flag = (name) => { const i = rest.indexOf(name); return i >= 0 ? rest[i + 1] : undefined; };
   try {
-    const sfxArg = flag("--sfx");
-    const r = await buildMd(entry, out, { sheetPath: flag("--sheet"), mapPath: flag("--map"), sfxPaths: sfxArg ? sfxArg.split(",") : undefined });
+    const r = await buildMd(entry, out, assetOpts());
     const { statSync } = await import("node:fs");
     console.log(`${r.outPath} (${statSync(r.outPath).size} bytes)`);
   } catch (e) { fail(String(e.message ?? e)); }
@@ -27,9 +36,8 @@ if (cmd === "build") {
   if (!target) fail("usage: mdlua run <main.lua|game.bin>");
   let rom = target;
   if (target.endsWith(".lua")) {
-    const flag = (name) => { const i = rest.indexOf(name); return i >= 0 ? rest[i + 1] : undefined; };
     const out = path.join(path.dirname(target), "game.bin");
-    await buildMd(target, out, { sheetPath: flag("--sheet"), mapPath: flag("--map") });
+    await buildMd(target, out, assetOpts());
     rom = out;
   }
   try {
@@ -46,5 +54,5 @@ if (cmd === "build") {
   if (!res.ok) fail(formatDiagnostics(res.diagnostics.filter((d) => d.severity === "error")));
   process.stdout.write(res.c + "\n");
 } else {
-  fail("usage: mdlua build <main.lua> [--sheet s.png] [--map m.png] [-o game.bin]\n       mdlua run   <main.lua|game.bin>\n       mdlua c <main.lua>");
+  fail("usage: mdlua build <main.lua> [--sheet s.png] [--map m.png] [--sfx a.wav,b.wav] [--music a.vgm,b.vgm] [-o game.bin]\n       mdlua run   <main.lua|game.bin>\n       mdlua c <main.lua>");
 }

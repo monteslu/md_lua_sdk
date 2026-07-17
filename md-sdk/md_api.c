@@ -375,11 +375,18 @@ long md_realsecs(void)   { return (long)(((unsigned long long)md_ticks() << 16) 
 void md_run(void) { SYS_hardReset(); }
 
 // ---- audio ----------------------------------------------------------------------
-extern const u8 md_song_0[];
+// music(n, [loop]): play song n from the --music bank (bank order = n).
+// music(-1) stops. loop defaults ON (the P8/gbalua contract); loop=false plays
+// the song once (XGM2_setLoopNumber(0) = single play, -1 = endless).
+extern const unsigned char *const md_song_bank[];
+extern const int md_song_count;
 void md_music(int n, int loop) {
-    (void)n; (void)loop;
     if (!xgm_up) { XGM2_loadDriver(TRUE); xgm_up = 1; }
-    XGM2_play(md_song_0);
+    if (n < 0) { XGM2_stop(); return; }
+    if (md_song_count <= 0) return;
+    if (n >= md_song_count) n = md_song_count - 1;
+    XGM2_setLoopNumber(loop ? -1 : 0);
+    XGM2_play(md_song_bank[n]);
 }
 // sfx: PCM samples through XGM2 (channels 2-4; music may own 1) when a --sfx
 // bank exists; PSG blip fallback otherwise. 8-bit signed 13.3 kHz, 256-aligned.

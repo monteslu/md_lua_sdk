@@ -284,3 +284,31 @@ Bound (optr sprite handle + fn callback). Two things surfaced:
   return as int + a `retptr: true` marker; emit wraps the call in `(int)`.
   (optr = pointer PARAMS -> (void*); retptr = pointer RETURNS -> (int).)
 46 tests (+3), 12 examples (+sprite_callback).
+
+### The REAL music bank (the demo-blob spike retired)
+"the audio needs to be perfect before we start on the IDE." It is now:
+- `--music a.vgm,b.vgm[,c.xgc]` -> compiler/audio-assets.mjs songToXgm2 ->
+  256-aligned bank in md_songs.c; md_music(n, loop) honors BOTH args at last
+  (was `(void)n; (void)loop;` playing the demo blob regardless). music(-1)
+  stops; loop default ON, XGM2_setLoopNumber(-1|0) before XGM2_play.
+- romdev-xgm2's vgmToXgm2 verified BYTE-IDENTICAL to SGDK's xgm2tool
+  (demo.vgm -> our output === shipped demo.xgc). .vgz inflates caller-side
+  (node: zlib; browser: DecompressionStream); .xgc passes through.
+- compiler/audio-assets.mjs is the BROWSER-SAFE module (DataView, no Buffer/
+  fs/zlib) both the CLI and the web IDE import - the byte-identity chokepoint.
+  wavToXgm2Pcm moved there off Buffer; sfx/songs bank C generators too.
+- gpgx-verified with Goertzel analysis (the crude mean-abs metric MISSED sfx
+  under music; per-frequency detection nailed it): music(0) vs music(1) are
+  different audible songs; music(-1) -> dead silence; music(n,false) ends
+  after one pass (fixture VGM needs a LOOP POINT or xgm2tool emits no loop
+  command and both modes play once); default loop alive at 3x song length;
+  sfx(0) at 1kHz PRESENT (g1000 179) while the 880Hz melody note ALSO
+  present (g880 337) - music+sfx genuinely mix.
+- test/vgm-fixture.mjs: synthetic-but-valid VGM 1.60 generator (PSG melody,
+  loop point) - the "tracker-generated VGM" proof for the future IDE tracker.
+- examples/music (bank switch/stop/once/sfx-over, starts at boot - caught
+  silent-boot in verification); 56 tests (+10 audio-assets). CLI run also
+  passes --sfx/--music now (run used to silently drop --sfx).
+- Dialect note hit while writing the example: top-level locals must init to
+  CONSTANT NUMBERS (booleans cascade-fail into "conditions must be boolean");
+  int flags + explicit == are the idiom.

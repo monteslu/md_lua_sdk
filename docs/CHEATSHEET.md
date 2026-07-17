@@ -358,21 +358,27 @@ end
 
 | Call | What |
 |---|---|
-| `music(n,[loop])` | start the XGM2 **FM** track (YM2612, driven by the Z80) |
+| `music(n,[loop])` | play song `n` from the `--music` bank (YM2612 FM + PSG, driven by the Z80 XGM2 driver). `music(-1)` stops. `loop` defaults ON; `music(n,false)` plays once |
 | `sfx(n,[ch])` | play PCM sample `n` from the `--sfx` bank; `ch` picks XGM2 PCM channel 2-4 (default 3) |
 
-- Music today plays the bundled demo tune (the song bank is one slot; the
-  track index and `loop` flag are reserved for the multi-song bank).
+- `--music a.vgm,b.vgm` builds the song bank - bank order is the `music(n)`
+  index. `.vgm` comes from any Mega Drive tracker (DefleMask, Furnace:
+  export VGM); gzipped `.vgz` and precompiled `.xgc` are accepted too. The
+  VGM -> XGM2 conversion is byte-identical to SGDK's own xgm2tool.
+- With no `--music` bank, `music(n)` plays the SDK's built-in demo tune, so
+  sound works before assets exist.
 - `--sfx a.wav,b.wav` builds the sample bank: converted to 8-bit signed
   13.3 kHz, 256-byte aligned (the XGM2 contract). Music and SFX share the
-  driver; PCM channel 1 is left for music.
-- With no `--sfx` bank, `sfx(n)` falls back to a PSG blip pitched by `n`, so
-  sound feedback works before assets exist.
+  driver and play TOGETHER (PCM channel 1 is left for music; sfx defaults
+  to channel 3).
+- With no `--sfx` bank, `sfx(n)` falls back to a PSG blip pitched by `n`.
 
 ```lua
-function _init() music(0) end
+function _init() music(0) end          -- looped
 function _update60()
-  if btnp(4) then sfx(0) end
+  if btnp(4) then sfx(0) end            -- over the music
+  if btnp(5) then music(1, false) end   -- next song, play once
+  if btnp(7) then music(-1) end         -- stop
 end
 ```
 
@@ -443,7 +449,8 @@ end
 mdlua build main.lua \
   --sheet sprites.png   \  # sprite art (PNG -> VDP tiles + palette line 1)
   --map level.png       \  # a tilemap (deduped tiles + palette line 2)
-  --sfx laser.wav,boom.wav \  # PCM sample bank
+  --sfx laser.wav,boom.wav \  # PCM sample bank (sfx(n) = list order)
+  --music intro.vgm,level.vgm \  # XGM2 song bank (music(n) = list order)
   -o game.bin              # output ROM (padded + checksummed)
 ```
 

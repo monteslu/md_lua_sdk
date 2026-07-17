@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 import { buildGenesisC, finalizeGenesisRom, parseBuildLog } from "romdev-toolchain-m68k-gcc";
 import { compile, formatDiagnostics } from "./index.js";
 import { sheetAssetsHeader, mapAssetHeader } from "./asset-headers.mjs";
+import { wavToXgm2Pcm, songToXgm2, songsBankC, sfxBankC, isGzip } from "./audio-assets.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SDK_DIR = path.resolve(__dirname, "..", "md-sdk");
@@ -39,43 +40,9 @@ async function buildAssetsHeader(opts) {
   return h;
 }
 
-// minimal PCM WAV reader -> XGM2 PCM (8-bit signed, 13.3 kHz, 256-pad).
-function wavToXgm2Pcm(buf) {
-  if (buf.toString("ascii", 0, 4) !== "RIFF" || buf.toString("ascii", 8, 12) !== "WAVE")
-    throw new Error("--sfx expects a PCM .wav");
-  let off = 12, fmt = null, data = null;
-  while (off + 8 <= buf.length) {
-    const id = buf.toString("ascii", off, off + 4);
-    const size = buf.readUInt32LE(off + 4);
-    if (id === "fmt ") fmt = { code: buf.readUInt16LE(off + 8), ch: buf.readUInt16LE(off + 10), rate: buf.readUInt32LE(off + 12), bits: buf.readUInt16LE(off + 22) };
-    if (id === "data") data = buf.subarray(off + 8, off + 8 + size);
-    off += 8 + size + (size & 1);
-  }
-  if (!fmt || !data || fmt.code !== 1) throw new Error("--sfx: unsupported wav (PCM only)");
-  // -> mono float
-  const n = data.length / (fmt.bits / 8) / fmt.ch;
-  const mono = new Float32Array(n);
-  for (let i = 0; i < n; i++) {
-    let acc = 0;
-    for (let c = 0; c < fmt.ch; c++) {
-      const idx = i * fmt.ch + c;
-      acc += fmt.bits === 16 ? data.readInt16LE(idx * 2) / 32768 : (data[idx] - 128) / 128;
-    }
-    mono[i] = acc / fmt.ch;
-  }
-  // naive linear resample -> 13312 Hz (XGM2 full rate)
-  const RATE = 13312;
-  const outN = Math.max(1, Math.round(n * RATE / fmt.rate));
-  const padded = (outN + 255) & ~255;
-  const out = new Uint8Array(padded);          // s8 stored as u8 bytes
-  for (let i = 0; i < outN; i++) {
-    const src = i * fmt.rate / RATE;
-    const i0 = Math.floor(src), f = src - i0;
-    const v = (mono[i0] ?? 0) * (1 - f) + (mono[i0 + 1] ?? 0) * f;
-    out[i] = Math.max(-128, Math.min(127, Math.round(v * 127))) & 0xFF;
-  }
-  return out;
-}
+// (wavToXgm2Pcm and the bank C generators live in audio-assets.mjs — the
+// BROWSER-SAFE module both this CLI and the web IDE pipeline import, so the
+// generated C is identical on every host.)
 
 export async function buildMd(entryLua, outPath, opts = {}) {
   const src = await readFile(entryLua, "utf8");
@@ -105,36 +72,34 @@ export async function buildMd(entryLua, outPath, opts = {}) {
     "md_assets.h": await buildAssetsHeader(opts),
   };
 
-  // song bank: md_music references md_song_0. Bake the XGM2 blob when the game
-  // uses music; a 1-byte stub otherwise (keeps the link closed either way).
-  // Spike source: the demo .xgc shipped in the toolchain's SGDK share tree.
-  // The real asset pipeline (VGM -> romdev-xgm2) replaces this in Phase 1.
+  // Song bank: --music a.vgm,b.vgm[,c.xgc] -> compiled XGM2 blobs, bank order
+  // = music(n) index. .vgm converts via romdev-xgm2 (byte-identical to SGDK's
+  // xgm2tool - verified against demo.xgc), .vgz inflates here (node side; the
+  // browser IDE inflates with DecompressionStream before calling songToXgm2),
+  // .xgc passes through. No --music but the game calls music() -> the SGDK
+  // demo tune as a 1-song bank, so first-run sound Just Works.
   const usesMusic = /\bmd_music\b/.test(res.c);
-  let songC = "const unsigned char md_song_0[1] = {0};\n";
-  if (usesMusic) {
+  const songBlobs = [];
+  if (opts.musicPaths && opts.musicPaths.length) {
+    const { gunzipSync } = await import("node:zlib");
+    for (const p of opts.musicPaths) {
+      let bytes = new Uint8Array(await readFile(p));
+      if (isGzip(bytes)) bytes = new Uint8Array(gunzipSync(bytes));
+      songBlobs.push(songToXgm2(bytes));
+    }
+  } else if (usesMusic) {
     const { shareDir } = await import("romdev-toolchain-m68k-gcc");
-    const xgc = await readFile(path.join(shareDir, "lib", "sgdk", "music", "demo.xgc"));
-    const bytes = Array.from(xgc).join(",");
-    songC = `// generated: demo XGM2 blob (spike). XGM2 data MUST be 256-byte aligned\n// (the Z80 driver pages through it in 256-byte units - rescomp does ALIGN 256).\n__attribute__((aligned(256))) const unsigned char md_song_0[${xgc.length}] = {${bytes}};\n`;
+    songBlobs.push(new Uint8Array(await readFile(path.join(shareDir, "lib", "sgdk", "music", "demo.xgc"))));
   }
-  sources["md_songs.c"] = songC;
+  sources["md_songs.c"] = songsBankC(songBlobs);
 
   // PCM SFX bank: --sfx a.wav,b.wav -> 8-bit signed 13.3kHz samples, 256-byte
   // aligned + padded (the XGM2 PCM contract). Stub table when absent.
-  let sfxC = "const unsigned char *const md_sfx_bank[1] = {0};\nconst unsigned long md_sfx_len[1] = {0};\nconst int md_sfx_count = 0;\n";
-  if (opts.sfxPaths && opts.sfxPaths.length) {
-    const parts = [];
-    const names = [];
-    for (let i = 0; i < opts.sfxPaths.length; i++) {
-      const pcm = wavToXgm2Pcm(await readFile(opts.sfxPaths[i]));
-      names.push(`md_sfx_${i}`);
-      parts.push(`__attribute__((aligned(256))) static const unsigned char md_sfx_${i}[${pcm.length}] = {${Array.from(pcm).join(",")}};`);
-    }
-    sfxC = parts.join("\n") + `\nconst unsigned char *const md_sfx_bank[${names.length}] = {${names.join(",")}};\n` +
-      `const unsigned long md_sfx_len[${names.length}] = {${opts.sfxPaths.map((_, i) => `sizeof(md_sfx_${i})`).join(",")}};\n` +
-      `const int md_sfx_count = ${names.length};\n`;
+  const sfxBlobs = [];
+  for (const p of opts.sfxPaths ?? []) {
+    sfxBlobs.push(wavToXgm2Pcm(new Uint8Array(await readFile(p))));
   }
-  sources["md_sfx_data.c"] = sfxC;
+  sources["md_sfx_data.c"] = sfxBankC(sfxBlobs);
 
   const r = await buildGenesisC({ sources, headers, sgdk: true });
   if (!r.ok) {
