@@ -24,7 +24,7 @@ function cOf(src) {
 
 // ---- examples --------------------------------------------------------------
 
-for (const ex of ["mvp", "hello", "anim", "starfall", "raster", "platformer", "sgdk_direct", "parity", "coroutine", "pcm"]) {
+for (const ex of ["mvp", "hello", "anim", "starfall", "raster", "platformer", "sgdk_direct", "parity", "coroutine", "pcm", "vint_callback"]) {
   test(`example ${ex} compiles`, () => {
     const src = readFileSync(path.join(REPO, `examples/${ex}/main.lua`), "utf8");
     const r = compile(src, "main.lua", { target: "md" });
@@ -190,6 +190,18 @@ test("callback function is NOT rejected as a value at the call site", () => {
   );
   assert.equal(r.ok, true, JSON.stringify(r.diagnostics, null, 2));
   assert.match(r.c, /SYS_setVIntCallback\(\(void\*\)&gtl_cb\)/);
+});
+
+test("SYS_setVIntCallback: installs a Lua fn as the vblank hook, keeps it live", () => {
+  // the callback bumps a memory-backed array (as the interrupt handler must) -
+  // and is reached ONLY via the callback, so it must survive dead-code elim.
+  const c = cOf(
+    "local v = array(2)\nfunction on_vblank()\n  v[0] = v[0] + 1\nend\n" +
+    "function _init()\n  v[0] = 0\n  SYS_setVIntCallback(on_vblank)\nend\n" +
+    "function _update60()\nend\nfunction _draw()\n  print(v[0], 8, 8, 7)\nend\n"
+  );
+  assert.match(c, /SYS_setVIntCallback\(\(void\*\)&gtl_on_vblank\)/);  // address-of
+  assert.match(c, /gtl_on_vblank\(void\)\s*\{/);                        // NOT eliminated
 });
 
 // ---- raw PCM (SND_PCM driver) ------------------------------------------------

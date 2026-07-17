@@ -255,3 +255,12 @@ task.h flipped from na->covered (removed the hardcoded NA_HEADERS["task.h"] in
 seed-ledger.mjs). Coverage 725->733 (na 66->58: only legacy sprite engine 45,
 MEM heap 9, 4 varargs remain). 41 tests (was 32), 10 examples (added
 coroutine + pcm, both gpgx-verified). baseline.json bumped to 733.
+
+### SYS_setVIntCallback: Lua fn as the vblank hook (example + test)
+Already bound (fn kind) - added examples/vint_callback + a test to prove it in
+practice. A top-level Lua function installed via SYS_setVIntCallback runs inside
+the VInt handler every vblank (60Hz), independent of _update/_draw. Same two
+rules as task.h: pass the bare function NAME (address handed to SGDK), and use a
+MEMORY-BACKED array for anything the handler mutates + the loop reads (interrupt
+context saves regs, but a scalar bump may never reach RAM). gpgx: vints:N ==
+frame:N lockstep. 43 tests, 11 examples.
