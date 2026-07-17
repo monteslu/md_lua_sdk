@@ -72,6 +72,12 @@ void md_run(void);
 void md_music(int n, int loop);
 void md_sfx(int n, int ch);
 
+// raw PCM (SGDK's standalone single-channel SND_PCM driver; distinct from XGM2)
+int  md_pcm_sample(int n);   // ROM pointer of --sfx blob n, as an opaque handle
+int  md_pcm_len(int n);      // byte length of --sfx blob n
+void md_pcm_driver(void);    // SND_PCM_loadDriver(TRUE) once
+void md_pcm_play(int n, int rate, int loop);  // whole-recipe convenience
+
 // animation helpers (slot-based frame-range cycling — the cross-SDK contract)
 int  md_anim(int slot, int first, int last, long fps);
 int  md_anim_once(int slot, int first, int last, long fps);

@@ -765,7 +765,18 @@ export function check(chunk, file) {
         if (b.audio) { usesAudio.flag = true; usesMusic.flag = true; }
         checkArgs(call, b.params, callee.name);
         call.sig = b;
-        call.argKinds = call.args.map((a) => typeOf(a));
+        // a "fn" (callback) arg is a bare function NAME, not a value - don't run
+        // typeOf on it (that would trip the "functions are not values" error);
+        // its argKind is a handle. Same skip for pool/array/str name-args.
+        call.argKinds = call.args.map((a, i) => {
+          const p = b.params[i];
+          if (a.callbackRef || (p && (p[0] === "fn" || p[0] === "pool" ||
+              p[0] === "array" || p[0] === "array8"))) return "int";
+          // "optr" is an opaque pointer HANDLE carried as an int (a Sprite*,
+          // sample blob, ...); type it as int, don't reject the value.
+          if (p && p[0] === "optr") { typeOf(a); return "int"; }
+          return typeOf(a);
+        });
         if (b.ret === "same") return call.argKinds.some((k) => k === "fixed") ? "fixed" : "int";
         return b.ret;
       }
@@ -833,6 +844,20 @@ export function check(chunk, file) {
         if (params[i] && params[i][0] === "str") {
           if (a.kind !== "string") err(a, `${name}() argument ${i + 1} must be a string literal`);
           else a.inPrint = true;   // string literal in an allowed position (not just print)
+          return;
+        }
+        // a "fn" param is a CALLBACK: a bare reference to a top-level function.
+        // Flat ROM makes an indirect call safe (no bank to unmap), and the call
+        // graph stays complete because the reference is static. The emitter
+        // renders it as &gtl_<name>. This is what unlocks SGDK's callback API
+        // (task.h, SYS_setVIntCallback, sprite frame-change hooks, ...).
+        if (params[i] && params[i][0] === "fn") {
+          if (a.kind !== "name" || !functions.has(a.name)) {
+            err(a, `${name}() argument ${i + 1} must be a top-level function name (a callback)`);
+          } else {
+            a.callbackRef = a.name;        // annotate for the emitter
+            functions.get(a.name).addressTaken = true;  // keep it (never dead-code it)
+          }
           return;
         }
         if (params[i] && (params[i][0] === "array" || params[i][0] === "array8")) {

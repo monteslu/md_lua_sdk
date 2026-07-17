@@ -952,8 +952,8 @@
         "via": "memcpy"
       },
       "memcmp": {
-        "status": "na",
-        "reason": "void* args - no typed binding (use array8 + a Lua loop)"
+        "status": "covered",
+        "via": "memcmp"
       }
     },
     "object.h": {
@@ -1792,28 +1792,28 @@
     },
     "task.h": {
       "TSK_init": {
-        "status": "na",
-        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+        "status": "covered",
+        "via": "TSK_init"
       },
       "TSK_userSet": {
-        "status": "na",
-        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+        "status": "covered",
+        "via": "TSK_userSet"
       },
       "TSK_stop": {
-        "status": "na",
-        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+        "status": "covered",
+        "via": "TSK_stop"
       },
       "TSK_userYield": {
-        "status": "na",
-        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+        "status": "covered",
+        "via": "TSK_userYield"
       },
       "TSK_superPend": {
-        "status": "na",
-        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+        "status": "covered",
+        "via": "TSK_superPend"
       },
       "TSK_superPost": {
-        "status": "na",
-        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+        "status": "covered",
+        "via": "TSK_superPost"
       }
     },
     "timer.h": {
@@ -2960,8 +2960,8 @@
         "via": "SND_PCM_isPlaying"
       },
       "SND_PCM_startPlay": {
-        "status": "na",
-        "reason": "struct-by-value config - Phase-later"
+        "status": "covered",
+        "via": "SND_PCM_startPlay"
       },
       "SND_PCM_stopPlay": {
         "status": "covered",

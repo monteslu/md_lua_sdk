@@ -404,6 +404,35 @@ void md_sfx(int n, int ch) {
     }
 }
 
+// ---- raw PCM (SGDK single-channel SND_PCM driver) -----------------------------
+// The same --sfx blobs, but played by SGDK's standalone Z80 PCM driver instead
+// of XGM2. pcm_sample/pcm_len hand the ROM blob to SND_PCM_startPlay; pcm_driver
+// loads it once; pcm_play is the whole-recipe convenience wrapper.
+static u16 pcm_up = 0;
+int md_pcm_sample(int n) {
+    int idx = n;
+    if (md_sfx_count <= 0) return 0;
+    if (idx < 0) idx = 0;
+    if (idx >= md_sfx_count) idx = md_sfx_count - 1;
+    return (int)md_sfx_bank[idx];   // ROM pointer as an opaque handle
+}
+int md_pcm_len(int n) {
+    int idx = n;
+    if (md_sfx_count <= 0) return 0;
+    if (idx < 0) idx = 0;
+    if (idx >= md_sfx_count) idx = md_sfx_count - 1;
+    return (int)md_sfx_len[idx];
+}
+void md_pcm_driver(void) {
+    if (!pcm_up) { SND_PCM_loadDriver(TRUE); pcm_up = 1; }
+}
+void md_pcm_play(int n, int rate, int loop) {
+    if (md_sfx_count <= 0) return;
+    md_pcm_driver();
+    SND_PCM_startPlay((const u8 *)md_pcm_sample(n), (u32)md_pcm_len(n),
+                      (SoundPcmSampleRate)rate, SOUND_PAN_CENTER, loop ? TRUE : FALSE);
+}
+
 // ---- frame harness ------------------------------------------------------------
 void md_init(void) {
     u16 i;

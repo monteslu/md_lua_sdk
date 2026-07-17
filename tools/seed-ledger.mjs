@@ -56,8 +56,10 @@ const HARNESS_ROOTS = ["md_init", "md_vsync", "md_endframe"];
 
 // ---- N/A rules (the honest bucket - keep SMALL, see PLAN.md §7a) -------------
 const NA_HEADERS = {
-  "task.h":
-    "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support",
+  // task.h IS covered now: TSK_* are plain SGDK calls, and TSK_userSet takes a
+  // VoidCallback* which the "fn" builtin kind binds to a top-level Lua function
+  // (&gtl_<name>). Flat ROM makes the indirect call safe. (This is SGDK's task
+  // API from Lua - NOT Lua-level coroutines, which the static model still lacks.)
   "sprite_eng_legacy.h":
     "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface",
 };

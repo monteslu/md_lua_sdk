@@ -376,6 +376,65 @@ function _update60()
 end
 ```
 
+### Raw PCM - SGDK's `SND_PCM` driver
+
+Distinct from the XGM2 path above. `SND_PCM` is SGDK's standalone single-channel
+PCM player. It and XGM2 both own the Z80, so **pick one per cart** - use these
+verbs *instead of* `sfx`/`music`, not alongside.
+
+| Call | What |
+|---|---|
+| `pcm_play(n,[rate],[loop])` | load the driver (once) + play `--sfx` blob `n`. `rate` is a `SoundPcmSampleRate` (3 = 13.4 kHz, matches the bank); `loop` is a flag |
+| `pcm_driver()` | load the Z80 PCM driver once (call before raw `SND_PCM_*`) |
+| `pcm_sample(n)` / `pcm_len(n)` | ROM pointer + byte length of `--sfx` blob `n` |
+
+```lua
+function _init()
+  pcm_driver()
+  pcm_play(0, 3, false)   -- convenience: blob 0, 13.4 kHz, no loop
+end
+function _update60()
+  if btnp(4) then
+    -- or drive SGDK's function directly (sample, len, rate, pan, loop):
+    SND_PCM_startPlay(pcm_sample(0), pcm_len(0), 3, 128, false)
+  end
+end
+```
+
+## Coroutines - SGDK user tasks (`task.h`)
+
+SGDK runs one **user task** alongside the main loop. The supervisor (your main
+loop) hands it a time-slice with `TSK_userYield()`; the task runs until the next
+VBlank pre-empts it. Register a plain top-level Lua function as the task - any
+SGDK callback param takes a bare function name (its address is passed).
+
+```lua
+local shared = array(2)     -- MUST be memory-backed (see the trap below)
+
+function bg_task()
+  while true do             -- runs each slice, pre-empted by VBlank
+    shared[0] = shared[0] + 1
+  end
+end
+
+function _init()
+  TSK_init()
+  TSK_userSet(bg_task)      -- hand SGDK your Lua function
+end
+function _update60()
+  TSK_userYield()           -- supervisor gives the task this frame's slice
+end
+```
+
+- **The user task must NOT call `TSK_userYield()`** - that is a supervisor-only
+  call (doing it from the task is a privilege violation). The task just runs and
+  gets pre-empted; the supervisor yields to it.
+- **A value the task mutates and the main loop reads must be memory-backed** (an
+  `array`), not a scalar local - a tight-loop scalar can sit in a register the
+  context switch saves but `_draw()` never sees flushed to RAM.
+- The same bare-function-name form works for every SGDK callback:
+  `SYS_setVIntCallback(on_vblank)`, sprite frame hooks, etc.
+
 ---
 
 ## Assets & building

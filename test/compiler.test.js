@@ -24,7 +24,7 @@ function cOf(src) {
 
 // ---- examples --------------------------------------------------------------
 
-for (const ex of ["mvp", "hello", "anim", "starfall", "raster", "platformer", "sgdk_direct", "parity"]) {
+for (const ex of ["mvp", "hello", "anim", "starfall", "raster", "platformer", "sgdk_direct", "parity", "coroutine", "pcm"]) {
   test(`example ${ex} compiles`, () => {
     const src = readFileSync(path.join(REPO, `examples/${ex}/main.lua`), "utf8");
     const r = compile(src, "main.lua", { target: "md" });
@@ -157,4 +157,75 @@ test("pool/add/del/all compile (SoA model intact)", () => {
   );
   assert.match(c, /ps_x\[/);
   assert.match(c, /ps_used\[/);
+});
+
+// ---- SGDK coroutines (task.h) via the "fn" callback kind ---------------------
+
+test("callback kind: TSK_userSet(fn) emits &gtl_<name> and keeps the function", () => {
+  const c = cOf(
+    "local n = 0\nfunction worker()\n  n += 1\nend\n" +
+    "function _init()\n  TSK_init()\n  TSK_userSet(worker)\nend\n" +
+    "function _update60()\n  TSK_userYield()\nend\nfunction _draw()\nend\n"
+  );
+  assert.match(c, /TSK_userSet\(\(void\*\)&gtl_worker\)/);   // address-of, not a call
+  assert.match(c, /gtl_worker\(void\)\s*\{/);                 // NOT dead-code eliminated
+  assert.match(c, /TSK_init\(\)/);
+  assert.match(c, /TSK_userYield\(\)/);
+});
+
+test("callback kind: passing a non-function is an error", () => {
+  const errs = errorsOf(
+    "local n = 0\nfunction _init()\n  TSK_userSet(n)\nend\n" +
+    "function _update60()\nend\nfunction _draw()\nend\n"
+  );
+  assert.ok(errs.some((m) => /must be a top-level function name/.test(m)), errs.join("\n"));
+});
+
+test("callback function is NOT rejected as a value at the call site", () => {
+  // regression: typeOf() over builtin args tripped 'functions are not values'
+  const r = compile(
+    "function cb()\nend\nfunction _init()\n  SYS_setVIntCallback(cb)\nend\n" +
+    "function _update60()\nend\nfunction _draw()\nend\n",
+    "t.lua", { target: "md" }
+  );
+  assert.equal(r.ok, true, JSON.stringify(r.diagnostics, null, 2));
+  assert.match(r.c, /SYS_setVIntCallback\(\(void\*\)&gtl_cb\)/);
+});
+
+// ---- raw PCM (SND_PCM driver) ------------------------------------------------
+
+test("SND_PCM_startPlay: pointer arg casts to void*, bool arg accepts false", () => {
+  const c = cOf(
+    "function _init()\n  pcm_driver()\n" +
+    "  SND_PCM_startPlay(pcm_sample(0), pcm_len(0), 3, 128, false)\nend\n" +
+    "function _update60()\nend\nfunction _draw()\nend\n"
+  );
+  assert.match(c, /SND_PCM_startPlay\(\(void\*\)\(/);   // optr -> (void*)(...)
+  assert.match(c, /\(\(0\) \? 1 : 0\)\)/);               // false -> flip kind
+  assert.match(c, /md_pcm_driver\(\)/);
+});
+
+test("curated pcm_play convenience verb compiles", () => {
+  const c = cOf(
+    "function _init()\n  pcm_play(0, 3, false)\nend\n" +
+    "function _update60()\nend\nfunction _draw()\nend\n"
+  );
+  assert.match(c, /md_pcm_play\(0, 3, /);
+});
+
+test("SGDK bool params accept Lua booleans (flip kind)", () => {
+  // a scalar `bool` param (DMA_setAutoFlush(bool)) must take true/false, not
+  // just ints - the generator maps bool -> the "flip" kind for exactly this.
+  const c = cOf(
+    "function _update60()\n  DMA_setAutoFlush(false)\nend\nfunction _draw()\nend\n"
+  );
+  assert.match(c, /DMA_setAutoFlush\(\(\(0\) \? 1 : 0\)\)/);
+});
+
+test("SGDK pointer-handle params cast to void* (Sprite* under -Werror)", () => {
+  const c = cOf(
+    "local s = 0\n" +
+    "function _update60()\n  s = SPR_addSprite(0, 0, 0, 0)\n  SPR_setPosition(s, 10, 20)\nend\nfunction _draw()\nend\n"
+  );
+  assert.match(c, /SPR_setPosition\(\(void\*\)\(/);   // handle -> void*
 });

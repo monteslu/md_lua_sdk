@@ -24,7 +24,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildInventory } from "./sgdk-coverage.mjs";
-import { BUILTINS } from "../compiler/builtins.js";
+import { CURATED_BUILTINS } from "../compiler/builtins.js";
 
 const REPO = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const OUT = path.join(REPO, "compiler", "builtins-sgdk.js");
@@ -40,6 +40,14 @@ const SCALAR = new Set([
   "CollisionType", "AnimationLoopMode", "TileSet", "HScrollMode", "VScrollMode",
   "SoundPCMChannelStatus", "PCMSampleRate", "Bool",
   "fastfix16", "fastfix32", "VBlankProcessTime",   // scalar typedefs/enums
+  "SoundPcmSampleRate", "SoundPanning", "size_t",  // more scalar enums/ints
+]);
+
+// callback pointer typedefs: a *fn ptr param becomes the "fn" builtin kind
+// (a bare Lua function name -> &gtl_<name>). SGDK's callback types.
+const CALLBACK_TYPES = new Set([
+  "VoidCallback", "FrameChangeCallback", "SpriteAnimationCallback",
+  "HIntCallback", "VIntCallback", "_voidCallback",
 ]);
 
 // varargs functions can't be bound (no fixed arity); N/A with a reason.
@@ -68,10 +76,15 @@ function paramType(p) {
 function kindOf(p) {
   const { base, ptr } = paramType(p);
   if (base === "void" && ptr === 0) return null; // (void) → no params
+  if (CALLBACK_TYPES.has(base) && ptr >= 1) return "fn";  // VoidCallback* → callback
   if (ptr >= 1) {
     if (base === "char") return "str";           // char* → string literal
-    return "int";                                 // opaque handle
+    return "optr";                                // opaque pointer handle (cast to void* at the call)
   }
+  // a scalar `bool`/`Bool` param → the "flip" kind, so Lua booleans (true/false)
+  // AND ints both pass (SGDK bools are just flags). Plain "int" would reject
+  // `false` as "boolean passed where number expected".
+  if (base === "bool" || base === "Bool") return "flip";
   if (SCALAR.has(base)) return "int";
   return false;                                   // struct by value → not representable
 }
@@ -89,7 +102,7 @@ const identOk = (n) => /^[A-Za-z_][A-Za-z0-9_]*$/.test(n);
 
 function generate() {
   const inv = buildInventory();
-  const taken = new Set(Object.keys(BUILTINS)); // curated verbs win
+  const taken = new Set(Object.keys(CURATED_BUILTINS)); // curated verbs win
   const rows = [];
   const skipped = { struct: 0, taken: 0, badname: 0, legacy: 0 };
 
@@ -101,7 +114,7 @@ function generate() {
       if (!identOk(name)) { skipped.badname++; continue; }
       if (taken.has(name)) { skipped.taken++; continue; }
       // heap + task + varargs are N/A (ledger), not direct-called
-      if (/^MEM_/.test(name) || header === "task.h" || VARARGS.has(name)) continue;
+      if (/^MEM_/.test(name) || VARARGS.has(name)) continue;   // task.h now binds (callbacks)
       // a `...` param in the prototype = varargs; skip (the parser keeps "...")
       if (fn.params.some((p) => (typeof p === "string" ? p : "").includes("..."))) continue;
 

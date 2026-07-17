@@ -17,7 +17,11 @@
 // curated PICO-8 verbs above always win a name clash.
 import { SGDK_BUILTINS } from "./builtins-sgdk.js";
 
-export const BUILTINS = {
+// The HAND-CURATED PICO-8 verbs. Exported on its own so the SGDK generator can
+// exclude exactly these (the verbs that WIN name clashes) WITHOUT importing its
+// own prior output (BUILTINS includes SGDK_BUILTINS - importing that here would
+// make every generated verb look "already taken" and wipe the table).
+export const CURATED_BUILTINS = {
   // ---- graphics -------------------------------------------------------------
   cls:      { params: [["color", true]], ret: "void", c: "gt_p8_cls" },
   camera:   { params: [["coord", true], ["coord", true]], ret: "void", c: "gt_p8_camera" },
@@ -194,6 +198,20 @@ export const BUILTINS = {
   // `loop` is a truthy flag (default on): music(0) loops, music(0,false) plays once.
   music: { params: [["int", false], ["flip", true]], ret: "void", c: "gt_music", audio: true },
 
+  // ---- raw PCM (SGDK's single-channel SND_PCM driver) ----------------------
+  // The --sfx WAV bank ships raw 8-bit signed 13.3kHz PCM blobs (256-aligned).
+  // These verbs expose them to SGDK's standalone PCM driver (SND_PCM_*), which
+  // is DISTINCT from the XGM2 path sfx()/music() use. Practical recipe:
+  //   pcm_driver()                            -- load the Z80 PCM driver (once)
+  //   SND_PCM_startPlay(pcm_sample(0), pcm_len(0), 3, 128, false)
+  // ...or the convenience wrapper:
+  //   pcm_play(0, 3, false)                   -- n, SoundPcmSampleRate, loop
+  // NOTE: XGM2 (sfx/music) and SND_PCM share the Z80 - pick ONE per cart.
+  pcm_sample: { params: [["int", false]], ret: "int", c: "md_pcm_sample", audio: true },
+  pcm_len:    { params: [["int", false]], ret: "int", c: "md_pcm_len", audio: true },
+  pcm_driver: { params: [], ret: "void", c: "md_pcm_driver", audio: true },
+  pcm_play:   { params: [["int", false], ["int", true], ["flip", true]], ret: "void", c: "md_pcm_play", audio: true },
+
   // ---- math ------------------------------------------------------------------
   flr:   { params: [["num", false]], ret: "int", c: null, special: "flr" },
   ceil:  { params: [["num", false]], ret: "int", c: null, special: "ceil" },
@@ -236,6 +254,11 @@ export const BUILTINS = {
   print: { params: [], ret: "int", special: "print" },
   add:  { params: [], ret: "void", special: "add" },
   del:  { params: [], ret: "void", special: "del" },
+};
+
+// The full table: curated verbs win, generated SGDK surface fills the rest.
+export const BUILTINS = {
+  ...CURATED_BUILTINS,
   ...SGDK_BUILTINS,
 };
 

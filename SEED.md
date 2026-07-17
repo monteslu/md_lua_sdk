@@ -203,3 +203,55 @@ desynced them. FIX: regenerated + added coverage-test gate (d) - builtins-sgdk
 must be non-stale (>500 entries) and every generated verb must resolve in the
 merged BUILTINS. Negative-tested (fires on the empty stub). Lesson for the
 lua-c extraction: generated artifacts need a sync gate, not just a ledger.
+
+### Post-v0.1.0: SGDK coroutines (task.h) + raw PCM, made usable with tests
+"why can't you do coroutines? it's just syntax + SGDK calls." Correct - nothing
+fundamental blocked it. Bound SGDK's task.h AND SND_PCM_startPlay, both proven
+IN gpgx.
+
+The `fn` (callback) builtin kind - the unlock for the whole SGDK callback API
+(task.h, SYS_setVIntCallback, sprite hooks):
+- check.js: a `fn` param must be a bare top-level function NAME. Annotates
+  `a.callbackRef` + marks `functions.get(name).addressTaken = true`.
+- emit.js: renders `(void*)&gtl_<name>`; dead-code roots include addressTaken
+  functions (so the referenced Lua fn survives). Flat Genesis ROM makes the
+  indirect call safe (no bank to unmap) and the static ref keeps the call graph
+  complete.
+- BUG fixed: `call.argKinds = call.args.map(typeOf)` ran typeOf() over EVERY
+  builtin arg AFTER checkArgs, re-tripping "functions are not values" on the
+  callback name. Skip typeOf for fn/pool/array/optr args in that map.
+
+SGDK task contract (task.h), learned the hard way (first cart = PRIVILEGE
+VIOLATION): the USER TASK must NOT call TSK_userYield() (that's supervisor-only)
+- the SUPERVISOR (main loop) calls TSK_userYield() to hand the task a slice; the
+  task runs until VBlank pre-empts it. And a value the task mutates + the
+  supervisor reads must be MEMORY-BACKED (an array) - a tight-loop scalar lives
+  in a register the context-switch saves but _draw() never sees flushed to RAM.
+  examples/coroutine proves task:N == frame:N in lockstep.
+
+Raw PCM (SND_PCM_* driver, DISTINCT from the XGM2 path sfx/music use - they
+share the Z80, pick one per cart). Curated: pcm_sample(n)/pcm_len(n) hand a
+--sfx blob to SND_PCM_startPlay; pcm_driver() loads the Z80 driver once;
+pcm_play(n,rate,loop) is the whole recipe. examples/pcm - audioDebug op:record
+shows peak 3262 / meanabs 648 (audible), not silence.
+
+Two GENERATOR fixes (both a class, not one-offs):
+1. `bool`/`Bool` scalar params -> the "flip" builtin kind, so Lua `true`/`false`
+   pass (plain "int" rejected `false` as "boolean where number expected"). 71
+   SGDK functions gain working bool args.
+2. pointer-HANDLE params -> a new "optr" kind that casts the int handle to
+   `(void*)` at the call site. Without it, `SND_PCM_startPlay(int, ...)` and the
+   whole Sprite*/Map* API failed under -Werror (-Wint-conversion). Pointer
+   RETURNS stay int (Lua holds the handle); only pointer PARAMS get optr.
+
+STRUCTURAL BUG fixed (same family as the empty-table ship): the generator
+imported the MERGED `BUILTINS` (which already spreads its own prior output), so
+on every rerun all 732 SGDK names looked "already taken" -> generated 0 ->
+wiped the file. FIX: split `CURATED_BUILTINS` as its own export; the generator
+excludes only THOSE. builtins.js now: `BUILTINS = {...CURATED_BUILTINS,
+...SGDK_BUILTINS}`. The drift gate catches the symptom; this kills the cause.
+
+task.h flipped from na->covered (removed the hardcoded NA_HEADERS["task.h"] in
+seed-ledger.mjs). Coverage 725->733 (na 66->58: only legacy sprite engine 45,
+MEM heap 9, 4 varargs remain). 41 tests (was 32), 10 examples (added
+coroutine + pcm, both gpgx-verified). baseline.json bumped to 733.

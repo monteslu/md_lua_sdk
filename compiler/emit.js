@@ -400,7 +400,11 @@ export function emit(chunk, symbols, file, opts = {}) {
   // the AST call graph is the complete truth.
   const liveFns = new Set();
   {
-    const stack = ["_init", "_update", "_update60", "_draw"].filter((n) => functions.has(n));
+    // roots: the lifecycle callbacks + any function whose ADDRESS was taken as a
+    // callback arg (fn kind) - those are reachable indirectly via SGDK.
+    const roots = ["_init", "_update", "_update60", "_draw"].filter((n) => functions.has(n));
+    for (const [n, f] of functions) if (f.addressTaken) roots.push(n);
+    const stack = roots;
     while (stack.length) {
       const n = stack.pop();
       if (liveFns.has(n)) continue;
@@ -777,6 +781,14 @@ export function emit(chunk, symbols, file, opts = {}) {
       case "array8": return a.kind === "name" ? mangle(a.name) : "0";
       // a flip flag: any truthy value -> 1, else 0 (packed by the caller).
       case "flip": return `((${expr(a, "int")}) ? 1 : 0)`;
+      // a callback: the address of a top-level Lua function (checker validated).
+      // Flat ROM makes the indirect call safe; the ref keeps the call graph
+      // complete. Cast to void* so it fits any SGDK callback pointer type.
+      case "fn": return a.callbackRef ? `(void*)&${mangle(a.callbackRef)}` : "0";
+      // an opaque POINTER handle (Sprite*, sample blob, ...) carried as an int.
+      // Cast to void* so it fits the SGDK prototype's pointer type under -Werror
+      // (int->pointer would otherwise be -Wint-conversion).
+      case "optr": return `(void*)(${expr(a, "int")})`;
       default: return expr(a, "any");
     }
   }
