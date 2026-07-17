@@ -1,6 +1,6 @@
 // md_api.h — the mdlua runtime contract (Sega Mega Drive / Genesis, SGDK).
-// The emitted C calls these md_* functions; each is a thin wrapper over SGDK.
-// Spike-0 surface: frame harness, input, cls, print, immediate-mode sprites.
+// Every md_* symbol here backs a Lua builtin (the emitter remaps the shared
+// builtins table's gt_* names to md_* at emit time).
 #ifndef MD_API_H
 #define MD_API_H
 
@@ -8,28 +8,75 @@
 
 // frame harness (called by the generated main())
 void md_init(void);
-void md_vsync(void);       // top of frame: latch input
-void md_endframe(void);    // bottom of frame: flush sprites + SYS_doVBlankProcess
+void md_vsync(void);
+void md_endframe(void);
 
-// input — PICO-8 indices: 0=left 1=right 2=up 3=down 4=O 5=X (O->B, X->C)
+// input — P8: 0-3 dpad, 4 O->B, 5 X->C; MD extras: 6 A, 7 START
 int md_btn(int i, int pl);
 int md_btnp(int i, int pl);
 
-// drawing (spike slice)
+// state
+void md_color(int c);
+void md_camera(int cx, int cy);
+void md_clip(int x, int y, int w, int h);
+
+// palette / screen
+void md_pal(int c0, int c1);
+void md_backdrop(int c);
+void md_screen_off(void);
+void md_screen_on(void);
+
+// bitmap verbs (SGDK BMP engine, lazy: 256x160 4bpp software framebuffer)
 void md_cls(int color);
+void md_pset(int x, int y, int color);
+int  md_pget(int x, int y);
+void md_line(int x0, int y0, int x1, int y1, int color);
+void md_rect(int x0, int y0, int x1, int y1, int color);
+void md_rectfill(int x0, int y0, int x1, int y1, int color);
+void md_circ(int cx, int cy, int r, int color);
+void md_circfill(int cx, int cy, int r, int color);
+
+// sprites (hardware, per-frame display list)
+void md_spr(int n, int x, int y, int w, int h, int flip);
+void md_spr8(int t, int x, int y, int flip);
+void md_sspr(int sx, int sy, int sw, int sh, int dx, int dy, int dw, int dh, int flip);
+void md_spr_pal(int bank);
+void md_spr_prio(int p);
+
+// tilemap (plane B)
+void md_map(const unsigned char *m, int mapw, int cx, int cy, int sx, int sy, int cw, int ch);
+void md_map_show(void);
+int  md_mget(int layer, int col, int row);
+void md_mset(int layer, int col, int row, int tile);
+void md_layer_scroll(int layer, int x, int y);
+void md_layer_show(int layer, int on);
+void md_layer_priority(int layer, int prio);
+
+// raster
+void md_hscroll(int line, int x);
+
+// text
 void md_print(const char *s, int x, int y, int color);
 void md_print_int(int v, int x, int y, int color);
 void md_print_num(long v, int x, int y, int color);
 void md_print_cur_str(const char *s, int color);
 void md_print_cur_int(int v, int color);
 void md_print_cur_num(long v, int color);
-void md_spr(int n, int x, int y, int w, int h, int flip);
 
-// spike-1 surface: Genesis flavor
-void md_pal(int c0, int c1);           // CRAM remap; c0<0 = reset all 16
-void md_hscroll(int line, int x);      // per-scanline H-scroll of plane B
-void md_music(int n, int loop);        // XGM2 module (FM) via the Z80 driver
-void md_sfx(int n, int ch);            // (stub until PCM lands in Phase 2)
-void md_spike_bg(void);          // temporary checker plane (Phase 1 removes)
+// hardware misc
+long md_realframes(void);
+long md_realsecs(void);
+void md_run(void);
+
+// audio
+void md_music(int n, int loop);
+void md_sfx(int n, int ch);
+
+// animation helpers (slot-based frame-range cycling — the cross-SDK contract)
+int  md_anim(int slot, int first, int last, long fps);
+int  md_anim_once(int slot, int first, int last, long fps);
+int  md_anim_pingpong(int slot, int first, int last, long fps);
+void md_anim_reset(int slot);
+int  md_anim_done(int slot);
 
 #endif

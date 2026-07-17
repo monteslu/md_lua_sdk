@@ -15,8 +15,9 @@ if (cmd === "build") {
   if (!entry) fail("usage: mdlua build <main.lua> [-o game.bin]");
   const oi = rest.indexOf("-o");
   const out = oi >= 0 ? rest[oi + 1] : path.join(path.dirname(entry), "game.bin");
+  const flag = (name) => { const i = rest.indexOf(name); return i >= 0 ? rest[i + 1] : undefined; };
   try {
-    const r = await buildMd(entry, out);
+    const r = await buildMd(entry, out, { sheetPath: flag("--sheet"), mapPath: flag("--map") });
     const { statSync } = await import("node:fs");
     console.log(`${r.outPath} (${statSync(r.outPath).size} bytes)`);
   } catch (e) { fail(String(e.message ?? e)); }
@@ -27,5 +28,5 @@ if (cmd === "build") {
   if (!res.ok) fail(formatDiagnostics(res.diagnostics.filter((d) => d.severity === "error")));
   process.stdout.write(res.c + "\n");
 } else {
-  fail("usage: mdlua build <main.lua> [-o game.bin]\n       mdlua c <main.lua>");
+  fail("usage: mdlua build <main.lua> [--sheet s.png] [--map m.png] [-o game.bin]\n       mdlua c <main.lua>");
 }

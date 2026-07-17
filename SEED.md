@@ -62,3 +62,26 @@ P8 buttons: 0-3 = dpad, 4 O→BUTTON_B, 5 X→BUTTON_C.
   exact profile).
 - Spike verbs added: pal/hscroll (mdOnly builtins), md_music/md_sfx stub,
   temporary checker plane in md_init (Phase 1 removes).
+
+### Phase 1 progress — 2026-07-16
+- **Asset pipeline ported**: png-tiles.mjs GBA→VDP (left pixel = HIGH nibble;
+  CRAM 9-bit BBB0GGG0RRR0 words; sheet tiles ROW-MAJOR linear — multi-cell
+  spr() composes 1x1 hardware sprites, sidestepping MD's column-major
+  multi-tile order). asset-headers.mjs emits sheet_/map_ C arrays; build-md
+  generates md_assets.h per build (stubs when no --sheet/--map).
+- **Full Phase-1 runtime** (~430 lines md_api.c): sprites w/h 1-4 cells +
+  flip grid, camera→plane scroll, bitmap verbs on SGDK BMP engine (lazy init,
+  256x160, Bresenham line/circ ports), P8-array map() + asset map_show() +
+  mget/mset shadow, layer_scroll, print with a 2-slot color cache (PAL2/3
+  idx15), PSG sfx blips, slot-based anim engine (gbalua's contract, ported).
+- **HARDWARE TRUTH (cost a debug cycle): mid-frame direct PAL_setColor races
+  the vblank DMA queue** — the control/data write pair gets split by the IRQ
+  and the value lands at the wrong CRAM address (measured: a print-color
+  write FLOODED the backdrop with the written value; whole screen one color).
+  FIX: all palette changes go through a 64-entry CRAM shadow flushed as ONE
+  PAL_setColors(..., DMA_QUEUE) in md_endframe. pal()/text-cache/fades all
+  ride it. Debug method: A/B/C/D/E bisect variants through gpgx + verify.
+- anim contract ADOPTED from gbalua verbatim (slot,first,last,fps) — cross-SDK
+  parity beats my simpler 3-arg draft; ported gba_anim.c wholesale.
+- MVP example (real critter.png sheet): text colors + animated sprite +
+  flipped sprite + input, 8 colors on screen, screenshot-verified.

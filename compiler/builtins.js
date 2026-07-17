@@ -1,5 +1,5 @@
 // gbalua builtin functions - the PICO-8 global API surface (v0.2 slice) plus
-// the gt.* GameTank extras.
+// the md-native extras (Genesis hardware verbs).
 //
 // Param kinds:
 //   coord - pixel coordinate/radius: C int; fixed args are floored (>>16)
@@ -24,33 +24,26 @@ export const BUILTINS = {
   // clip(x,y,w,h): restrict all subsequent bitmap drawing to a rectangle (HUD
   // panels, masked regions). clip() with no args resets to full screen; cls()
   // also resets it. PICO-8 semantics.
-  clip:     { params: [["coord", true], ["coord", true], ["coord", true], ["coord", true]], ret: "void", c: "gba_clip", gbaOnly: true },
+  clip:     { params: [["coord", true], ["coord", true], ["coord", true], ["coord", true]], ret: "void", c: "gt_clip", mdOnly: true },
   // pget(x,y): read a bitmap pixel (color 0..255). sset(x,y,[c]): paint a pixel
   // into the loaded sprite sheet at runtime (0..15). Read-modify-write bitmap /
   // procedural sprite art.
-  pget:     { params: [["coord", false], ["coord", false]], ret: "int", c: "gba_pget", gbaOnly: true },
-  sset:     { params: [["coord", false], ["coord", false], ["color", true]], ret: "void", c: "gba_sset", gbaOnly: true },
+  pget:     { params: [["coord", false], ["coord", false]], ret: "int", c: "gt_pget", mdOnly: true },
   spr:      { params: [["int", false], ["coord", false], ["coord", false], ["int", true], ["int", true], ["flip", true], ["flip", true]], ret: "void", c: "gt_p8_spr" },
   // GBA-only: rotated+scaled hardware sprite. sprr(n, x, y, angle, [scale]).
   // angle is PICO-8 turns (0..1, like sin/cos); scale is a fixed multiplier
   // (default 1.0). Uses a real OBJ affine matrix — the GBA affine hardware the
   // whole SDK leans into. (No GameTank analog; the emitter only reaches this on
   // the gba target.)
-  sprr:     { params: [["int", false], ["coord", false], ["coord", false], ["num", false], ["num", true]], ret: "void", c: "gba_sprr", gbaOnly: true },
   // sprr2(n,x,y,angle,sx,sy): rotated + NON-uniform scale (squash/stretch, spinning coin).
-  sprr2:    { params: [["int", false], ["coord", false], ["coord", false], ["num", false], ["num", false], ["num", false]], ret: "void", c: "gba_sprr2", gbaOnly: true },
   // spr8(t,x,y,[flip]): an 8x8 sprite from raw tile index t (bullets, pickups).
-  spr8:     { params: [["int", false], ["coord", false], ["coord", false], ["flip", true]], ret: "void", c: "gba_spr8", gbaOnly: true },
+  spr8:     { params: [["int", false], ["coord", false], ["coord", false], ["flip", true]], ret: "void", c: "gt_spr8", mdOnly: true },
   // per-sprite modifiers for the next spr()/spr8() this frame (reset each frame):
-  spr_pal:  { params: [["int", false]], ret: "void", c: "gba_spr_pal", gbaOnly: true },
-  spr_prio: { params: [["int", false]], ret: "void", c: "gba_spr_prio", gbaOnly: true },
+  spr_pal:  { params: [["int", false]], ret: "void", c: "gt_spr_pal", mdOnly: true },
+  spr_prio: { params: [["int", false]], ret: "void", c: "gt_spr_prio", mdOnly: true },
   // spr_blend()/spr_blend_off(): next spr() translucent (uses blend weights) or opaque.
-  spr_blend:     { params: [], ret: "void", c: "gba_spr_blend", gbaOnly: true },
-  spr_blend_off: { params: [], ret: "void", c: "gba_spr_blend_off", gbaOnly: true },
   // spr_window(): next spr() is a shaped OBJ-window mask (pair with window_obj).
-  spr_window:    { params: [], ret: "void", c: "gba_spr_window", gbaOnly: true },
   // spr_mosaic(on): apply the mosaic() grid to the next spr().
-  spr_mosaic:    { params: [["flip", false]], ret: "void", c: "gba_spr_mosaic", gbaOnly: true },
 
   // ---- GBA hardware tile backgrounds (Mode 0) — the real scrolling-game path ----
   // These control the 4 hardware BG layers. The tileset/tilemap DATA comes from
@@ -58,16 +51,15 @@ export const BUILTINS = {
   // Lua game just shows/scrolls/edits layers — no giant arrays in Lua source.
   // map_show(layer): display the build-bundled tilemap on a layer (loads its
   //   tiles + map, enables it). Call once (usually _init).
-  map_show:  { params: [["int", true]], ret: "void", c: "gba_map_show", gbaOnly: true },
-  layer_show:{ params: [["int", false], ["flip", false]], ret: "void", c: "gba_layer_show", gbaOnly: true },
-  layer_pri: { params: [["int", false], ["int", false]], ret: "void", c: "gba_layer_priority", gbaOnly: true },
+  map_show:  { params: [["int", true]], ret: "void", c: "gt_map_show", mdOnly: true },
+  layer_show:{ params: [["int", false], ["flip", false]], ret: "void", c: "gt_layer_show", mdOnly: true },
+  layer_pri: { params: [["int", false], ["int", false]], ret: "void", c: "gt_layer_priority", mdOnly: true },
   // camera(x,y) already exists (PICO-8) and maps to gba_camera — hardware scroll.
-  layer_scroll:{ params: [["int", false], ["coord", false], ["coord", false]], ret: "void", c: "gba_layer_scroll", gbaOnly: true },
-  parallax:  { params: [["int", false], ["num", false]], ret: "void", c: "gba_layer_parallax", gbaOnly: true },
+  layer_scroll:{ params: [["int", false], ["coord", false], ["coord", false]], ret: "void", c: "gt_layer_scroll", mdOnly: true },
   // tget/tset: read/set a tile in a layer's map at (col,row). (Distinct from the
   // GameTank mget/mset above, which have a different 2-arg signature.)
-  tget:      { params: [["int", false], ["int", false], ["int", false]], ret: "int", c: "gba_mget", gbaOnly: true },
-  tset:      { params: [["int", false], ["int", false], ["int", false], ["int", false]], ret: "void", c: "gba_mset", gbaOnly: true },
+  tget:      { params: [["int", false], ["int", false], ["int", false]], ret: "int", c: "gt_mget", mdOnly: true },
+  tset:      { params: [["int", false], ["int", false], ["int", false], ["int", false]], ret: "void", c: "gt_mset", mdOnly: true },
 
   // ---- color effects (hardware blend unit — free, composites in the PPU) ----
   // blend(layer, alpha): draw a layer semi-transparent over the scene behind it
@@ -75,17 +67,12 @@ export const BUILTINS = {
   // fade(amount, [white]): fade the whole screen to black (or white) — the level-
   //   wipe / hit-flash / pause-dim workhorse. amount 0..1; white truthy = to white.
   // blend_off(): clear all color effects.
-  blend:     { params: [["int", false], ["num", false]], ret: "void", c: "gba_blend", gbaOnly: true },
-  fade:      { params: [["num", false], ["flip", true]], ret: "void", c: "gba_fade", gbaOnly: true },
-  blend_off: { params: [], ret: "void", c: "gba_blend_off", gbaOnly: true },
   // mosaic(n)/mosaic2(bh,bv): hardware pixelate (0=off..15). Dissolve/hit-flash/heat.
-  mosaic:    { params: [["int", false]], ret: "void", c: "gba_mosaic", gbaOnly: true },
-  mosaic2:   { params: [["int", false], ["int", false]], ret: "void", c: "gba_mosaic2", gbaOnly: true },
   // backdrop(color): the void behind all layers (PICO-8 index or raw). screen_off/on:
   // force-blank the display instantly (hide a mid-frame rebuild, instant cut).
-  backdrop:   { params: [["color", false]], ret: "void", c: "gba_backdrop", gbaOnly: true },
-  screen_off: { params: [], ret: "void", c: "gba_screen_off", gbaOnly: true },
-  screen_on:  { params: [], ret: "void", c: "gba_screen_on", gbaOnly: true },
+  backdrop:   { params: [["color", false]], ret: "void", c: "gt_backdrop", mdOnly: true },
+  screen_off: { params: [], ret: "void", c: "gt_screen_off", mdOnly: true },
+  screen_on:  { params: [], ret: "void", c: "gt_screen_on", mdOnly: true },
   // pal(i,r,g,b) / spr_col(i,r,g,b): set a BG / OBJ palette color at runtime (0..255
   // components). Palette swap, day/night, animated cycling (rotate entries each frame).
   // Genesis pal(): REAL runtime CRAM writes — the headline. pal(c0,c1) remaps
@@ -93,36 +80,27 @@ export const BUILTINS = {
   pal:       { params: [["int", true], ["int", true]], ret: "void", c: "gt_pal", mdOnly: true },
   // per-scanline horizontal scroll of plane B — the Genesis raster signature.
   hscroll:   { params: [["int", false], ["int", false]], ret: "void", c: "gt_hscroll", mdOnly: true },
-  spr_col:   { params: [["int", false], ["int", false], ["int", false], ["int", false]], ret: "void", c: "gba_spr_col", gbaOnly: true },
   // hgradient(table): per-scanline BACKDROP gradient via the HBlank IRQ. `table` is
   // an array of 160 raw BGR555 colors (fill with rgb()/color numbers, one per line):
   // sunset skies, underwater bands, a fire glow. Pass it once/frame; nil/0 = off.
-  hgradient: { params: [["array", false]], ret: "void", c: "gba_hgradient", gbaOnly: true },
   // save(slot, array8, n) / load(slot, array8, n): battery SRAM persistence. `slot`
   // 0..15 (1 KB each); keep game state in an array8 and save/load it. load returns
   // the byte count restored (0 = slot never written -> start fresh).
-  save:      { params: [["int", false], ["array8", false], ["int", false]], ret: "void", c: "gba_save", gbaOnly: true },
-  load:      { params: [["int", false], ["array8", false], ["int", false]], ret: "int",  c: "gba_load", gbaOnly: true },
   // timer_start()/timer_read(): a free-running hardware timer (Timer 3, ~16 kHz) for
   // sub-frame timing + profiling. timer_start resets it; timer_read samples the count
   // (wraps ~every 4 ms). Bracket a routine to profile it, or drive rhythm timing.
-  timer_start: { params: [], ret: "void", c: "gba_timer_start", gbaOnly: true },
-  timer_read:  { params: [], ret: "int",  c: "gba_timer_read",  gbaOnly: true },
   // realframes()/realsecs(): a STEADY real-time clock. t()/time() advance once per
   // game loop (so a slow _draw makes them drift); these tick in a VCOUNT IRQ at a
   // true 60 Hz regardless — use them to pace things by wall-clock (auto-advance,
   // timeouts). realframes = frame count; realsecs = seconds (16.16).
-  realframes: { params: [], ret: "int", c: "gba_realframes", gbaOnly: true },
-  realsecs:   { params: [], ret: "num", c: "gba_realsecs",   gbaOnly: true },
+  realframes: { params: [], ret: "int", c: "gt_realframes", mdOnly: true },
+  realsecs:   { params: [], ret: "num", c: "gt_realsecs",   mdOnly: true },
 
   // ---- Mode 7: affine background (rotate/scale/scroll a plane in hardware) ----
   // mode7(): show the bundled --mode7 plane on BG2 (call once in _init).
   // mode7_cam(x,y, angle, [zoom]): per frame, place the camera over the plane.
   //   x,y = world point the screen centers on; angle = turns (0..1); zoom scale.
   // mode7_off(): hide the affine layer.
-  mode7:     { params: [], ret: "void", c: "gba_mode7", gbaOnly: true },
-  mode7_cam: { params: [["num", false], ["num", false], ["num", false], ["num", true]], ret: "void", c: "gba_mode7_cam", gbaOnly: true },
-  mode7_off: { params: [], ret: "void", c: "gba_mode7_off", gbaOnly: true },
 
   // ---- second affine BG (rotate/scale a layer of YOUR OWN tiles, not Mode 7) --
   // abg_setup(tiles, ntiles, map, msize, [pal]): tiles = array8 of 8bpp pixels
@@ -130,26 +108,15 @@ export const BUILTINS = {
   //   64/128, pal = array of BGR555 colors (or omit to keep the BG palette).
   // abg_cam(x,y,angle,[zoom]): per-frame camera (same as mode7_cam).
   // abg_off(): hide it. A spinning logo/menu or a second scaled world.
-  abg_setup: { params: [["array8", false], ["int", false], ["array8", false], ["int", false], ["array", true]], ret: "void", c: "gba_abg_setup", gbaOnly: true },
-  abg_cam:   { params: [["num", false], ["num", false], ["num", false], ["num", true]], ret: "void", c: "gba_abg_cam", gbaOnly: true },
-  abg_off:   { params: [], ret: "void", c: "gba_abg_off", gbaOnly: true },
 
   // ---- DMA bulk moves (DMA3 — fast block copy/fill of gbalua arrays) ---------
   // dma(dst, src, n): copy n 32-bit words src->dst. dma_fill(dst, value, n): fill.
   // For `array` (16.16) n = element count; for array8 pass a word count (bytes/4).
-  dma:      { params: [["array", false], ["array", false], ["int", false]], ret: "void", c: "gba_dma", gbaOnly: true },
-  dma_fill: { params: [["array", false], ["int", false], ["int", false]], ret: "void", c: "gba_dma_fill", gbaOnly: true },
 
   // ---- 16-bit direct-color bitmap (Mode 5, true color, double-buffered) -------
   // mode15(): switch to the 16-bit bitmap (160x128). rgb15(r,g,b): build a color
   // (0..255 each). cls15(color)/pset15(x,y,color): clear/plot. flip15(): present.
   // For plasmas / gradients / photo blits beyond the 16-color indexed path.
-  mode15:   { params: [], ret: "void", c: "gba_mode15", gbaOnly: true },
-  rgb15:    { params: [["int", false], ["int", false], ["int", false]], ret: "int", c: "gba_rgb15", gbaOnly: true },
-  cls15:    { params: [["int", false]], ret: "void", c: "gba_cls15", gbaOnly: true },
-  pset15:   { params: [["coord", false], ["coord", false], ["int", false]], ret: "void", c: "gba_pset15", gbaOnly: true },
-  fillrect15: { params: [["coord", false], ["coord", false], ["coord", false], ["coord", false], ["int", false]], ret: "void", c: "gba_fillrect15", gbaOnly: true },
-  flip15:   { params: [], ret: "void", c: "gba_flip15", gbaOnly: true },
 
   // ---- windows: hardware rectangular clipping regions (free in the PPU) ----
   // window(x0,y0,x1,y1): SPOTLIGHT — show everything inside the box, hide outside
@@ -159,13 +126,8 @@ export const BUILTINS = {
   // window_outside(layers): what shows OUTSIDE the box (default none = hidden).
   //   Pass 31 to keep the full scene outside and use the box only to override a region.
   // window_off(): disable windowing.
-  window:         { params: [["coord", false], ["coord", false], ["coord", false], ["coord", false]], ret: "void", c: "gba_window", gbaOnly: true },
-  window_inside:  { params: [["coord", false], ["coord", false], ["coord", false], ["coord", false], ["int", false]], ret: "void", c: "gba_window_inside", gbaOnly: true },
-  window_outside: { params: [["int", false]], ret: "void", c: "gba_window_outside", gbaOnly: true },
   // window_obj(layers): OBJ window — sprites flagged spr_window() become a shaped
   //   mask; `layers` (same bitmask) shows through the sprite silhouette (torch/keyhole).
-  window_obj:     { params: [["int", false]], ret: "void", c: "gba_window_obj", gbaOnly: true },
-  window_off:     { params: [], ret: "void", c: "gba_window_off", gbaOnly: true },
 
   // ---- animation helpers (frame-range cycling, timed off the frame clock) ----
   // anim(slot, first, last, fps): current frame of a LOOPING cycle first..last at
@@ -175,11 +137,11 @@ export const BUILTINS = {
   //   goes true at the end. For explosions / one-shots.
   // anim_pingpong(...): bounce first..last..first.
   // anim_reset(slot): restart. anim_done(slot): 1 if a once-anim finished.
-  anim:          { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "gba_anim", gbaOnly: true },
-  anim_once:     { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "gba_anim_once", gbaOnly: true },
-  anim_pingpong: { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "gba_anim_pingpong", gbaOnly: true },
-  anim_reset:    { params: [["int", false]], ret: "void", c: "gba_anim_reset", gbaOnly: true },
-  anim_done:     { params: [["int", false]], ret: "int", c: "gba_anim_done", gbaOnly: true },
+  anim:          { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "gt_anim", mdOnly: true },
+  anim_once:     { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "gt_anim_once", mdOnly: true },
+  anim_pingpong: { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "gt_anim_pingpong", mdOnly: true },
+  anim_reset:    { params: [["int", false]], ret: "void", c: "gt_anim_reset", mdOnly: true },
+  anim_done:     { params: [["int", false]], ret: "int", c: "gt_anim_done", mdOnly: true },
   // PICO-8 tilemap: map(cx,cy, sx,sy, cw,ch) draws a cw x ch block of the cart's
   // __map__ (imported as a byte array) starting at cell (cx,cy) to screen pixel
   // (sx,sy), one 8x8 sheet sprite per non-zero tile. Software spr()-loop, the
@@ -211,8 +173,6 @@ export const BUILTINS = {
   sfx:   { params: [["int", false], ["int", true]], ret: "void", c: "gt_sfx", audio: true },
   // sfx_ex(n, [vol], [pan], [pitch]): per-shot volume 0..1024, pan 0..255 (128=center),
   // pitch 16.16 (1.0=normal). sfx_volume(0..1024): master effect volume.
-  sfx_ex:     { params: [["int", false], ["int", true], ["int", true], ["num", true]], ret: "void", c: "gba_sfx_ex", gbaOnly: true },
-  sfx_volume: { params: [["int", false]], ret: "void", c: "gba_sfx_volume", gbaOnly: true },
   // `loop` is a truthy flag (default on): music(0) loops, music(0,false) plays once.
   music: { params: [["int", false], ["flip", true]], ret: "void", c: "gt_music", audio: true },
 
