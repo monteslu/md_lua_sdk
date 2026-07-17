@@ -370,7 +370,14 @@ export function emit(chunk, symbols, file, opts = {}) {
     // newleste's profile showed 18% of the frame in incsp2 stack cleanup
     // from exactly these calls
     const zpKindOk = (k) => k === "int" || (N8 && k === "fixed");
-    if (fn.params.length >= 1 && fn.params.length <= 5 &&
+    // ZP-fastcall is a GameTank 65C02 ZERO-PAGE optimization (params passed via
+    // gt_p0..4 in zero page instead of the C stack). The 68000 has no zero page
+    // and mdlua declares no md_p* globals, so on the md target this would emit a
+    // param-less signature whose body reads undeclared md_p0/md_p1 (a real bug -
+    // found building examples/platformer). Disable it entirely for Genesis;
+    // plain C params are correct and the 68000 has the registers for them.
+    if (!isMd &&
+        fn.params.length >= 1 && fn.params.length <= 5 &&
         fn.params.every((_, i) => zpKindOk(fn.paramKinds[i] ?? "int")) &&
         (!fn.hasReturnValue || fn.retKind === "int" || (N8 && fn.retKind === "fixed"))) {
       zpCall.add(name);

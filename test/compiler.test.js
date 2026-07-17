@@ -159,6 +159,19 @@ test("pool/add/del/all compile (SoA model intact)", () => {
   assert.match(c, /ps_used\[/);
 });
 
+test("int-param helper functions emit real C params (no zp-fastcall on md)", () => {
+  // regression: the GameTank zp-fastcall passed params via gt_p0.. (-> md_p0..
+  // after the remap), but the 68000 has no zero page and md_p* is undeclared,
+  // so a helper compiled to `solid(void)` reading md_p0 -> undeclared-var error.
+  // Found building examples/platformer. On md, params must be real C params.
+  const c = cOf(
+    "function solid(col, row)\n  if col < 0 then return 1 end\n  return 0\nend\n" +
+    "function _update60()\nend\nfunction _draw()\n  if solid(2, 3) == 1 then print(\"x\", 8, 8, 7) end\nend\n"
+  );
+  assert.match(c, /gtl_solid\(int gtl_col, int gtl_row\)/);   // real params
+  assert.doesNotMatch(c, /\bmd_p[0-9]\b/);                    // no zp param globals
+});
+
 // ---- SGDK coroutines (task.h) via the "fn" callback kind ---------------------
 
 test("callback kind: TSK_userSet(fn) emits &gtl_<name> and keeps the function", () => {
