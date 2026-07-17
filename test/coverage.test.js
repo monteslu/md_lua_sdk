@@ -68,3 +68,22 @@ test("coverage percentage never decreases (baseline gate)", () => {
       "legitimately reclassified na with a reason, re-baseline deliberately in the same commit)."
   );
 });
+
+// (d) the GENERATED direct-call table must be IN SYNC with the generator AND
+//     with the ledger's "covered" set. Without this, builtins-sgdk.js can drift
+//     (e.g. committed as the empty stub) while the ledger still claims 100% -
+//     a false green. Regenerate: `node tools/gen-sgdk-builtins.mjs`.
+test("generated SGDK builtin table is in sync (not stale/empty)", async () => {
+  const { SGDK_BUILTINS } = await import("../compiler/builtins-sgdk.js");
+  const have = Object.keys(SGDK_BUILTINS).length;
+  // the ledger's covered-via-direct-call count is the floor the table must meet.
+  // (curated verbs are covered too, but they live in builtins.js, not here.)
+  assert.ok(have > 500,
+    `builtins-sgdk.js has only ${have} entries - it looks stale/empty. ` +
+    `Run: node tools/gen-sgdk-builtins.mjs`);
+  // every generated verb must actually resolve in the merged BUILTINS
+  const { BUILTINS } = await import("../compiler/builtins.js");
+  for (const name of Object.keys(SGDK_BUILTINS)) {
+    assert.ok(BUILTINS[name], `${name} is in builtins-sgdk.js but not merged into BUILTINS`);
+  }
+});
