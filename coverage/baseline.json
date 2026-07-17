@@ -1,0 +1,8 @@
+{
+  "note": "Coverage floor enforced by test/coverage.test.js - the percent may only go UP. When coverage grows, update this deliberately with the numbers from `npm run coverage`.",
+  "percent": 5.32,
+  "covered": 35,
+  "denominator": 658,
+  "na": 60,
+  "total": 718
+}

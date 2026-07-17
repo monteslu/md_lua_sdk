@@ -1745,12 +1745,7 @@
           "line": 1065
         }
       ],
-      "unparsed": [
-        {
-          "line": 19,
-          "text": "const fix32 trigtab_f32[(90 * 4) + 1]"
-        }
-      ],
+      "unparsed": [],
       "inlineOnly": []
     },
     "maths3D.h": {

@@ -1660,21 +1660,28 @@ export function emit(chunk, symbols, file, opts = {}) {
     out.push(`${ind}${mangle(name)}();`);
   };
   if (isMd) {
-    // libtonc harness: install the vblank IRQ (THE #1 GBA footgun — before the
-    // first VBlankIntrWait), let the runtime bring up video, then the frame loop
-    // reads input, runs the callbacks, and flushes OAM at vblank. All the moving
-    // parts (DISPCNT, OAM shadow, input latch, oam flush) live in gba_api.c.
+    // SGDK harness: md_init brings up the VDP + palette + tiles, then the frame
+    // loop latches input (md_vsync), runs the callbacks, draws, and flushes the
+    // SAT + palette + raster tables at vblank (md_endframe). _update60 runs every
+    // frame (60 Hz); _update runs every OTHER frame (30 Hz, PICO-8's default) so
+    // ports written for 30 fps keep their timing. _draw + endframe are 60 Hz.
     out.push("int main(bool hard)");
     out.push("{");
     out.push("    (void)hard;");
     out.push("    md_init();");
     if (has("_init")) callCb("_init", "    ");
+    if (thirty) out.push("    unsigned char _md_odd = 0;");
     out.push("    for (;;) {");
-    out.push("        md_vsync();");        // VBlankIntrWait + latch input
+    out.push("        md_vsync();");        // latch input, reset sprite list
     if (has("_update60")) callCb("_update60", "        ");
-    if (thirty) callCb("_update", "        ");
+    if (thirty) {
+      out.push("        if (_md_odd == 0) {");
+      callCb("_update", "            ");
+      out.push("        }");
+      out.push("        _md_odd ^= 1;");
+    }
     if (has("_draw")) callCb("_draw", "        ");
-    out.push("        md_endframe();");     // oam flush + housekeeping
+    out.push("        md_endframe();");     // SAT + palette flush, vblank sync
     out.push("    }");
     out.push("    return 0;");
     out.push("}");

@@ -1,0 +1,2313 @@
+{
+  "note": "SGDK coverage ledger - seeded by tools/seed-ledger.mjs, safe to hand-edit (re-runs merge: hand entries are kept unless auto-detection upgrades to covered). status: covered (reachable from Lua; via = verb name(s) or 'harness' for the always-emitted frame loop) | planned | na (requires reason).",
+  "toolchain": "romdev-toolchain-m68k-gcc@0.3.0",
+  "headers": {
+    "bmp.h": {
+      "BMP_init": {
+        "status": "covered",
+        "via": "circ,circfill,line,pset,rect,rectfill"
+      },
+      "BMP_end": {
+        "status": "planned"
+      },
+      "BMP_reset": {
+        "status": "planned"
+      },
+      "BMP_setBufferCopy": {
+        "status": "planned"
+      },
+      "BMP_flip": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "BMP_clear": {
+        "status": "covered",
+        "via": "cls"
+      },
+      "BMP_getWritePointer": {
+        "status": "planned"
+      },
+      "BMP_getReadPointer": {
+        "status": "planned"
+      },
+      "BMP_hasFlipRequestPending": {
+        "status": "planned"
+      },
+      "BMP_waitWhileFlipRequestPending": {
+        "status": "planned"
+      },
+      "BMP_hasFlipInProgess": {
+        "status": "planned"
+      },
+      "BMP_waitFlipComplete": {
+        "status": "planned"
+      },
+      "BMP_drawText": {
+        "status": "covered",
+        "via": "print"
+      },
+      "BMP_clearText": {
+        "status": "planned"
+      },
+      "BMP_clearTextLine": {
+        "status": "planned"
+      },
+      "BMP_showFPS": {
+        "status": "planned"
+      },
+      "BMP_getPixel": {
+        "status": "covered",
+        "via": "pget"
+      },
+      "BMP_getPixelFast": {
+        "status": "planned"
+      },
+      "BMP_setPixel": {
+        "status": "covered",
+        "via": "circ,circfill,line,pset,rect,rectfill"
+      },
+      "BMP_setPixelFast": {
+        "status": "planned"
+      },
+      "BMP_setPixels_V2D": {
+        "status": "planned"
+      },
+      "BMP_setPixelsFast_V2D": {
+        "status": "planned"
+      },
+      "BMP_setPixels": {
+        "status": "planned"
+      },
+      "BMP_setPixelsFast": {
+        "status": "planned"
+      },
+      "BMP_clipLine": {
+        "status": "planned"
+      },
+      "BMP_drawLine": {
+        "status": "planned"
+      },
+      "BMP_isPolygonCulled": {
+        "status": "planned"
+      },
+      "BMP_drawPolygon": {
+        "status": "planned"
+      },
+      "BMP_drawBitmapData": {
+        "status": "planned"
+      },
+      "BMP_drawBitmap": {
+        "status": "planned"
+      },
+      "BMP_drawBitmapScaled": {
+        "status": "planned"
+      },
+      "BMP_scale": {
+        "status": "planned"
+      }
+    },
+    "dma.h": {
+      "DMA_init": {
+        "status": "planned"
+      },
+      "DMA_initEx": {
+        "status": "planned"
+      },
+      "DMA_getAutoFlush": {
+        "status": "planned"
+      },
+      "DMA_setAutoFlush": {
+        "status": "planned"
+      },
+      "DMA_getMaxQueueSize": {
+        "status": "planned"
+      },
+      "DMA_setMaxQueueSize": {
+        "status": "planned"
+      },
+      "DMA_setMaxQueueSizeToDefault": {
+        "status": "planned"
+      },
+      "DMA_getMaxTransferSize": {
+        "status": "planned"
+      },
+      "DMA_setMaxTransferSize": {
+        "status": "planned"
+      },
+      "DMA_setMaxTransferSizeToDefault": {
+        "status": "planned"
+      },
+      "DMA_getBufferSize": {
+        "status": "planned"
+      },
+      "DMA_setBufferSize": {
+        "status": "planned"
+      },
+      "DMA_setBufferSizeToDefault": {
+        "status": "planned"
+      },
+      "DMA_getIgnoreOverCapacity": {
+        "status": "planned"
+      },
+      "DMA_setIgnoreOverCapacity": {
+        "status": "planned"
+      },
+      "DMA_clearQueue": {
+        "status": "planned"
+      },
+      "DMA_flushQueue": {
+        "status": "planned"
+      },
+      "DMA_getQueueSize": {
+        "status": "planned"
+      },
+      "DMA_getQueueTransferSize": {
+        "status": "planned"
+      },
+      "DMA_allocateTemp": {
+        "status": "planned"
+      },
+      "DMA_releaseTemp": {
+        "status": "planned"
+      },
+      "DMA_transfer": {
+        "status": "planned"
+      },
+      "DMA_canQueue": {
+        "status": "planned"
+      },
+      "DMA_allocateAndQueueDma": {
+        "status": "planned"
+      },
+      "DMA_copyAndQueueDma": {
+        "status": "planned"
+      },
+      "DMA_queueDma": {
+        "status": "planned"
+      },
+      "DMA_queueDmaFast": {
+        "status": "planned"
+      },
+      "DMA_doDma": {
+        "status": "planned"
+      },
+      "DMA_doDmaFast": {
+        "status": "planned"
+      },
+      "DMA_doCPUCopy": {
+        "status": "planned"
+      },
+      "DMA_doCPUCopyDirect": {
+        "status": "planned"
+      },
+      "DMA_doVRamFill": {
+        "status": "planned"
+      },
+      "DMA_doVRamCopy": {
+        "status": "planned"
+      },
+      "DMA_waitCompletion": {
+        "status": "planned"
+      }
+    },
+    "joy.h": {
+      "JOY_init": {
+        "status": "planned"
+      },
+      "JOY_reset": {
+        "status": "planned"
+      },
+      "JOY_getEventHandler": {
+        "status": "planned"
+      },
+      "JOY_setEventHandler": {
+        "status": "planned"
+      },
+      "JOY_setSupport": {
+        "status": "planned"
+      },
+      "JOY_getPortType": {
+        "status": "planned"
+      },
+      "JOY_getJoypadType": {
+        "status": "planned"
+      },
+      "JOY_readJoypad": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "JOY_readJoypadX": {
+        "status": "planned"
+      },
+      "JOY_writeJoypadX": {
+        "status": "planned"
+      },
+      "JOY_readJoypadY": {
+        "status": "planned"
+      },
+      "JOY_writeJoypadY": {
+        "status": "planned"
+      },
+      "JOY_waitPressBtn": {
+        "status": "planned"
+      },
+      "JOY_waitPressBtnTime": {
+        "status": "planned"
+      },
+      "JOY_waitPress": {
+        "status": "planned"
+      },
+      "JOY_waitPressTime": {
+        "status": "planned"
+      },
+      "JOY_update": {
+        "status": "planned"
+      }
+    },
+    "kdebug.h": {
+      "KDebug_Halt": {
+        "status": "planned"
+      },
+      "KDebug_Alert": {
+        "status": "planned"
+      },
+      "KDebug_AlertNumber": {
+        "status": "planned"
+      },
+      "KDebug_StartTimer": {
+        "status": "planned"
+      },
+      "KDebug_StopTimer": {
+        "status": "planned"
+      }
+    },
+    "map.h": {
+      "MAP_create": {
+        "status": "planned"
+      },
+      "MAP_release": {
+        "status": "planned"
+      },
+      "MAP_scrollTo": {
+        "status": "planned"
+      },
+      "MAP_scrollToEx": {
+        "status": "planned"
+      },
+      "MAP_getMetaTile": {
+        "status": "planned"
+      },
+      "MAP_getTile": {
+        "status": "planned"
+      },
+      "MAP_getMetaTilemapRect": {
+        "status": "planned"
+      },
+      "MAP_getTilemapRect": {
+        "status": "planned"
+      },
+      "MAP_setDataPatchCallback": {
+        "status": "planned"
+      },
+      "MAP_overridePlaneSize": {
+        "status": "planned"
+      }
+    },
+    "mapper.h": {
+      "SYS_resetBanks": {
+        "status": "planned"
+      },
+      "SYS_getBank": {
+        "status": "planned"
+      },
+      "SYS_setBank": {
+        "status": "planned"
+      },
+      "SYS_getFarData": {
+        "status": "planned"
+      },
+      "SYS_getFarDataEx": {
+        "status": "planned"
+      },
+      "SYS_isCrossingBank": {
+        "status": "planned"
+      },
+      "SYS_getFarDataSafe": {
+        "status": "planned"
+      },
+      "SYS_getFarDataSafeEx": {
+        "status": "planned"
+      },
+      "SYS_getNextFarAccessRegion": {
+        "status": "planned"
+      },
+      "SYS_setNextFarAccessRegion": {
+        "status": "planned"
+      }
+    },
+    "maths.h": {
+      "rol8": {
+        "status": "planned"
+      },
+      "rol16": {
+        "status": "planned"
+      },
+      "rol32": {
+        "status": "planned"
+      },
+      "ror8": {
+        "status": "planned"
+      },
+      "ror16": {
+        "status": "planned"
+      },
+      "ror32": {
+        "status": "planned"
+      },
+      "mulu": {
+        "status": "planned"
+      },
+      "muls": {
+        "status": "planned"
+      },
+      "divu": {
+        "status": "planned"
+      },
+      "divs": {
+        "status": "planned"
+      },
+      "modu": {
+        "status": "planned"
+      },
+      "mods": {
+        "status": "planned"
+      },
+      "divmodu": {
+        "status": "planned"
+      },
+      "divmods": {
+        "status": "planned"
+      },
+      "u16ToBCD": {
+        "status": "planned"
+      },
+      "u32ToBCD": {
+        "status": "planned"
+      },
+      "getNextPow2": {
+        "status": "planned"
+      },
+      "getLog2": {
+        "status": "planned"
+      },
+      "getApproximatedDistance": {
+        "status": "planned"
+      },
+      "getApproximatedDistanceV": {
+        "status": "planned"
+      },
+      "F16_toInt": {
+        "status": "planned"
+      },
+      "F16_toFix32": {
+        "status": "planned"
+      },
+      "F16_toFastFix16": {
+        "status": "planned"
+      },
+      "F16_toFastFix32": {
+        "status": "planned"
+      },
+      "F16_frac": {
+        "status": "planned"
+      },
+      "F16_int": {
+        "status": "planned"
+      },
+      "F16_abs": {
+        "status": "planned"
+      },
+      "F16_round": {
+        "status": "planned"
+      },
+      "F16_toRoundedInt": {
+        "status": "planned"
+      },
+      "F16_mul": {
+        "status": "planned"
+      },
+      "F16_div": {
+        "status": "planned"
+      },
+      "F16_avg": {
+        "status": "planned"
+      },
+      "F16_log2": {
+        "status": "planned"
+      },
+      "F16_log10": {
+        "status": "planned"
+      },
+      "F16_sqrt": {
+        "status": "planned"
+      },
+      "F16_normalizeAngle": {
+        "status": "planned"
+      },
+      "F16_sin": {
+        "status": "planned"
+      },
+      "F16_cos": {
+        "status": "planned"
+      },
+      "F16_tan": {
+        "status": "planned"
+      },
+      "F16_atan": {
+        "status": "planned"
+      },
+      "F16_atan2": {
+        "status": "planned"
+      },
+      "sinFix16": {
+        "status": "planned"
+      },
+      "cosFix16": {
+        "status": "planned"
+      },
+      "F16_degreeToRadian": {
+        "status": "planned"
+      },
+      "F16_radianToDegree": {
+        "status": "planned"
+      },
+      "F16_getAngle": {
+        "status": "planned"
+      },
+      "F16_computePosition": {
+        "status": "planned"
+      },
+      "F16_computePositionEx": {
+        "status": "planned"
+      },
+      "F32_toInt": {
+        "status": "planned"
+      },
+      "F32_toFix16": {
+        "status": "planned"
+      },
+      "F32_toFastFix16": {
+        "status": "planned"
+      },
+      "F32_toFastFix32": {
+        "status": "planned"
+      },
+      "F32_frac": {
+        "status": "planned"
+      },
+      "F32_int": {
+        "status": "planned"
+      },
+      "F32_round": {
+        "status": "planned"
+      },
+      "F32_toRoundedInt": {
+        "status": "planned"
+      },
+      "F32_mul": {
+        "status": "planned"
+      },
+      "F32_div": {
+        "status": "planned"
+      },
+      "F32_avg": {
+        "status": "planned"
+      },
+      "F32_sin": {
+        "status": "planned"
+      },
+      "F32_cos": {
+        "status": "planned"
+      },
+      "sinFix32": {
+        "status": "planned"
+      },
+      "cosFix32": {
+        "status": "planned"
+      },
+      "FF16_toInt": {
+        "status": "planned"
+      },
+      "FF16_toFix16": {
+        "status": "planned"
+      },
+      "FF16_toFix32": {
+        "status": "planned"
+      },
+      "FF16_toFastFix32": {
+        "status": "planned"
+      },
+      "FF16_frac": {
+        "status": "planned"
+      },
+      "FF16_int": {
+        "status": "planned"
+      },
+      "FF16_round": {
+        "status": "planned"
+      },
+      "FF16_toRoundedInt": {
+        "status": "planned"
+      },
+      "FF16_mul": {
+        "status": "planned"
+      },
+      "FF16_div": {
+        "status": "planned"
+      },
+      "FF32_fromInt": {
+        "status": "planned"
+      },
+      "FF32_toInt": {
+        "status": "planned"
+      },
+      "FF32_toFix16": {
+        "status": "planned"
+      },
+      "FF32_toFix32": {
+        "status": "planned"
+      },
+      "FF32_toFastFix16": {
+        "status": "planned"
+      },
+      "FF32_frac": {
+        "status": "planned"
+      },
+      "FF32_int": {
+        "status": "planned"
+      },
+      "FF32_round": {
+        "status": "planned"
+      },
+      "FF32_toRoundedInt": {
+        "status": "planned"
+      },
+      "FF32_mul": {
+        "status": "planned"
+      },
+      "FF32_div": {
+        "status": "planned"
+      },
+      "FF32_getLog2Fast": {
+        "status": "planned"
+      },
+      "V2D_F16_getAngle": {
+        "status": "planned"
+      },
+      "V2D_F16_computePosition": {
+        "status": "planned"
+      },
+      "V2D_F16_computePositionEx": {
+        "status": "planned"
+      },
+      "V2D_S32_getApproximatedDistance": {
+        "status": "planned"
+      }
+    },
+    "maths3D.h": {
+      "M3D_reset": {
+        "status": "planned"
+      },
+      "M3D_setLightEnabled": {
+        "status": "planned"
+      },
+      "M3D_getLightEnabled": {
+        "status": "planned"
+      },
+      "M3D_setViewport": {
+        "status": "planned"
+      },
+      "M3D_setCamDistance": {
+        "status": "planned"
+      },
+      "M3D_setLightXYZ": {
+        "status": "planned"
+      },
+      "M3D_setLight": {
+        "status": "planned"
+      },
+      "M3D_resetTransform": {
+        "status": "planned"
+      },
+      "M3D_setTransform": {
+        "status": "planned"
+      },
+      "M3D_setTranslation": {
+        "status": "planned"
+      },
+      "M3D_setRotation": {
+        "status": "planned"
+      },
+      "M3D_combineTransform": {
+        "status": "planned"
+      },
+      "M3D_combineTranslationLeft": {
+        "status": "planned"
+      },
+      "M3D_combineTranslationRight": {
+        "status": "planned"
+      },
+      "M3D_buildMat3D": {
+        "status": "planned"
+      },
+      "M3D_buildMat3DOnly": {
+        "status": "planned"
+      },
+      "M3D_buildMat3DExtras": {
+        "status": "planned"
+      },
+      "M3D_translate": {
+        "status": "planned"
+      },
+      "M3D_rotate": {
+        "status": "planned"
+      },
+      "M3D_rotateInv": {
+        "status": "planned"
+      },
+      "M3D_transform": {
+        "status": "planned"
+      },
+      "M3D_project_f16": {
+        "status": "planned"
+      },
+      "M3D_project_s16": {
+        "status": "planned"
+      }
+    },
+    "memory.h": {
+      "MEM_getFree": {
+        "status": "na",
+        "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
+      },
+      "MEM_getAllocated": {
+        "status": "na",
+        "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
+      },
+      "MEM_getLargestFreeBlock": {
+        "status": "na",
+        "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
+      },
+      "MEM_free": {
+        "status": "na",
+        "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
+      },
+      "MEM_alloc": {
+        "status": "na",
+        "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
+      },
+      "MEM_allocAt": {
+        "status": "na",
+        "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
+      },
+      "MEM_pack": {
+        "status": "na",
+        "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
+      },
+      "MEM_checkIntegrity": {
+        "status": "na",
+        "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
+      },
+      "MEM_dump": {
+        "status": "na",
+        "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
+      },
+      "memset": {
+        "status": "planned"
+      },
+      "memsetU16": {
+        "status": "planned"
+      },
+      "memsetU32": {
+        "status": "planned"
+      },
+      "memcpy": {
+        "status": "planned"
+      },
+      "memcmp": {
+        "status": "planned"
+      }
+    },
+    "object.h": {
+      "OBJ_createObjectPool": {
+        "status": "planned"
+      },
+      "OBJ_create": {
+        "status": "planned"
+      },
+      "OBJ_release": {
+        "status": "planned"
+      },
+      "OBJ_updateAll": {
+        "status": "planned"
+      },
+      "OBJ_setInitMethod": {
+        "status": "planned"
+      },
+      "OBJ_setUpdateMethod": {
+        "status": "planned"
+      },
+      "OBJ_setEndMethod": {
+        "status": "planned"
+      }
+    },
+    "pal.h": {
+      "PAL_getColor": {
+        "status": "planned"
+      },
+      "PAL_getColors": {
+        "status": "planned"
+      },
+      "PAL_getPalette": {
+        "status": "planned"
+      },
+      "PAL_setColor": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "PAL_setColors": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "PAL_setPaletteColors": {
+        "status": "planned"
+      },
+      "PAL_setPalette": {
+        "status": "planned"
+      },
+      "PAL_initFade": {
+        "status": "planned"
+      },
+      "PAL_doFadeStep": {
+        "status": "planned"
+      },
+      "PAL_isManualFadeDone": {
+        "status": "planned"
+      },
+      "PAL_fade": {
+        "status": "planned"
+      },
+      "PAL_fadeTo": {
+        "status": "planned"
+      },
+      "PAL_fadeOut": {
+        "status": "planned"
+      },
+      "PAL_fadeIn": {
+        "status": "planned"
+      },
+      "PAL_fadePalette": {
+        "status": "planned"
+      },
+      "PAL_fadeToPalette": {
+        "status": "planned"
+      },
+      "PAL_fadeOutPalette": {
+        "status": "planned"
+      },
+      "PAL_fadeInPalette": {
+        "status": "planned"
+      },
+      "PAL_fadeAll": {
+        "status": "planned"
+      },
+      "PAL_fadeToAll": {
+        "status": "planned"
+      },
+      "PAL_fadeOutAll": {
+        "status": "planned"
+      },
+      "PAL_fadeInAll": {
+        "status": "planned"
+      },
+      "PAL_isDoingFade": {
+        "status": "planned"
+      },
+      "PAL_waitFadeCompletion": {
+        "status": "planned"
+      },
+      "PAL_interruptFade": {
+        "status": "planned"
+      }
+    },
+    "pool.h": {
+      "POOL_create": {
+        "status": "planned"
+      },
+      "POOL_destroy": {
+        "status": "planned"
+      },
+      "POOL_reset": {
+        "status": "planned"
+      },
+      "POOL_allocate": {
+        "status": "planned"
+      },
+      "POOL_release": {
+        "status": "planned"
+      },
+      "POOL_getFree": {
+        "status": "planned"
+      },
+      "POOL_getNumAllocated": {
+        "status": "planned"
+      },
+      "POOL_getFirst": {
+        "status": "planned"
+      },
+      "POOL_find": {
+        "status": "planned"
+      }
+    },
+    "psg.h": {
+      "PSG_reset": {
+        "status": "planned"
+      },
+      "PSG_write": {
+        "status": "planned"
+      },
+      "PSG_setEnvelope": {
+        "status": "covered",
+        "via": "sfx"
+      },
+      "PSG_setTone": {
+        "status": "planned"
+      },
+      "PSG_setToneLow": {
+        "status": "planned"
+      },
+      "PSG_setFrequency": {
+        "status": "covered",
+        "via": "sfx"
+      },
+      "PSG_setNoise": {
+        "status": "planned"
+      }
+    },
+    "sprite_eng.h": {
+      "SPR_init": {
+        "status": "planned"
+      },
+      "SPR_initEx": {
+        "status": "planned"
+      },
+      "SPR_end": {
+        "status": "planned"
+      },
+      "SPR_isInitialized": {
+        "status": "planned"
+      },
+      "SPR_reset": {
+        "status": "planned"
+      },
+      "SPR_addSpriteEx": {
+        "status": "planned"
+      },
+      "SPR_addSprite": {
+        "status": "planned"
+      },
+      "SPR_addSpriteExSafe": {
+        "status": "planned"
+      },
+      "SPR_addSpriteSafe": {
+        "status": "planned"
+      },
+      "SPR_releaseSprite": {
+        "status": "planned"
+      },
+      "SPR_getNumActiveSprite": {
+        "status": "planned"
+      },
+      "SPR_getUsedVDPSprite": {
+        "status": "planned"
+      },
+      "SPR_getFreeVRAM": {
+        "status": "planned"
+      },
+      "SPR_getLargestFreeVRAMBlock": {
+        "status": "planned"
+      },
+      "SPR_enableVDPSpriteChecking": {
+        "status": "planned"
+      },
+      "SPR_disableVDPSpriteChecking": {
+        "status": "planned"
+      },
+      "SPR_defragVRAM": {
+        "status": "planned"
+      },
+      "SPR_loadAllFramesEx": {
+        "status": "planned"
+      },
+      "SPR_loadAllFrames": {
+        "status": "planned"
+      },
+      "SPR_loadAllIndexes": {
+        "status": "planned"
+      },
+      "SPR_loadAllTiles": {
+        "status": "planned"
+      },
+      "SPR_setDefinition": {
+        "status": "planned"
+      },
+      "SPR_getPositionX": {
+        "status": "planned"
+      },
+      "SPR_getPositionY": {
+        "status": "planned"
+      },
+      "SPR_setPosition": {
+        "status": "planned"
+      },
+      "SPR_setHFlip": {
+        "status": "planned"
+      },
+      "SPR_setVFlip": {
+        "status": "planned"
+      },
+      "SPR_setPalette": {
+        "status": "planned"
+      },
+      "SPR_setPriority": {
+        "status": "planned"
+      },
+      "SPR_setDepth": {
+        "status": "planned"
+      },
+      "SPR_setZ": {
+        "status": "planned"
+      },
+      "SPR_setAlwaysOnTop": {
+        "status": "planned"
+      },
+      "SPR_setAlwaysAtBottom": {
+        "status": "planned"
+      },
+      "SPR_setAnimAndFrame": {
+        "status": "planned"
+      },
+      "SPR_setAnim": {
+        "status": "planned"
+      },
+      "SPR_setFrame": {
+        "status": "planned"
+      },
+      "SPR_nextFrame": {
+        "status": "planned"
+      },
+      "SPR_setAutoAnimation": {
+        "status": "planned"
+      },
+      "SPR_getAutoAnimation": {
+        "status": "planned"
+      },
+      "SPR_setAnimationLoop": {
+        "status": "planned"
+      },
+      "SPR_isAnimationDone": {
+        "status": "planned"
+      },
+      "SPR_setVRAMTileIndex": {
+        "status": "planned"
+      },
+      "SPR_setAutoTileUpload": {
+        "status": "planned"
+      },
+      "SPR_setDelayedFrameUpdate": {
+        "status": "planned"
+      },
+      "SPR_setFrameChangeCallback": {
+        "status": "planned"
+      },
+      "SPR_getVisibility": {
+        "status": "planned"
+      },
+      "SPR_isVisible": {
+        "status": "planned"
+      },
+      "SPR_setVisibility": {
+        "status": "planned"
+      },
+      "SPR_clear": {
+        "status": "planned"
+      },
+      "SPR_update": {
+        "status": "planned"
+      },
+      "SPR_logProfil": {
+        "status": "planned"
+      },
+      "SPR_logSprites": {
+        "status": "planned"
+      }
+    },
+    "sprite_eng_legacy.h": {
+      "SPR_init": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_initEx": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_end": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_isInitialized": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_reset": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_addSpriteEx": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_addSprite": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_addSpriteExSafe": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_addSpriteSafe": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_releaseSprite": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_getNumActiveSprite": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_defragVRAM": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_loadAllFrames": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setDefinition": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_getPositionX": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_getPositionY": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setPosition": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setHFlip": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setVFlip": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setPalette": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setPriority": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setDepth": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setZ": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setAlwaysOnTop": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setAlwaysAtBottom": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setAnimAndFrame": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setAnim": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setFrame": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_nextFrame": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setAutoAnimation": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_getAutoAnimation": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setAnimationLoop": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_isAnimationDone": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setVRAMTileIndex": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setSpriteTableIndex": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setAutoTileUpload": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setDelayedFrameUpdate": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setFrameChangeCallback": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_getVisibility": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_isVisible": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_setVisibility": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_clear": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_update": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_logProfil": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      },
+      "SPR_logSprites": {
+        "status": "na",
+        "reason": "superseded duplicate: legacy sprite engine kept by SGDK for old projects; sprite_eng.h is the covered surface"
+      }
+    },
+    "sram.h": {
+      "SRAM_enable": {
+        "status": "covered",
+        "via": "save"
+      },
+      "SRAM_enableRO": {
+        "status": "covered",
+        "via": "load"
+      },
+      "SRAM_disable": {
+        "status": "covered",
+        "via": "load,save"
+      },
+      "SRAM_readByte": {
+        "status": "covered",
+        "via": "load"
+      },
+      "SRAM_readWord": {
+        "status": "planned"
+      },
+      "SRAM_readLong": {
+        "status": "planned"
+      },
+      "SRAM_writeByte": {
+        "status": "covered",
+        "via": "save"
+      },
+      "SRAM_writeWord": {
+        "status": "planned"
+      },
+      "SRAM_writeLong": {
+        "status": "planned"
+      }
+    },
+    "string.h": {
+      "strlen": {
+        "status": "planned"
+      },
+      "strnlen": {
+        "status": "planned"
+      },
+      "strcmp": {
+        "status": "planned"
+      },
+      "strcpy": {
+        "status": "planned"
+      },
+      "strncpy": {
+        "status": "planned"
+      },
+      "strcat": {
+        "status": "planned"
+      },
+      "strchr": {
+        "status": "planned"
+      },
+      "vsprintf": {
+        "status": "planned"
+      },
+      "sprintf": {
+        "status": "planned"
+      },
+      "strclr": {
+        "status": "planned"
+      },
+      "strreplacechar": {
+        "status": "planned"
+      },
+      "intToStr": {
+        "status": "planned"
+      },
+      "uintToStr": {
+        "status": "planned"
+      },
+      "intToHex": {
+        "status": "planned"
+      },
+      "fix16ToStr": {
+        "status": "planned"
+      },
+      "fix32ToStr": {
+        "status": "planned"
+      },
+      "fastFix16ToStr": {
+        "status": "planned"
+      },
+      "fastFix32ToStr": {
+        "status": "planned"
+      },
+      "F16_toStr": {
+        "status": "planned"
+      },
+      "F32_toStr": {
+        "status": "planned"
+      },
+      "FF16_toStr": {
+        "status": "planned"
+      },
+      "FF32_toStr": {
+        "status": "planned"
+      }
+    },
+    "sys.h": {
+      "SYS_assertReset": {
+        "status": "planned"
+      },
+      "SYS_reset": {
+        "status": "planned"
+      },
+      "SYS_hardReset": {
+        "status": "covered",
+        "via": "reset,run"
+      },
+      "SYS_doVBlankProcess": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "SYS_doVBlankProcessEx": {
+        "status": "planned"
+      },
+      "SYS_nextFrame": {
+        "status": "planned"
+      },
+      "SYS_getStackPointer": {
+        "status": "planned"
+      },
+      "SYS_getInterruptMaskLevel": {
+        "status": "planned"
+      },
+      "SYS_setInterruptMaskLevel": {
+        "status": "planned"
+      },
+      "SYS_getAndSetInterruptMaskLevel": {
+        "status": "planned"
+      },
+      "SYS_disableInts": {
+        "status": "planned"
+      },
+      "SYS_enableInts": {
+        "status": "planned"
+      },
+      "SYS_setVBlankCallback": {
+        "status": "planned"
+      },
+      "SYS_setVIntCallback": {
+        "status": "planned"
+      },
+      "SYS_setHIntCallback": {
+        "status": "planned"
+      },
+      "SYS_setExtIntCallback": {
+        "status": "planned"
+      },
+      "SYS_isInVInt": {
+        "status": "planned"
+      },
+      "SYS_isNTSC": {
+        "status": "planned"
+      },
+      "SYS_isPAL": {
+        "status": "planned"
+      },
+      "SYS_getFPS": {
+        "status": "planned"
+      },
+      "SYS_getFPSAsFloat": {
+        "status": "planned"
+      },
+      "SYS_getCPULoad": {
+        "status": "planned"
+      },
+      "SYS_getShowFrameLoad": {
+        "status": "planned"
+      },
+      "SYS_showFrameLoad": {
+        "status": "planned"
+      },
+      "SYS_hideFrameLoad": {
+        "status": "planned"
+      },
+      "SYS_computeChecksum": {
+        "status": "planned"
+      },
+      "SYS_isChecksumOk": {
+        "status": "planned"
+      },
+      "SYS_die": {
+        "status": "planned"
+      }
+    },
+    "task.h": {
+      "TSK_init": {
+        "status": "na",
+        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+      },
+      "TSK_userSet": {
+        "status": "na",
+        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+      },
+      "TSK_stop": {
+        "status": "na",
+        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+      },
+      "TSK_userYield": {
+        "status": "na",
+        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+      },
+      "TSK_superPend": {
+        "status": "na",
+        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+      },
+      "TSK_superPost": {
+        "status": "na",
+        "reason": "task.h user tasks are 68k coroutines; mdlua's static compilation model has no coroutine support"
+      }
+    },
+    "timer.h": {
+      "getSubTick": {
+        "status": "planned"
+      },
+      "getTick": {
+        "status": "planned"
+      },
+      "getTime": {
+        "status": "planned"
+      },
+      "getTimeAsFix32": {
+        "status": "planned"
+      },
+      "startTimer": {
+        "status": "planned"
+      },
+      "getTimer": {
+        "status": "planned"
+      },
+      "waitSubTick": {
+        "status": "planned"
+      },
+      "waitTick": {
+        "status": "planned"
+      },
+      "waitMs": {
+        "status": "planned"
+      }
+    },
+    "tools.h": {
+      "setRandomSeed": {
+        "status": "planned"
+      },
+      "random": {
+        "status": "planned"
+      },
+      "kprintf": {
+        "status": "planned"
+      },
+      "KLog": {
+        "status": "planned"
+      },
+      "KLog_U1": {
+        "status": "planned"
+      },
+      "KLog_U2": {
+        "status": "planned"
+      },
+      "KLog_U3": {
+        "status": "planned"
+      },
+      "KLog_U4": {
+        "status": "planned"
+      },
+      "KLog_U1_": {
+        "status": "planned"
+      },
+      "KLog_U2_": {
+        "status": "planned"
+      },
+      "KLog_U3_": {
+        "status": "planned"
+      },
+      "KLog_U4_": {
+        "status": "planned"
+      },
+      "KLog_U1x": {
+        "status": "planned"
+      },
+      "KLog_U2x": {
+        "status": "planned"
+      },
+      "KLog_U3x": {
+        "status": "planned"
+      },
+      "KLog_U4x": {
+        "status": "planned"
+      },
+      "KLog_U1x_": {
+        "status": "planned"
+      },
+      "KLog_U2x_": {
+        "status": "planned"
+      },
+      "KLog_U3x_": {
+        "status": "planned"
+      },
+      "KLog_U4x_": {
+        "status": "planned"
+      },
+      "KLog_S1": {
+        "status": "planned"
+      },
+      "KLog_S2": {
+        "status": "planned"
+      },
+      "KLog_S3": {
+        "status": "planned"
+      },
+      "KLog_S4": {
+        "status": "planned"
+      },
+      "KLog_S1_": {
+        "status": "planned"
+      },
+      "KLog_S2_": {
+        "status": "planned"
+      },
+      "KLog_S3_": {
+        "status": "planned"
+      },
+      "KLog_S4_": {
+        "status": "planned"
+      },
+      "KLog_S1x": {
+        "status": "planned"
+      },
+      "KLog_S2x": {
+        "status": "planned"
+      },
+      "KLog_S3x": {
+        "status": "planned"
+      },
+      "KLog_S4x": {
+        "status": "planned"
+      },
+      "KLog_f1": {
+        "status": "planned"
+      },
+      "KLog_f2": {
+        "status": "planned"
+      },
+      "KLog_f3": {
+        "status": "planned"
+      },
+      "KLog_f4": {
+        "status": "planned"
+      },
+      "KLog_f1x": {
+        "status": "planned"
+      },
+      "KLog_f2x": {
+        "status": "planned"
+      },
+      "KLog_f3x": {
+        "status": "planned"
+      },
+      "KLog_f4x": {
+        "status": "planned"
+      },
+      "KLog_F1": {
+        "status": "planned"
+      },
+      "KLog_F2": {
+        "status": "planned"
+      },
+      "KLog_F3": {
+        "status": "planned"
+      },
+      "KLog_F4": {
+        "status": "planned"
+      },
+      "KLog_F1x": {
+        "status": "planned"
+      },
+      "KLog_F2x": {
+        "status": "planned"
+      },
+      "KLog_F3x": {
+        "status": "planned"
+      },
+      "KLog_F4x": {
+        "status": "planned"
+      },
+      "allocateBitmap": {
+        "status": "planned"
+      },
+      "allocateBitmapEx": {
+        "status": "planned"
+      },
+      "allocateTileSet": {
+        "status": "planned"
+      },
+      "allocateTileSetEx": {
+        "status": "planned"
+      },
+      "allocateTileMap": {
+        "status": "planned"
+      },
+      "allocateTileMapEx": {
+        "status": "planned"
+      },
+      "allocateImage": {
+        "status": "planned"
+      },
+      "allocateMap": {
+        "status": "planned"
+      },
+      "unpackBitmap": {
+        "status": "planned"
+      },
+      "unpackTileSet": {
+        "status": "planned"
+      },
+      "unpackTileMap": {
+        "status": "planned"
+      },
+      "unpackImage": {
+        "status": "planned"
+      },
+      "unpack": {
+        "status": "planned"
+      },
+      "aplib_unpack": {
+        "status": "planned"
+      },
+      "lz4w_unpack": {
+        "status": "planned"
+      },
+      "qsort_u8": {
+        "status": "planned"
+      },
+      "qsort_s8": {
+        "status": "planned"
+      },
+      "qsort_u16": {
+        "status": "planned"
+      },
+      "qsort_s16": {
+        "status": "planned"
+      },
+      "qsort_u32": {
+        "status": "planned"
+      },
+      "qsort_s32": {
+        "status": "planned"
+      },
+      "qsort": {
+        "status": "planned"
+      }
+    },
+    "types.h": {
+      "getZeroU8": {
+        "status": "planned"
+      },
+      "getZeroU16": {
+        "status": "planned"
+      },
+      "getZeroU32": {
+        "status": "planned"
+      }
+    },
+    "vdp.h": {
+      "VDP_init": {
+        "status": "planned"
+      },
+      "VDP_resetScreen": {
+        "status": "planned"
+      },
+      "VDP_getReg": {
+        "status": "planned"
+      },
+      "VDP_setReg": {
+        "status": "planned"
+      },
+      "VDP_getEnable": {
+        "status": "planned"
+      },
+      "VDP_isEnable": {
+        "status": "planned"
+      },
+      "VDP_setEnable": {
+        "status": "covered",
+        "via": "screen_off,screen_on"
+      },
+      "VDP_getScanlineNumber": {
+        "status": "planned"
+      },
+      "VDP_getScreenHeight": {
+        "status": "planned"
+      },
+      "VDP_setScreenHeight224": {
+        "status": "planned"
+      },
+      "VDP_setScreenHeight240": {
+        "status": "planned"
+      },
+      "VDP_getScreenWidth": {
+        "status": "planned"
+      },
+      "VDP_setScreenWidth256": {
+        "status": "planned"
+      },
+      "VDP_setScreenWidth320": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "VDP_getPlaneWidth": {
+        "status": "planned"
+      },
+      "VDP_getPlaneHeight": {
+        "status": "planned"
+      },
+      "VDP_setPlaneSize": {
+        "status": "planned"
+      },
+      "VDP_getHorizontalScrollingMode": {
+        "status": "planned"
+      },
+      "VDP_getVerticalScrollingMode": {
+        "status": "planned"
+      },
+      "VDP_setScrollingMode": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "VDP_getBackgroundColor": {
+        "status": "planned"
+      },
+      "VDP_setBackgroundColor": {
+        "status": "covered",
+        "via": "backdrop,cls"
+      },
+      "VDP_getAutoInc": {
+        "status": "planned"
+      },
+      "VDP_setAutoInc": {
+        "status": "planned"
+      },
+      "VDP_getDMAEnabled": {
+        "status": "planned"
+      },
+      "VDP_setDMAEnabled": {
+        "status": "planned"
+      },
+      "VDP_getHVLatching": {
+        "status": "planned"
+      },
+      "VDP_setHVLatching": {
+        "status": "planned"
+      },
+      "VDP_setVInterrupt": {
+        "status": "planned"
+      },
+      "VDP_setHInterrupt": {
+        "status": "planned"
+      },
+      "VDP_setExtInterrupt": {
+        "status": "planned"
+      },
+      "VDP_setHilightShadow": {
+        "status": "covered",
+        "via": "shade_mode"
+      },
+      "VDP_getHIntCounter": {
+        "status": "planned"
+      },
+      "VDP_setHIntCounter": {
+        "status": "planned"
+      },
+      "VDP_getBGAAddress": {
+        "status": "planned"
+      },
+      "VDP_getBGBAddress": {
+        "status": "planned"
+      },
+      "VDP_getWindowAddress": {
+        "status": "planned"
+      },
+      "VDP_getSpriteListAddress": {
+        "status": "planned"
+      },
+      "VDP_getHScrollTableAddress": {
+        "status": "planned"
+      },
+      "VDP_setBGAAddress": {
+        "status": "planned"
+      },
+      "VDP_setBGBAddress": {
+        "status": "planned"
+      },
+      "VDP_setWindowAddress": {
+        "status": "planned"
+      },
+      "VDP_setSpriteListAddress": {
+        "status": "planned"
+      },
+      "VDP_setHScrollTableAddress": {
+        "status": "planned"
+      },
+      "VDP_setScanMode": {
+        "status": "planned"
+      },
+      "VDP_setWindowHPos": {
+        "status": "planned"
+      },
+      "VDP_setWindowVPos": {
+        "status": "covered",
+        "via": "hud"
+      },
+      "VDP_setWindowOff": {
+        "status": "planned"
+      },
+      "VDP_setWindowOnTop": {
+        "status": "planned"
+      },
+      "VDP_setWindowOnBottom": {
+        "status": "planned"
+      },
+      "VDP_setWindowOnLeft": {
+        "status": "planned"
+      },
+      "VDP_setWindowOnRight": {
+        "status": "planned"
+      },
+      "VDP_setWindowFullScreen": {
+        "status": "planned"
+      },
+      "VDP_waitDMACompletion": {
+        "status": "planned"
+      },
+      "VDP_waitFIFOEmpty": {
+        "status": "planned"
+      },
+      "VDP_waitVInt": {
+        "status": "planned"
+      },
+      "VDP_waitVBlank": {
+        "status": "planned"
+      },
+      "VDP_waitVSync": {
+        "status": "planned"
+      },
+      "VDP_waitVActive": {
+        "status": "planned"
+      },
+      "VDP_getAdjustedVCounter": {
+        "status": "planned"
+      },
+      "VDP_showFPS": {
+        "status": "planned"
+      },
+      "VDP_showCPULoad": {
+        "status": "planned"
+      }
+    },
+    "vdp_bg.h": {
+      "VDP_setHorizontalScroll": {
+        "status": "covered",
+        "via": "layer_scroll"
+      },
+      "VDP_setHorizontalScrollVSync": {
+        "status": "planned"
+      },
+      "VDP_setHorizontalScrollTile": {
+        "status": "planned"
+      },
+      "VDP_setHorizontalScrollLine": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "VDP_setVerticalScroll": {
+        "status": "covered",
+        "via": "layer_scroll"
+      },
+      "VDP_setVerticalScrollVSync": {
+        "status": "planned"
+      },
+      "VDP_setVerticalScrollTile": {
+        "status": "planned"
+      },
+      "VDP_clearPlane": {
+        "status": "covered",
+        "via": "cls"
+      },
+      "VDP_getTextPlane": {
+        "status": "planned"
+      },
+      "VDP_getTextPalette": {
+        "status": "planned"
+      },
+      "VDP_getTextPriority": {
+        "status": "planned"
+      },
+      "VDP_setTextPlane": {
+        "status": "planned"
+      },
+      "VDP_setTextPalette": {
+        "status": "covered",
+        "via": "print"
+      },
+      "VDP_setTextPriority": {
+        "status": "planned"
+      },
+      "VDP_drawTextEx": {
+        "status": "planned"
+      },
+      "VDP_clearTextEx": {
+        "status": "planned"
+      },
+      "VDP_clearTextAreaEx": {
+        "status": "planned"
+      },
+      "VDP_drawTextBG": {
+        "status": "covered",
+        "via": "print"
+      },
+      "VDP_clearTextBG": {
+        "status": "planned"
+      },
+      "VDP_clearTextAreaBG": {
+        "status": "planned"
+      },
+      "VDP_clearTextLineBG": {
+        "status": "planned"
+      },
+      "VDP_drawText": {
+        "status": "planned"
+      },
+      "VDP_drawTextBGFill": {
+        "status": "planned"
+      },
+      "VDP_drawTextFill": {
+        "status": "planned"
+      },
+      "VDP_clearText": {
+        "status": "planned"
+      },
+      "VDP_clearTextArea": {
+        "status": "planned"
+      },
+      "VDP_clearTextLine": {
+        "status": "planned"
+      },
+      "VDP_drawBitmap": {
+        "status": "planned"
+      },
+      "VDP_drawBitmapEx": {
+        "status": "planned"
+      },
+      "VDP_drawImage": {
+        "status": "planned"
+      },
+      "VDP_drawImageEx": {
+        "status": "planned"
+      }
+    },
+    "vdp_spr.h": {
+      "VDP_resetSprites": {
+        "status": "planned"
+      },
+      "VDP_releaseAllSprites": {
+        "status": "planned"
+      },
+      "VDP_allocateSprites": {
+        "status": "planned"
+      },
+      "VDP_releaseSprites": {
+        "status": "planned"
+      },
+      "VDP_getAvailableSprites": {
+        "status": "planned"
+      },
+      "VDP_refreshHighestAllocatedSpriteIndex": {
+        "status": "planned"
+      },
+      "VDP_clearSprites": {
+        "status": "planned"
+      },
+      "VDP_setSpriteFull": {
+        "status": "planned"
+      },
+      "VDP_setSprite": {
+        "status": "covered",
+        "via": "spr,spr8,sspr"
+      },
+      "VDP_setSpritePosition": {
+        "status": "planned"
+      },
+      "VDP_setSpriteSize": {
+        "status": "planned"
+      },
+      "VDP_setSpriteAttribut": {
+        "status": "planned"
+      },
+      "VDP_setSpriteLink": {
+        "status": "planned"
+      },
+      "VDP_linkSprites": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "VDP_updateSprites": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "VDP_setSpritePriority": {
+        "status": "planned"
+      },
+      "VDP_getSpritePriority": {
+        "status": "planned"
+      },
+      "VDP_setSpritePalette": {
+        "status": "planned"
+      },
+      "VDP_getSpritePalette": {
+        "status": "planned"
+      },
+      "VDP_setSpriteFlip": {
+        "status": "planned"
+      },
+      "VDP_setSpriteFlipH": {
+        "status": "planned"
+      },
+      "VDP_setSpriteFlipV": {
+        "status": "planned"
+      },
+      "VDP_getSpriteFlipH": {
+        "status": "planned"
+      },
+      "VDP_getSpriteFlipV": {
+        "status": "planned"
+      },
+      "VDP_setSpriteTile": {
+        "status": "planned"
+      },
+      "VDP_getSpriteTile": {
+        "status": "planned"
+      }
+    },
+    "vdp_tile.h": {
+      "VDP_getPlaneAddress": {
+        "status": "planned"
+      },
+      "VDP_loadTileData": {
+        "status": "covered",
+        "via": "harness"
+      },
+      "VDP_loadTileSet": {
+        "status": "planned"
+      },
+      "VDP_loadTileSetEx": {
+        "status": "planned"
+      },
+      "VDP_loadFontData": {
+        "status": "planned"
+      },
+      "VDP_loadFont": {
+        "status": "planned"
+      },
+      "VDP_loadDefaultFont": {
+        "status": "planned"
+      },
+      "VDP_loadBMPTileData": {
+        "status": "planned"
+      },
+      "VDP_loadBMPTileDataEx": {
+        "status": "planned"
+      },
+      "VDP_fillTileData": {
+        "status": "planned"
+      },
+      "VDP_clearTileMap": {
+        "status": "planned"
+      },
+      "VDP_fillTileMap": {
+        "status": "planned"
+      },
+      "VDP_setTileMapData": {
+        "status": "planned"
+      },
+      "VDP_setTileMapDataEx": {
+        "status": "planned"
+      },
+      "VDP_setTileMapXY": {
+        "status": "covered",
+        "via": "map,map_show,tset"
+      },
+      "VDP_clearTileMapRect": {
+        "status": "planned"
+      },
+      "VDP_fillTileMapRect": {
+        "status": "planned"
+      },
+      "VDP_fillTileMapRectInc": {
+        "status": "planned"
+      },
+      "VDP_setTileMapDataRect": {
+        "status": "planned"
+      },
+      "VDP_setTileMapDataRectEx": {
+        "status": "planned"
+      },
+      "VDP_setTileMapDataRow": {
+        "status": "planned"
+      },
+      "VDP_setTileMapDataRowEx": {
+        "status": "planned"
+      },
+      "VDP_setTileMapDataColumnFast": {
+        "status": "planned"
+      },
+      "VDP_setTileMapDataColumn": {
+        "status": "planned"
+      },
+      "VDP_setTileMapDataColumnEx": {
+        "status": "planned"
+      },
+      "VDP_setTileMap": {
+        "status": "planned"
+      },
+      "VDP_setTileMapEx": {
+        "status": "planned"
+      },
+      "VDP_setTileMapRow": {
+        "status": "planned"
+      },
+      "VDP_setTileMapRowEx": {
+        "status": "planned"
+      },
+      "VDP_setTileMapColumn": {
+        "status": "planned"
+      },
+      "VDP_setTileMapColumnEx": {
+        "status": "planned"
+      },
+      "VDP_setMap": {
+        "status": "planned"
+      },
+      "VDP_setMapEx": {
+        "status": "planned"
+      }
+    },
+    "vram.h": {
+      "VRAM_createRegion": {
+        "status": "planned"
+      },
+      "VRAM_releaseRegion": {
+        "status": "planned"
+      },
+      "VRAM_clearRegion": {
+        "status": "planned"
+      },
+      "VRAM_getFree": {
+        "status": "planned"
+      },
+      "VRAM_getAllocated": {
+        "status": "planned"
+      },
+      "VRAM_getLargestFreeBlock": {
+        "status": "planned"
+      },
+      "VRAM_alloc": {
+        "status": "planned"
+      },
+      "VRAM_free": {
+        "status": "planned"
+      }
+    },
+    "ym2612.h": {
+      "YM2612_reset": {
+        "status": "planned"
+      },
+      "YM2612_read": {
+        "status": "planned"
+      },
+      "YM2612_readStatus": {
+        "status": "planned"
+      },
+      "YM2612_write": {
+        "status": "planned"
+      },
+      "YM2612_writeReg": {
+        "status": "planned"
+      },
+      "YM2612_enableDAC": {
+        "status": "planned"
+      },
+      "YM2612_disableDAC": {
+        "status": "planned"
+      }
+    },
+    "z80_ctrl.h": {
+      "Z80_init": {
+        "status": "planned"
+      },
+      "Z80_isBusTaken": {
+        "status": "planned"
+      },
+      "Z80_requestBus": {
+        "status": "planned"
+      },
+      "Z80_getAndRequestBus": {
+        "status": "planned"
+      },
+      "Z80_releaseBus": {
+        "status": "planned"
+      },
+      "Z80_startReset": {
+        "status": "planned"
+      },
+      "Z80_endReset": {
+        "status": "planned"
+      },
+      "Z80_setBank": {
+        "status": "planned"
+      },
+      "Z80_read": {
+        "status": "planned"
+      },
+      "Z80_write": {
+        "status": "planned"
+      },
+      "Z80_clear": {
+        "status": "planned"
+      },
+      "Z80_upload": {
+        "status": "planned"
+      },
+      "Z80_download": {
+        "status": "planned"
+      },
+      "Z80_getLoadedDriver": {
+        "status": "planned"
+      },
+      "Z80_unloadDriver": {
+        "status": "planned"
+      },
+      "Z80_loadCustomDriver": {
+        "status": "planned"
+      },
+      "Z80_isDriverReady": {
+        "status": "planned"
+      },
+      "Z80_getVIntCallback": {
+        "status": "planned"
+      },
+      "Z80_setVIntCallback": {
+        "status": "planned"
+      },
+      "Z80_useBusProtection": {
+        "status": "planned"
+      },
+      "Z80_setBusProtection": {
+        "status": "planned"
+      },
+      "Z80_enableBusProtection": {
+        "status": "planned"
+      },
+      "Z80_disableBusProtection": {
+        "status": "planned"
+      },
+      "Z80_getForceDelayDMA": {
+        "status": "planned"
+      },
+      "Z80_setForceDelayDMA": {
+        "status": "planned"
+      }
+    }
+  }
+}

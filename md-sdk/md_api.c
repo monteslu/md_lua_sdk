@@ -78,6 +78,10 @@ static u16 p8_mask(int i) {
         case 5: return BUTTON_C;     // P8 X
         case 6: return BUTTON_A;     // MD extra
         case 7: return BUTTON_START; // MD extra
+        case 8: return BUTTON_X;     // 6-button pad
+        case 9: return BUTTON_Y;
+        case 10: return BUTTON_Z;
+        case 11: return BUTTON_MODE;
         default: return 0;
     }
 }
@@ -428,6 +432,7 @@ void md_vsync(void) {
     joy_cur[0] = JOY_readJoypad(JOY_1);
     joy_cur[1] = JOY_readJoypad(JOY_2);
     spr_count = 0;
+    spr_palbank = PAL1; spr_priority = 1;   // draw state resets each frame (P8 model)
 }
 
 void md_endframe(void) {
@@ -458,22 +463,31 @@ void md_endframe(void) {
 // save/load: (slot, array8, count) — 256-byte slots in battery SRAM, the
 // cross-SDK contract (gbalua's shape). SRAM on MD is byte-wide on odd addresses;
 // SGDK's SRAM_* handles the addressing.
+// Slot layout (cross-SDK contract, matches gbalua): [magic][len][data...].
+// load() returns 0 for a never-written slot (fresh SRAM is garbage) — the
+// caller doesn't have to keep its own magic byte.
+#define MD_SAVE_MAGIC 0xA5
 void md_save(int slot, const unsigned char *arr, int n) {
     int i;
     u32 base = (u32)(slot & 0xFF) << 8;
-    if (n > 256) n = 256;
+    if (n > 254) n = 254;                     // 2 bytes reserved for magic+len
     SRAM_enable();
-    for (i = 0; i < n; i++) SRAM_writeByte(base + (u32)i, arr[i]);
+    SRAM_writeByte(base, MD_SAVE_MAGIC);
+    SRAM_writeByte(base + 1, (u8)n);
+    for (i = 0; i < n; i++) SRAM_writeByte(base + 2 + (u32)i, arr[i]);
     SRAM_disable();
 }
 int md_load(int slot, unsigned char *arr, int n) {
-    int i;
+    int i, len;
     u32 base = (u32)(slot & 0xFF) << 8;
-    if (n > 256) n = 256;
     SRAM_enableRO();
-    for (i = 0; i < n; i++) arr[i] = SRAM_readByte(base + (u32)i);
+    if (SRAM_readByte(base) != MD_SAVE_MAGIC) { SRAM_disable(); return 0; }  // never saved
+    len = SRAM_readByte(base + 1);
+    if (len > n) len = n;
+    if (len > 254) len = 254;
+    for (i = 0; i < len; i++) arr[i] = SRAM_readByte(base + 2 + (u32)i);
     SRAM_disable();
-    return n;
+    return len;
 }
 
 // hud(rows): the VDP WINDOW plane replaces plane A for the top N tile rows —

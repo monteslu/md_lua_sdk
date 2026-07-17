@@ -1,4 +1,4 @@
-// sgdk-coverage.mjs — parse the bundled SGDK public headers into a function
+// sgdk-coverage.mjs - parse the bundled SGDK public headers into a function
 // inventory. This is the DENOMINATOR of the 100%-SGDK-coverage grind
 // (internal-genesislua/PLAN.md §7a): every public prototype in
 // node_modules/romdev-toolchain-m68k-gcc/share/genesis/lib/sgdk/include/*.h.
@@ -14,7 +14,7 @@
 // being dropped silently.
 //
 // The ext/ and snd/ subdirectories are NOT yet part of the coverage
-// denominator — they are counted into a separate `notSurveyed` bucket so the
+// denominator - they are counted into a separate `notSurveyed` bucket so the
 // report can show how much surface is still un-triaged.
 //
 // Usage:
@@ -84,7 +84,7 @@ function blankLiterals(src) {
 }
 
 /** Blank all preprocessor lines (macros, includes, conditionals), honoring
- *  backslash line continuations. Code BETWEEN #if/#endif is kept — we take
+ *  backslash line continuations. Code BETWEEN #if/#endif is kept - we take
  *  the union of all branches (an over-approximation, which for an inventory
  *  is the honest direction: nothing silently vanishes).
  *  @param {string} src */
@@ -157,8 +157,12 @@ function splitParams(s) {
 function classifyStatement(stmt, line, out) {
   let s = squish(stmt);
   if (s === "") return;
-  if (!s.includes("(")) return; // variable/array decl — not a function
+  if (!s.includes("(")) return; // variable/array decl - not a function
   if (/^(typedef|struct|enum|union)\b/.test(s)) return; // types (incl. fn-ptr typedefs)
+  // array declaration whose SIZE expression holds the only parens, e.g.
+  // `extern const fix32 trigtab_f32[(90*4)+1];` - a variable, not a function
+  const firstBracket = s.indexOf("[");
+  if (firstBracket !== -1 && firstBracket < s.indexOf("(")) return;
   s = squish(stripAttributes(s).replace(STRIP_WORDS, " "));
   // HINTERRUPT_CALLBACK expands to `__attribute__((interrupt)) void`
   s = s.replace(/^HINTERRUPT_CALLBACK\b/, "void");
@@ -190,7 +194,7 @@ function classifyStatement(stmt, line, out) {
     out.unparsed.push({ line, text: s });
     return;
   }
-  if (name.startsWith("_")) return; // compiler/SGDK-internal — skipped by design
+  if (name.startsWith("_")) return; // compiler/SGDK-internal - skipped by design
   out.functions.push({ name, ret, params: splitParams(s.slice(open + 1, close)), line });
 }
 
@@ -354,7 +358,7 @@ if (isMain) {
   }
   console.log(`\n  TOTAL public prototypes: ${total}   (unparsed constructs: ${unparsed})`);
   console.log(
-    `  not yet surveyed: ${inv.notSurveyed.dirs.join("/, ")}/ — ` +
+    `  not yet surveyed: ${inv.notSurveyed.dirs.join("/, ")}/ - ` +
       `${inv.notSurveyed.headerCount} headers, ~${inv.notSurveyed.functionCount} prototypes (excluded from the denominator)`
   );
   console.log(`\n  wrote ${path.relative(REPO, INVENTORY_PATH)}`);
