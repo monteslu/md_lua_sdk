@@ -832,6 +832,7 @@ export function check(chunk, file) {
         }
         if (params[i] && params[i][0] === "str") {
           if (a.kind !== "string") err(a, `${name}() argument ${i + 1} must be a string literal`);
+          else a.inPrint = true;   // string literal in an allowed position (not just print)
           return;
         }
         if (params[i] && (params[i][0] === "array" || params[i][0] === "array8")) {

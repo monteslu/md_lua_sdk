@@ -142,3 +142,22 @@ emit's 8.8 path works (strength-reduction verified) but md_math is 16.16-only
 (sin table, time, print_num) - wiring --num8 now = silently wrong math. Wire
 it when md_math grows -DMD_NUM8 tables; measure on the 16-bit-native 68000 in
 the Phase-3 perf pass. (Same state gbalua shipped in, but DOCUMENTED here.)
+
+### Phase 3 — 100% SGDK COVERAGE 2026-07-16
+- snd/ added to the survey (XGM2/PSG/PCM are API we target); 791 total protos.
+- **tools/gen-sgdk-builtins.mjs**: auto-generates direct-call builtins for the
+  ENTIRE SGDK public surface. 724 functions exposed under their OWN names
+  (VDP_setTileMapXY, SPR_addSprite, PAL_setColor, XGM2_play...). scalar args ->
+  int kind; POINTERS -> opaque int handles (m68k int is 32-bit; Sprite*/Map*
+  fit); char* -> string literal. C names are raw SGDK symbols (no gt_ root ->
+  emitter's remap leaves them -> link straight to bundled libmd). Curated
+  PICO-8 verbs win name clashes (merged first).
+- **COVERAGE: 100.00%** (725/725 applicable). 66 N/A each with a reason:
+  sprite_eng_legacy (superseded) 45, MEM heap 9, task/coroutines 6, varargs
+  (sprintf/kprintf/SYS_die) + memcmp(void*) + struct-by-value config 6.
+- baseline.json locked at 100% (never-decrease CI gate).
+- 799 total Lua verbs (75 curated + 724 SGDK). "Know SGDK -> know mdlua."
+- PROVEN: VDP_setReg/getReg/PAL_setColor/VDP_drawText compile, LINK against
+  libmd, and run in gpgx. Front-end fix: string literals now allowed in any
+  str-kind builtin arg (was print()-only) - needed for VDP_drawText et al.
+- example sgdk_direct: raw SGDK calls next to PICO-8 verbs in one cart.

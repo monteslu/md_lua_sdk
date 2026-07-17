@@ -5,684 +5,897 @@
     "bmp.h": {
       "BMP_init": {
         "status": "covered",
-        "via": "circ,circfill,line,pset,rect,rectfill"
+        "via": "BMP_init,circ,circfill,line,pset,rect,rectfill"
       },
       "BMP_end": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_end"
       },
       "BMP_reset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_reset"
       },
       "BMP_setBufferCopy": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_setBufferCopy"
       },
       "BMP_flip": {
         "status": "covered",
-        "via": "harness"
+        "via": "BMP_flip"
       },
       "BMP_clear": {
         "status": "covered",
-        "via": "cls"
+        "via": "BMP_clear,cls"
       },
       "BMP_getWritePointer": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_getWritePointer"
       },
       "BMP_getReadPointer": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_getReadPointer"
       },
       "BMP_hasFlipRequestPending": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_hasFlipRequestPending"
       },
       "BMP_waitWhileFlipRequestPending": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_waitWhileFlipRequestPending"
       },
       "BMP_hasFlipInProgess": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_hasFlipInProgess"
       },
       "BMP_waitFlipComplete": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_waitFlipComplete"
       },
       "BMP_drawText": {
         "status": "covered",
-        "via": "print"
+        "via": "BMP_drawText,print"
       },
       "BMP_clearText": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_clearText"
       },
       "BMP_clearTextLine": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_clearTextLine"
       },
       "BMP_showFPS": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_showFPS"
       },
       "BMP_getPixel": {
         "status": "covered",
-        "via": "pget"
+        "via": "BMP_getPixel,pget"
       },
       "BMP_getPixelFast": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_getPixelFast"
       },
       "BMP_setPixel": {
         "status": "covered",
-        "via": "circ,circfill,line,pset,rect,rectfill"
+        "via": "BMP_setPixel,circ,circfill,line,pset,rect,rectfill"
       },
       "BMP_setPixelFast": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_setPixelFast"
       },
       "BMP_setPixels_V2D": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_setPixels_V2D"
       },
       "BMP_setPixelsFast_V2D": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_setPixelsFast_V2D"
       },
       "BMP_setPixels": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_setPixels"
       },
       "BMP_setPixelsFast": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_setPixelsFast"
       },
       "BMP_clipLine": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_clipLine"
       },
       "BMP_drawLine": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_drawLine"
       },
       "BMP_isPolygonCulled": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_isPolygonCulled"
       },
       "BMP_drawPolygon": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_drawPolygon"
       },
       "BMP_drawBitmapData": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_drawBitmapData"
       },
       "BMP_drawBitmap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_drawBitmap"
       },
       "BMP_drawBitmapScaled": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_drawBitmapScaled"
       },
       "BMP_scale": {
-        "status": "planned"
+        "status": "covered",
+        "via": "BMP_scale"
       }
     },
     "dma.h": {
       "DMA_init": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_init"
       },
       "DMA_initEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_initEx"
       },
       "DMA_getAutoFlush": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_getAutoFlush"
       },
       "DMA_setAutoFlush": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_setAutoFlush"
       },
       "DMA_getMaxQueueSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_getMaxQueueSize"
       },
       "DMA_setMaxQueueSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_setMaxQueueSize"
       },
       "DMA_setMaxQueueSizeToDefault": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_setMaxQueueSizeToDefault"
       },
       "DMA_getMaxTransferSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_getMaxTransferSize"
       },
       "DMA_setMaxTransferSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_setMaxTransferSize"
       },
       "DMA_setMaxTransferSizeToDefault": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_setMaxTransferSizeToDefault"
       },
       "DMA_getBufferSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_getBufferSize"
       },
       "DMA_setBufferSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_setBufferSize"
       },
       "DMA_setBufferSizeToDefault": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_setBufferSizeToDefault"
       },
       "DMA_getIgnoreOverCapacity": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_getIgnoreOverCapacity"
       },
       "DMA_setIgnoreOverCapacity": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_setIgnoreOverCapacity"
       },
       "DMA_clearQueue": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_clearQueue"
       },
       "DMA_flushQueue": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_flushQueue"
       },
       "DMA_getQueueSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_getQueueSize"
       },
       "DMA_getQueueTransferSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_getQueueTransferSize"
       },
       "DMA_allocateTemp": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_allocateTemp"
       },
       "DMA_releaseTemp": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_releaseTemp"
       },
       "DMA_transfer": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_transfer"
       },
       "DMA_canQueue": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_canQueue"
       },
       "DMA_allocateAndQueueDma": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_allocateAndQueueDma"
       },
       "DMA_copyAndQueueDma": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_copyAndQueueDma"
       },
       "DMA_queueDma": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_queueDma"
       },
       "DMA_queueDmaFast": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_queueDmaFast"
       },
       "DMA_doDma": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_doDma"
       },
       "DMA_doDmaFast": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_doDmaFast"
       },
       "DMA_doCPUCopy": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_doCPUCopy"
       },
       "DMA_doCPUCopyDirect": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_doCPUCopyDirect"
       },
       "DMA_doVRamFill": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_doVRamFill"
       },
       "DMA_doVRamCopy": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_doVRamCopy"
       },
       "DMA_waitCompletion": {
-        "status": "planned"
+        "status": "covered",
+        "via": "DMA_waitCompletion"
       }
     },
     "joy.h": {
       "JOY_init": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_init"
       },
       "JOY_reset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_reset"
       },
       "JOY_getEventHandler": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_getEventHandler"
       },
       "JOY_setEventHandler": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_setEventHandler"
       },
       "JOY_setSupport": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_setSupport"
       },
       "JOY_getPortType": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_getPortType"
       },
       "JOY_getJoypadType": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_getJoypadType"
       },
       "JOY_readJoypad": {
         "status": "covered",
-        "via": "harness"
+        "via": "JOY_readJoypad"
       },
       "JOY_readJoypadX": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_readJoypadX"
       },
       "JOY_writeJoypadX": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_writeJoypadX"
       },
       "JOY_readJoypadY": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_readJoypadY"
       },
       "JOY_writeJoypadY": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_writeJoypadY"
       },
       "JOY_waitPressBtn": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_waitPressBtn"
       },
       "JOY_waitPressBtnTime": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_waitPressBtnTime"
       },
       "JOY_waitPress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_waitPress"
       },
       "JOY_waitPressTime": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_waitPressTime"
       },
       "JOY_update": {
-        "status": "planned"
+        "status": "covered",
+        "via": "JOY_update"
       }
     },
     "kdebug.h": {
       "KDebug_Halt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KDebug_Halt"
       },
       "KDebug_Alert": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KDebug_Alert"
       },
       "KDebug_AlertNumber": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KDebug_AlertNumber"
       },
       "KDebug_StartTimer": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KDebug_StartTimer"
       },
       "KDebug_StopTimer": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KDebug_StopTimer"
       }
     },
     "map.h": {
       "MAP_create": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_create"
       },
       "MAP_release": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_release"
       },
       "MAP_scrollTo": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_scrollTo"
       },
       "MAP_scrollToEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_scrollToEx"
       },
       "MAP_getMetaTile": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_getMetaTile"
       },
       "MAP_getTile": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_getTile"
       },
       "MAP_getMetaTilemapRect": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_getMetaTilemapRect"
       },
       "MAP_getTilemapRect": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_getTilemapRect"
       },
       "MAP_setDataPatchCallback": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_setDataPatchCallback"
       },
       "MAP_overridePlaneSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "MAP_overridePlaneSize"
       }
     },
     "mapper.h": {
       "SYS_resetBanks": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_resetBanks"
       },
       "SYS_getBank": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getBank"
       },
       "SYS_setBank": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_setBank"
       },
       "SYS_getFarData": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getFarData"
       },
       "SYS_getFarDataEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getFarDataEx"
       },
       "SYS_isCrossingBank": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_isCrossingBank"
       },
       "SYS_getFarDataSafe": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getFarDataSafe"
       },
       "SYS_getFarDataSafeEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getFarDataSafeEx"
       },
       "SYS_getNextFarAccessRegion": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getNextFarAccessRegion"
       },
       "SYS_setNextFarAccessRegion": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_setNextFarAccessRegion"
       }
     },
     "maths.h": {
       "rol8": {
-        "status": "planned"
+        "status": "covered",
+        "via": "rol8"
       },
       "rol16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "rol16"
       },
       "rol32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "rol32"
       },
       "ror8": {
-        "status": "planned"
+        "status": "covered",
+        "via": "ror8"
       },
       "ror16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "ror16"
       },
       "ror32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "ror32"
       },
       "mulu": {
-        "status": "planned"
+        "status": "covered",
+        "via": "mulu"
       },
       "muls": {
-        "status": "planned"
+        "status": "covered",
+        "via": "muls"
       },
       "divu": {
-        "status": "planned"
+        "status": "covered",
+        "via": "divu"
       },
       "divs": {
-        "status": "planned"
+        "status": "covered",
+        "via": "divs"
       },
       "modu": {
-        "status": "planned"
+        "status": "covered",
+        "via": "modu"
       },
       "mods": {
-        "status": "planned"
+        "status": "covered",
+        "via": "mods"
       },
       "divmodu": {
-        "status": "planned"
+        "status": "covered",
+        "via": "divmodu"
       },
       "divmods": {
-        "status": "planned"
+        "status": "covered",
+        "via": "divmods"
       },
       "u16ToBCD": {
-        "status": "planned"
+        "status": "covered",
+        "via": "u16ToBCD"
       },
       "u32ToBCD": {
-        "status": "planned"
+        "status": "covered",
+        "via": "u32ToBCD"
       },
       "getNextPow2": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getNextPow2"
       },
       "getLog2": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getLog2"
       },
       "getApproximatedDistance": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getApproximatedDistance"
       },
       "getApproximatedDistanceV": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getApproximatedDistanceV"
       },
       "F16_toInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_toInt"
       },
       "F16_toFix32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_toFix32"
       },
       "F16_toFastFix16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_toFastFix16"
       },
       "F16_toFastFix32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_toFastFix32"
       },
       "F16_frac": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_frac"
       },
       "F16_int": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_int"
       },
       "F16_abs": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_abs"
       },
       "F16_round": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_round"
       },
       "F16_toRoundedInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_toRoundedInt"
       },
       "F16_mul": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_mul"
       },
       "F16_div": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_div"
       },
       "F16_avg": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_avg"
       },
       "F16_log2": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_log2"
       },
       "F16_log10": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_log10"
       },
       "F16_sqrt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_sqrt"
       },
       "F16_normalizeAngle": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_normalizeAngle"
       },
       "F16_sin": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_sin"
       },
       "F16_cos": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_cos"
       },
       "F16_tan": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_tan"
       },
       "F16_atan": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_atan"
       },
       "F16_atan2": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_atan2"
       },
       "sinFix16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "sinFix16"
       },
       "cosFix16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "cosFix16"
       },
       "F16_degreeToRadian": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_degreeToRadian"
       },
       "F16_radianToDegree": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_radianToDegree"
       },
       "F16_getAngle": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_getAngle"
       },
       "F16_computePosition": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_computePosition"
       },
       "F16_computePositionEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_computePositionEx"
       },
       "F32_toInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_toInt"
       },
       "F32_toFix16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_toFix16"
       },
       "F32_toFastFix16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_toFastFix16"
       },
       "F32_toFastFix32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_toFastFix32"
       },
       "F32_frac": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_frac"
       },
       "F32_int": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_int"
       },
       "F32_round": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_round"
       },
       "F32_toRoundedInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_toRoundedInt"
       },
       "F32_mul": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_mul"
       },
       "F32_div": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_div"
       },
       "F32_avg": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_avg"
       },
       "F32_sin": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_sin"
       },
       "F32_cos": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_cos"
       },
       "sinFix32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "sinFix32"
       },
       "cosFix32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "cosFix32"
       },
       "FF16_toInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_toInt"
       },
       "FF16_toFix16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_toFix16"
       },
       "FF16_toFix32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_toFix32"
       },
       "FF16_toFastFix32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_toFastFix32"
       },
       "FF16_frac": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_frac"
       },
       "FF16_int": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_int"
       },
       "FF16_round": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_round"
       },
       "FF16_toRoundedInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_toRoundedInt"
       },
       "FF16_mul": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_mul"
       },
       "FF16_div": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_div"
       },
       "FF32_fromInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_fromInt"
       },
       "FF32_toInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_toInt"
       },
       "FF32_toFix16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_toFix16"
       },
       "FF32_toFix32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_toFix32"
       },
       "FF32_toFastFix16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_toFastFix16"
       },
       "FF32_frac": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_frac"
       },
       "FF32_int": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_int"
       },
       "FF32_round": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_round"
       },
       "FF32_toRoundedInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_toRoundedInt"
       },
       "FF32_mul": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_mul"
       },
       "FF32_div": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_div"
       },
       "FF32_getLog2Fast": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_getLog2Fast"
       },
       "V2D_F16_getAngle": {
-        "status": "planned"
+        "status": "covered",
+        "via": "V2D_F16_getAngle"
       },
       "V2D_F16_computePosition": {
-        "status": "planned"
+        "status": "covered",
+        "via": "V2D_F16_computePosition"
       },
       "V2D_F16_computePositionEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "V2D_F16_computePositionEx"
       },
       "V2D_S32_getApproximatedDistance": {
-        "status": "planned"
+        "status": "covered",
+        "via": "V2D_S32_getApproximatedDistance"
       }
     },
     "maths3D.h": {
       "M3D_reset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_reset"
       },
       "M3D_setLightEnabled": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_setLightEnabled"
       },
       "M3D_getLightEnabled": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_getLightEnabled"
       },
       "M3D_setViewport": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_setViewport"
       },
       "M3D_setCamDistance": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_setCamDistance"
       },
       "M3D_setLightXYZ": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_setLightXYZ"
       },
       "M3D_setLight": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_setLight"
       },
       "M3D_resetTransform": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_resetTransform"
       },
       "M3D_setTransform": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_setTransform"
       },
       "M3D_setTranslation": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_setTranslation"
       },
       "M3D_setRotation": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_setRotation"
       },
       "M3D_combineTransform": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_combineTransform"
       },
       "M3D_combineTranslationLeft": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_combineTranslationLeft"
       },
       "M3D_combineTranslationRight": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_combineTranslationRight"
       },
       "M3D_buildMat3D": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_buildMat3D"
       },
       "M3D_buildMat3DOnly": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_buildMat3DOnly"
       },
       "M3D_buildMat3DExtras": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_buildMat3DExtras"
       },
       "M3D_translate": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_translate"
       },
       "M3D_rotate": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_rotate"
       },
       "M3D_rotateInv": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_rotateInv"
       },
       "M3D_transform": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_transform"
       },
       "M3D_project_f16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_project_f16"
       },
       "M3D_project_s16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "M3D_project_s16"
       }
     },
     "memory.h": {
@@ -723,333 +936,434 @@
         "reason": "MEM_alloc heap family: mdlua's memory model is fully static (arrays/pools) - no heap"
       },
       "memset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "memset"
       },
       "memsetU16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "memsetU16"
       },
       "memsetU32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "memsetU32"
       },
       "memcpy": {
-        "status": "planned"
+        "status": "covered",
+        "via": "memcpy"
       },
       "memcmp": {
-        "status": "planned"
+        "status": "na",
+        "reason": "void* args - no typed binding (use array8 + a Lua loop)"
       }
     },
     "object.h": {
       "OBJ_createObjectPool": {
-        "status": "planned"
+        "status": "covered",
+        "via": "OBJ_createObjectPool"
       },
       "OBJ_create": {
-        "status": "planned"
+        "status": "covered",
+        "via": "OBJ_create"
       },
       "OBJ_release": {
-        "status": "planned"
+        "status": "covered",
+        "via": "OBJ_release"
       },
       "OBJ_updateAll": {
-        "status": "planned"
+        "status": "covered",
+        "via": "OBJ_updateAll"
       },
       "OBJ_setInitMethod": {
-        "status": "planned"
+        "status": "covered",
+        "via": "OBJ_setInitMethod"
       },
       "OBJ_setUpdateMethod": {
-        "status": "planned"
+        "status": "covered",
+        "via": "OBJ_setUpdateMethod"
       },
       "OBJ_setEndMethod": {
-        "status": "planned"
+        "status": "covered",
+        "via": "OBJ_setEndMethod"
       }
     },
     "pal.h": {
       "PAL_getColor": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_getColor"
       },
       "PAL_getColors": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_getColors"
       },
       "PAL_getPalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_getPalette"
       },
       "PAL_setColor": {
         "status": "covered",
-        "via": "harness"
+        "via": "PAL_setColor"
       },
       "PAL_setColors": {
         "status": "covered",
-        "via": "harness"
+        "via": "PAL_setColors"
       },
       "PAL_setPaletteColors": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_setPaletteColors"
       },
       "PAL_setPalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_setPalette"
       },
       "PAL_initFade": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_initFade"
       },
       "PAL_doFadeStep": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_doFadeStep"
       },
       "PAL_isManualFadeDone": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_isManualFadeDone"
       },
       "PAL_fade": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fade"
       },
       "PAL_fadeTo": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeTo"
       },
       "PAL_fadeOut": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeOut"
       },
       "PAL_fadeIn": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeIn"
       },
       "PAL_fadePalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadePalette"
       },
       "PAL_fadeToPalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeToPalette"
       },
       "PAL_fadeOutPalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeOutPalette"
       },
       "PAL_fadeInPalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeInPalette"
       },
       "PAL_fadeAll": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeAll"
       },
       "PAL_fadeToAll": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeToAll"
       },
       "PAL_fadeOutAll": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeOutAll"
       },
       "PAL_fadeInAll": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_fadeInAll"
       },
       "PAL_isDoingFade": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_isDoingFade"
       },
       "PAL_waitFadeCompletion": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_waitFadeCompletion"
       },
       "PAL_interruptFade": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PAL_interruptFade"
       }
     },
     "pool.h": {
       "POOL_create": {
-        "status": "planned"
+        "status": "covered",
+        "via": "POOL_create"
       },
       "POOL_destroy": {
-        "status": "planned"
+        "status": "covered",
+        "via": "POOL_destroy"
       },
       "POOL_reset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "POOL_reset"
       },
       "POOL_allocate": {
-        "status": "planned"
+        "status": "covered",
+        "via": "POOL_allocate"
       },
       "POOL_release": {
-        "status": "planned"
+        "status": "covered",
+        "via": "POOL_release"
       },
       "POOL_getFree": {
-        "status": "planned"
+        "status": "covered",
+        "via": "POOL_getFree"
       },
       "POOL_getNumAllocated": {
-        "status": "planned"
+        "status": "covered",
+        "via": "POOL_getNumAllocated"
       },
       "POOL_getFirst": {
-        "status": "planned"
+        "status": "covered",
+        "via": "POOL_getFirst"
       },
       "POOL_find": {
-        "status": "planned"
+        "status": "covered",
+        "via": "POOL_find"
       }
     },
     "psg.h": {
       "PSG_reset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PSG_reset"
       },
       "PSG_write": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PSG_write"
       },
       "PSG_setEnvelope": {
         "status": "covered",
-        "via": "sfx"
+        "via": "PSG_setEnvelope,sfx"
       },
       "PSG_setTone": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PSG_setTone"
       },
       "PSG_setToneLow": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PSG_setToneLow"
       },
       "PSG_setFrequency": {
         "status": "covered",
-        "via": "sfx"
+        "via": "PSG_setFrequency,sfx"
       },
       "PSG_setNoise": {
-        "status": "planned"
+        "status": "covered",
+        "via": "PSG_setNoise"
       }
     },
     "sprite_eng.h": {
       "SPR_init": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_init"
       },
       "SPR_initEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_initEx"
       },
       "SPR_end": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_end"
       },
       "SPR_isInitialized": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_isInitialized"
       },
       "SPR_reset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_reset"
       },
       "SPR_addSpriteEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_addSpriteEx"
       },
       "SPR_addSprite": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_addSprite"
       },
       "SPR_addSpriteExSafe": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_addSpriteExSafe"
       },
       "SPR_addSpriteSafe": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_addSpriteSafe"
       },
       "SPR_releaseSprite": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_releaseSprite"
       },
       "SPR_getNumActiveSprite": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_getNumActiveSprite"
       },
       "SPR_getUsedVDPSprite": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_getUsedVDPSprite"
       },
       "SPR_getFreeVRAM": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_getFreeVRAM"
       },
       "SPR_getLargestFreeVRAMBlock": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_getLargestFreeVRAMBlock"
       },
       "SPR_enableVDPSpriteChecking": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_enableVDPSpriteChecking"
       },
       "SPR_disableVDPSpriteChecking": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_disableVDPSpriteChecking"
       },
       "SPR_defragVRAM": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_defragVRAM"
       },
       "SPR_loadAllFramesEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_loadAllFramesEx"
       },
       "SPR_loadAllFrames": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_loadAllFrames"
       },
       "SPR_loadAllIndexes": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_loadAllIndexes"
       },
       "SPR_loadAllTiles": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_loadAllTiles"
       },
       "SPR_setDefinition": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setDefinition"
       },
       "SPR_getPositionX": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_getPositionX"
       },
       "SPR_getPositionY": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_getPositionY"
       },
       "SPR_setPosition": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setPosition"
       },
       "SPR_setHFlip": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setHFlip"
       },
       "SPR_setVFlip": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setVFlip"
       },
       "SPR_setPalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setPalette"
       },
       "SPR_setPriority": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setPriority"
       },
       "SPR_setDepth": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setDepth"
       },
       "SPR_setZ": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setZ"
       },
       "SPR_setAlwaysOnTop": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setAlwaysOnTop"
       },
       "SPR_setAlwaysAtBottom": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setAlwaysAtBottom"
       },
       "SPR_setAnimAndFrame": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setAnimAndFrame"
       },
       "SPR_setAnim": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setAnim"
       },
       "SPR_setFrame": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setFrame"
       },
       "SPR_nextFrame": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_nextFrame"
       },
       "SPR_setAutoAnimation": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setAutoAnimation"
       },
       "SPR_getAutoAnimation": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_getAutoAnimation"
       },
       "SPR_setAnimationLoop": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setAnimationLoop"
       },
       "SPR_isAnimationDone": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_isAnimationDone"
       },
       "SPR_setVRAMTileIndex": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setVRAMTileIndex"
       },
       "SPR_setAutoTileUpload": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setAutoTileUpload"
       },
       "SPR_setDelayedFrameUpdate": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setDelayedFrameUpdate"
       },
       "SPR_setFrameChangeCallback": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setFrameChangeCallback"
       },
       "SPR_getVisibility": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_getVisibility"
       },
       "SPR_isVisible": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_isVisible"
       },
       "SPR_setVisibility": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_setVisibility"
       },
       "SPR_clear": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_clear"
       },
       "SPR_update": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_update"
       },
       "SPR_logProfil": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_logProfil"
       },
       "SPR_logSprites": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SPR_logSprites"
       }
     },
     "sprite_eng_legacy.h": {
@@ -1237,191 +1551,243 @@
     "sram.h": {
       "SRAM_enable": {
         "status": "covered",
-        "via": "save"
+        "via": "SRAM_enable,save"
       },
       "SRAM_enableRO": {
         "status": "covered",
-        "via": "load"
+        "via": "SRAM_enableRO,load"
       },
       "SRAM_disable": {
         "status": "covered",
-        "via": "load,save"
+        "via": "SRAM_disable,load,save"
       },
       "SRAM_readByte": {
         "status": "covered",
-        "via": "load"
+        "via": "SRAM_readByte,load"
       },
       "SRAM_readWord": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SRAM_readWord"
       },
       "SRAM_readLong": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SRAM_readLong"
       },
       "SRAM_writeByte": {
         "status": "covered",
-        "via": "save"
+        "via": "SRAM_writeByte,save"
       },
       "SRAM_writeWord": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SRAM_writeWord"
       },
       "SRAM_writeLong": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SRAM_writeLong"
       }
     },
     "string.h": {
       "strlen": {
-        "status": "planned"
+        "status": "covered",
+        "via": "strlen"
       },
       "strnlen": {
-        "status": "planned"
+        "status": "covered",
+        "via": "strnlen"
       },
       "strcmp": {
-        "status": "planned"
+        "status": "covered",
+        "via": "strcmp"
       },
       "strcpy": {
-        "status": "planned"
+        "status": "covered",
+        "via": "strcpy"
       },
       "strncpy": {
-        "status": "planned"
+        "status": "covered",
+        "via": "strncpy"
       },
       "strcat": {
-        "status": "planned"
+        "status": "covered",
+        "via": "strcat"
       },
       "strchr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "strchr"
       },
       "vsprintf": {
-        "status": "planned"
+        "status": "na",
+        "reason": "varargs (va_list)"
       },
       "sprintf": {
-        "status": "planned"
+        "status": "na",
+        "reason": "varargs - no fixed arity to bind"
       },
       "strclr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "strclr"
       },
       "strreplacechar": {
-        "status": "planned"
+        "status": "covered",
+        "via": "strreplacechar"
       },
       "intToStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "intToStr"
       },
       "uintToStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "uintToStr"
       },
       "intToHex": {
-        "status": "planned"
+        "status": "covered",
+        "via": "intToHex"
       },
       "fix16ToStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "fix16ToStr"
       },
       "fix32ToStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "fix32ToStr"
       },
       "fastFix16ToStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "fastFix16ToStr"
       },
       "fastFix32ToStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "fastFix32ToStr"
       },
       "F16_toStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F16_toStr"
       },
       "F32_toStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "F32_toStr"
       },
       "FF16_toStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF16_toStr"
       },
       "FF32_toStr": {
-        "status": "planned"
+        "status": "covered",
+        "via": "FF32_toStr"
       }
     },
     "sys.h": {
       "SYS_assertReset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_assertReset"
       },
       "SYS_reset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_reset"
       },
       "SYS_hardReset": {
         "status": "covered",
-        "via": "reset,run"
+        "via": "SYS_hardReset,reset,run"
       },
       "SYS_doVBlankProcess": {
         "status": "covered",
-        "via": "harness"
+        "via": "SYS_doVBlankProcess"
       },
       "SYS_doVBlankProcessEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_doVBlankProcessEx"
       },
       "SYS_nextFrame": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_nextFrame"
       },
       "SYS_getStackPointer": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getStackPointer"
       },
       "SYS_getInterruptMaskLevel": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getInterruptMaskLevel"
       },
       "SYS_setInterruptMaskLevel": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_setInterruptMaskLevel"
       },
       "SYS_getAndSetInterruptMaskLevel": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getAndSetInterruptMaskLevel"
       },
       "SYS_disableInts": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_disableInts"
       },
       "SYS_enableInts": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_enableInts"
       },
       "SYS_setVBlankCallback": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_setVBlankCallback"
       },
       "SYS_setVIntCallback": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_setVIntCallback"
       },
       "SYS_setHIntCallback": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_setHIntCallback"
       },
       "SYS_setExtIntCallback": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_setExtIntCallback"
       },
       "SYS_isInVInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_isInVInt"
       },
       "SYS_isNTSC": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_isNTSC"
       },
       "SYS_isPAL": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_isPAL"
       },
       "SYS_getFPS": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getFPS"
       },
       "SYS_getFPSAsFloat": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getFPSAsFloat"
       },
       "SYS_getCPULoad": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getCPULoad"
       },
       "SYS_getShowFrameLoad": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_getShowFrameLoad"
       },
       "SYS_showFrameLoad": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_showFrameLoad"
       },
       "SYS_hideFrameLoad": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_hideFrameLoad"
       },
       "SYS_computeChecksum": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_computeChecksum"
       },
       "SYS_isChecksumOk": {
-        "status": "planned"
+        "status": "covered",
+        "via": "SYS_isChecksumOk"
       },
       "SYS_die": {
-        "status": "planned"
+        "status": "na",
+        "reason": "varargs"
       }
     },
     "task.h": {
@@ -1452,861 +1818,1422 @@
     },
     "timer.h": {
       "getSubTick": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getSubTick"
       },
       "getTick": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getTick"
       },
       "getTime": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getTime"
       },
       "getTimeAsFix32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getTimeAsFix32"
       },
       "startTimer": {
-        "status": "planned"
+        "status": "covered",
+        "via": "startTimer"
       },
       "getTimer": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getTimer"
       },
       "waitSubTick": {
-        "status": "planned"
+        "status": "covered",
+        "via": "waitSubTick"
       },
       "waitTick": {
-        "status": "planned"
+        "status": "covered",
+        "via": "waitTick"
       },
       "waitMs": {
-        "status": "planned"
+        "status": "covered",
+        "via": "waitMs"
       }
     },
     "tools.h": {
       "setRandomSeed": {
-        "status": "planned"
+        "status": "covered",
+        "via": "setRandomSeed"
       },
       "random": {
-        "status": "planned"
+        "status": "covered",
+        "via": "random"
       },
       "kprintf": {
-        "status": "planned"
+        "status": "na",
+        "reason": "varargs debug print"
       },
       "KLog": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog"
       },
       "KLog_U1": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U1"
       },
       "KLog_U2": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U2"
       },
       "KLog_U3": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U3"
       },
       "KLog_U4": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U4"
       },
       "KLog_U1_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U1_"
       },
       "KLog_U2_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U2_"
       },
       "KLog_U3_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U3_"
       },
       "KLog_U4_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U4_"
       },
       "KLog_U1x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U1x"
       },
       "KLog_U2x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U2x"
       },
       "KLog_U3x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U3x"
       },
       "KLog_U4x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U4x"
       },
       "KLog_U1x_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U1x_"
       },
       "KLog_U2x_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U2x_"
       },
       "KLog_U3x_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U3x_"
       },
       "KLog_U4x_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_U4x_"
       },
       "KLog_S1": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S1"
       },
       "KLog_S2": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S2"
       },
       "KLog_S3": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S3"
       },
       "KLog_S4": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S4"
       },
       "KLog_S1_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S1_"
       },
       "KLog_S2_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S2_"
       },
       "KLog_S3_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S3_"
       },
       "KLog_S4_": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S4_"
       },
       "KLog_S1x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S1x"
       },
       "KLog_S2x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S2x"
       },
       "KLog_S3x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S3x"
       },
       "KLog_S4x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_S4x"
       },
       "KLog_f1": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_f1"
       },
       "KLog_f2": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_f2"
       },
       "KLog_f3": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_f3"
       },
       "KLog_f4": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_f4"
       },
       "KLog_f1x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_f1x"
       },
       "KLog_f2x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_f2x"
       },
       "KLog_f3x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_f3x"
       },
       "KLog_f4x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_f4x"
       },
       "KLog_F1": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_F1"
       },
       "KLog_F2": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_F2"
       },
       "KLog_F3": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_F3"
       },
       "KLog_F4": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_F4"
       },
       "KLog_F1x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_F1x"
       },
       "KLog_F2x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_F2x"
       },
       "KLog_F3x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_F3x"
       },
       "KLog_F4x": {
-        "status": "planned"
+        "status": "covered",
+        "via": "KLog_F4x"
       },
       "allocateBitmap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "allocateBitmap"
       },
       "allocateBitmapEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "allocateBitmapEx"
       },
       "allocateTileSet": {
-        "status": "planned"
+        "status": "covered",
+        "via": "allocateTileSet"
       },
       "allocateTileSetEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "allocateTileSetEx"
       },
       "allocateTileMap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "allocateTileMap"
       },
       "allocateTileMapEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "allocateTileMapEx"
       },
       "allocateImage": {
-        "status": "planned"
+        "status": "covered",
+        "via": "allocateImage"
       },
       "allocateMap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "allocateMap"
       },
       "unpackBitmap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "unpackBitmap"
       },
       "unpackTileSet": {
-        "status": "planned"
+        "status": "covered",
+        "via": "unpackTileSet"
       },
       "unpackTileMap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "unpackTileMap"
       },
       "unpackImage": {
-        "status": "planned"
+        "status": "covered",
+        "via": "unpackImage"
       },
       "unpack": {
-        "status": "planned"
+        "status": "covered",
+        "via": "unpack"
       },
       "aplib_unpack": {
-        "status": "planned"
+        "status": "covered",
+        "via": "aplib_unpack"
       },
       "lz4w_unpack": {
-        "status": "planned"
+        "status": "covered",
+        "via": "lz4w_unpack"
       },
       "qsort_u8": {
-        "status": "planned"
+        "status": "covered",
+        "via": "qsort_u8"
       },
       "qsort_s8": {
-        "status": "planned"
+        "status": "covered",
+        "via": "qsort_s8"
       },
       "qsort_u16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "qsort_u16"
       },
       "qsort_s16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "qsort_s16"
       },
       "qsort_u32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "qsort_u32"
       },
       "qsort_s32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "qsort_s32"
       },
       "qsort": {
-        "status": "planned"
+        "status": "covered",
+        "via": "qsort"
       }
     },
     "types.h": {
       "getZeroU8": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getZeroU8"
       },
       "getZeroU16": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getZeroU16"
       },
       "getZeroU32": {
-        "status": "planned"
+        "status": "covered",
+        "via": "getZeroU32"
       }
     },
     "vdp.h": {
       "VDP_init": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_init"
       },
       "VDP_resetScreen": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_resetScreen"
       },
       "VDP_getReg": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getReg"
       },
       "VDP_setReg": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setReg"
       },
       "VDP_getEnable": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getEnable"
       },
       "VDP_isEnable": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_isEnable"
       },
       "VDP_setEnable": {
         "status": "covered",
-        "via": "screen_off,screen_on"
+        "via": "VDP_setEnable,screen_off,screen_on"
       },
       "VDP_getScanlineNumber": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getScanlineNumber"
       },
       "VDP_getScreenHeight": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getScreenHeight"
       },
       "VDP_setScreenHeight224": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setScreenHeight224"
       },
       "VDP_setScreenHeight240": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setScreenHeight240"
       },
       "VDP_getScreenWidth": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getScreenWidth"
       },
       "VDP_setScreenWidth256": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setScreenWidth256"
       },
       "VDP_setScreenWidth320": {
         "status": "covered",
-        "via": "harness"
+        "via": "VDP_setScreenWidth320"
       },
       "VDP_getPlaneWidth": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getPlaneWidth"
       },
       "VDP_getPlaneHeight": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getPlaneHeight"
       },
       "VDP_setPlaneSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setPlaneSize"
       },
       "VDP_getHorizontalScrollingMode": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getHorizontalScrollingMode"
       },
       "VDP_getVerticalScrollingMode": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getVerticalScrollingMode"
       },
       "VDP_setScrollingMode": {
         "status": "covered",
-        "via": "harness"
+        "via": "VDP_setScrollingMode"
       },
       "VDP_getBackgroundColor": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getBackgroundColor"
       },
       "VDP_setBackgroundColor": {
         "status": "covered",
-        "via": "backdrop,cls"
+        "via": "VDP_setBackgroundColor,backdrop,cls"
       },
       "VDP_getAutoInc": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getAutoInc"
       },
       "VDP_setAutoInc": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setAutoInc"
       },
       "VDP_getDMAEnabled": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getDMAEnabled"
       },
       "VDP_setDMAEnabled": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setDMAEnabled"
       },
       "VDP_getHVLatching": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getHVLatching"
       },
       "VDP_setHVLatching": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setHVLatching"
       },
       "VDP_setVInterrupt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setVInterrupt"
       },
       "VDP_setHInterrupt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setHInterrupt"
       },
       "VDP_setExtInterrupt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setExtInterrupt"
       },
       "VDP_setHilightShadow": {
         "status": "covered",
-        "via": "shade_mode"
+        "via": "VDP_setHilightShadow,shade_mode"
       },
       "VDP_getHIntCounter": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getHIntCounter"
       },
       "VDP_setHIntCounter": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setHIntCounter"
       },
       "VDP_getBGAAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getBGAAddress"
       },
       "VDP_getBGBAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getBGBAddress"
       },
       "VDP_getWindowAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getWindowAddress"
       },
       "VDP_getSpriteListAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getSpriteListAddress"
       },
       "VDP_getHScrollTableAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getHScrollTableAddress"
       },
       "VDP_setBGAAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setBGAAddress"
       },
       "VDP_setBGBAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setBGBAddress"
       },
       "VDP_setWindowAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setWindowAddress"
       },
       "VDP_setSpriteListAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpriteListAddress"
       },
       "VDP_setHScrollTableAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setHScrollTableAddress"
       },
       "VDP_setScanMode": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setScanMode"
       },
       "VDP_setWindowHPos": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setWindowHPos"
       },
       "VDP_setWindowVPos": {
         "status": "covered",
-        "via": "hud"
+        "via": "VDP_setWindowVPos,hud"
       },
       "VDP_setWindowOff": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setWindowOff"
       },
       "VDP_setWindowOnTop": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setWindowOnTop"
       },
       "VDP_setWindowOnBottom": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setWindowOnBottom"
       },
       "VDP_setWindowOnLeft": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setWindowOnLeft"
       },
       "VDP_setWindowOnRight": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setWindowOnRight"
       },
       "VDP_setWindowFullScreen": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setWindowFullScreen"
       },
       "VDP_waitDMACompletion": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_waitDMACompletion"
       },
       "VDP_waitFIFOEmpty": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_waitFIFOEmpty"
       },
       "VDP_waitVInt": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_waitVInt"
       },
       "VDP_waitVBlank": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_waitVBlank"
       },
       "VDP_waitVSync": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_waitVSync"
       },
       "VDP_waitVActive": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_waitVActive"
       },
       "VDP_getAdjustedVCounter": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getAdjustedVCounter"
       },
       "VDP_showFPS": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_showFPS"
       },
       "VDP_showCPULoad": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_showCPULoad"
       }
     },
     "vdp_bg.h": {
       "VDP_setHorizontalScroll": {
         "status": "covered",
-        "via": "layer_scroll"
+        "via": "VDP_setHorizontalScroll,layer_scroll"
       },
       "VDP_setHorizontalScrollVSync": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setHorizontalScrollVSync"
       },
       "VDP_setHorizontalScrollTile": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setHorizontalScrollTile"
       },
       "VDP_setHorizontalScrollLine": {
         "status": "covered",
-        "via": "harness"
+        "via": "VDP_setHorizontalScrollLine"
       },
       "VDP_setVerticalScroll": {
         "status": "covered",
-        "via": "layer_scroll"
+        "via": "VDP_setVerticalScroll,layer_scroll"
       },
       "VDP_setVerticalScrollVSync": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setVerticalScrollVSync"
       },
       "VDP_setVerticalScrollTile": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setVerticalScrollTile"
       },
       "VDP_clearPlane": {
         "status": "covered",
-        "via": "cls"
+        "via": "VDP_clearPlane,cls"
       },
       "VDP_getTextPlane": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getTextPlane"
       },
       "VDP_getTextPalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getTextPalette"
       },
       "VDP_getTextPriority": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getTextPriority"
       },
       "VDP_setTextPlane": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTextPlane"
       },
       "VDP_setTextPalette": {
         "status": "covered",
-        "via": "print"
+        "via": "VDP_setTextPalette,print"
       },
       "VDP_setTextPriority": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTextPriority"
       },
       "VDP_drawTextEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_drawTextEx"
       },
       "VDP_clearTextEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearTextEx"
       },
       "VDP_clearTextAreaEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearTextAreaEx"
       },
       "VDP_drawTextBG": {
         "status": "covered",
-        "via": "print"
+        "via": "VDP_drawTextBG,print"
       },
       "VDP_clearTextBG": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearTextBG"
       },
       "VDP_clearTextAreaBG": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearTextAreaBG"
       },
       "VDP_clearTextLineBG": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearTextLineBG"
       },
       "VDP_drawText": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_drawText"
       },
       "VDP_drawTextBGFill": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_drawTextBGFill"
       },
       "VDP_drawTextFill": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_drawTextFill"
       },
       "VDP_clearText": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearText"
       },
       "VDP_clearTextArea": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearTextArea"
       },
       "VDP_clearTextLine": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearTextLine"
       },
       "VDP_drawBitmap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_drawBitmap"
       },
       "VDP_drawBitmapEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_drawBitmapEx"
       },
       "VDP_drawImage": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_drawImage"
       },
       "VDP_drawImageEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_drawImageEx"
       }
     },
     "vdp_spr.h": {
       "VDP_resetSprites": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_resetSprites"
       },
       "VDP_releaseAllSprites": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_releaseAllSprites"
       },
       "VDP_allocateSprites": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_allocateSprites"
       },
       "VDP_releaseSprites": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_releaseSprites"
       },
       "VDP_getAvailableSprites": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getAvailableSprites"
       },
       "VDP_refreshHighestAllocatedSpriteIndex": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_refreshHighestAllocatedSpriteIndex"
       },
       "VDP_clearSprites": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearSprites"
       },
       "VDP_setSpriteFull": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpriteFull"
       },
       "VDP_setSprite": {
         "status": "covered",
-        "via": "spr,spr8,sspr"
+        "via": "VDP_setSprite,spr,spr8,sspr"
       },
       "VDP_setSpritePosition": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpritePosition"
       },
       "VDP_setSpriteSize": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpriteSize"
       },
       "VDP_setSpriteAttribut": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpriteAttribut"
       },
       "VDP_setSpriteLink": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpriteLink"
       },
       "VDP_linkSprites": {
         "status": "covered",
-        "via": "harness"
+        "via": "VDP_linkSprites"
       },
       "VDP_updateSprites": {
         "status": "covered",
-        "via": "harness"
+        "via": "VDP_updateSprites"
       },
       "VDP_setSpritePriority": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpritePriority"
       },
       "VDP_getSpritePriority": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getSpritePriority"
       },
       "VDP_setSpritePalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpritePalette"
       },
       "VDP_getSpritePalette": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getSpritePalette"
       },
       "VDP_setSpriteFlip": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpriteFlip"
       },
       "VDP_setSpriteFlipH": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpriteFlipH"
       },
       "VDP_setSpriteFlipV": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpriteFlipV"
       },
       "VDP_getSpriteFlipH": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getSpriteFlipH"
       },
       "VDP_getSpriteFlipV": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getSpriteFlipV"
       },
       "VDP_setSpriteTile": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setSpriteTile"
       },
       "VDP_getSpriteTile": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getSpriteTile"
       }
     },
     "vdp_tile.h": {
       "VDP_getPlaneAddress": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_getPlaneAddress"
       },
       "VDP_loadTileData": {
         "status": "covered",
-        "via": "harness"
+        "via": "VDP_loadTileData"
       },
       "VDP_loadTileSet": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_loadTileSet"
       },
       "VDP_loadTileSetEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_loadTileSetEx"
       },
       "VDP_loadFontData": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_loadFontData"
       },
       "VDP_loadFont": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_loadFont"
       },
       "VDP_loadDefaultFont": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_loadDefaultFont"
       },
       "VDP_loadBMPTileData": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_loadBMPTileData"
       },
       "VDP_loadBMPTileDataEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_loadBMPTileDataEx"
       },
       "VDP_fillTileData": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_fillTileData"
       },
       "VDP_clearTileMap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearTileMap"
       },
       "VDP_fillTileMap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_fillTileMap"
       },
       "VDP_setTileMapData": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapData"
       },
       "VDP_setTileMapDataEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapDataEx"
       },
       "VDP_setTileMapXY": {
         "status": "covered",
-        "via": "map,map_show,tset"
+        "via": "VDP_setTileMapXY,map,map_show,tset"
       },
       "VDP_clearTileMapRect": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_clearTileMapRect"
       },
       "VDP_fillTileMapRect": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_fillTileMapRect"
       },
       "VDP_fillTileMapRectInc": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_fillTileMapRectInc"
       },
       "VDP_setTileMapDataRect": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapDataRect"
       },
       "VDP_setTileMapDataRectEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapDataRectEx"
       },
       "VDP_setTileMapDataRow": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapDataRow"
       },
       "VDP_setTileMapDataRowEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapDataRowEx"
       },
       "VDP_setTileMapDataColumnFast": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapDataColumnFast"
       },
       "VDP_setTileMapDataColumn": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapDataColumn"
       },
       "VDP_setTileMapDataColumnEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapDataColumnEx"
       },
       "VDP_setTileMap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMap"
       },
       "VDP_setTileMapEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapEx"
       },
       "VDP_setTileMapRow": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapRow"
       },
       "VDP_setTileMapRowEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapRowEx"
       },
       "VDP_setTileMapColumn": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapColumn"
       },
       "VDP_setTileMapColumnEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setTileMapColumnEx"
       },
       "VDP_setMap": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setMap"
       },
       "VDP_setMapEx": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VDP_setMapEx"
       }
     },
     "vram.h": {
       "VRAM_createRegion": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VRAM_createRegion"
       },
       "VRAM_releaseRegion": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VRAM_releaseRegion"
       },
       "VRAM_clearRegion": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VRAM_clearRegion"
       },
       "VRAM_getFree": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VRAM_getFree"
       },
       "VRAM_getAllocated": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VRAM_getAllocated"
       },
       "VRAM_getLargestFreeBlock": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VRAM_getLargestFreeBlock"
       },
       "VRAM_alloc": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VRAM_alloc"
       },
       "VRAM_free": {
-        "status": "planned"
+        "status": "covered",
+        "via": "VRAM_free"
       }
     },
     "ym2612.h": {
       "YM2612_reset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "YM2612_reset"
       },
       "YM2612_read": {
-        "status": "planned"
+        "status": "covered",
+        "via": "YM2612_read"
       },
       "YM2612_readStatus": {
-        "status": "planned"
+        "status": "covered",
+        "via": "YM2612_readStatus"
       },
       "YM2612_write": {
-        "status": "planned"
+        "status": "covered",
+        "via": "YM2612_write"
       },
       "YM2612_writeReg": {
-        "status": "planned"
+        "status": "covered",
+        "via": "YM2612_writeReg"
       },
       "YM2612_enableDAC": {
-        "status": "planned"
+        "status": "covered",
+        "via": "YM2612_enableDAC"
       },
       "YM2612_disableDAC": {
-        "status": "planned"
+        "status": "covered",
+        "via": "YM2612_disableDAC"
       }
     },
     "z80_ctrl.h": {
       "Z80_init": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_init"
       },
       "Z80_isBusTaken": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_isBusTaken"
       },
       "Z80_requestBus": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_requestBus"
       },
       "Z80_getAndRequestBus": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_getAndRequestBus"
       },
       "Z80_releaseBus": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_releaseBus"
       },
       "Z80_startReset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_startReset"
       },
       "Z80_endReset": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_endReset"
       },
       "Z80_setBank": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_setBank"
       },
       "Z80_read": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_read"
       },
       "Z80_write": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_write"
       },
       "Z80_clear": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_clear"
       },
       "Z80_upload": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_upload"
       },
       "Z80_download": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_download"
       },
       "Z80_getLoadedDriver": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_getLoadedDriver"
       },
       "Z80_unloadDriver": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_unloadDriver"
       },
       "Z80_loadCustomDriver": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_loadCustomDriver"
       },
       "Z80_isDriverReady": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_isDriverReady"
       },
       "Z80_getVIntCallback": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_getVIntCallback"
       },
       "Z80_setVIntCallback": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_setVIntCallback"
       },
       "Z80_useBusProtection": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_useBusProtection"
       },
       "Z80_setBusProtection": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_setBusProtection"
       },
       "Z80_enableBusProtection": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_enableBusProtection"
       },
       "Z80_disableBusProtection": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_disableBusProtection"
       },
       "Z80_getForceDelayDMA": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_getForceDelayDMA"
       },
       "Z80_setForceDelayDMA": {
-        "status": "planned"
+        "status": "covered",
+        "via": "Z80_setForceDelayDMA"
+      }
+    },
+    "snd/pcm/snd_dpcm2.h": {
+      "SND_DPCM2_loadDriver": {
+        "status": "covered",
+        "via": "SND_DPCM2_loadDriver"
+      },
+      "SND_DPCM2_isPlaying": {
+        "status": "covered",
+        "via": "SND_DPCM2_isPlaying"
+      },
+      "SND_DPCM2_startPlay": {
+        "status": "covered",
+        "via": "SND_DPCM2_startPlay"
+      },
+      "SND_DPCM2_stopPlay": {
+        "status": "covered",
+        "via": "SND_DPCM2_stopPlay"
+      }
+    },
+    "snd/pcm/snd_pcm.h": {
+      "SND_PCM_loadDriver": {
+        "status": "covered",
+        "via": "SND_PCM_loadDriver"
+      },
+      "SND_PCM_isPlaying": {
+        "status": "covered",
+        "via": "SND_PCM_isPlaying"
+      },
+      "SND_PCM_startPlay": {
+        "status": "na",
+        "reason": "struct-by-value config - Phase-later"
+      },
+      "SND_PCM_stopPlay": {
+        "status": "covered",
+        "via": "SND_PCM_stopPlay"
+      }
+    },
+    "snd/pcm/snd_pcm4.h": {
+      "SND_PCM4_loadDriver": {
+        "status": "covered",
+        "via": "SND_PCM4_loadDriver"
+      },
+      "SND_PCM4_isPlaying": {
+        "status": "covered",
+        "via": "SND_PCM4_isPlaying"
+      },
+      "SND_PCM4_startPlay": {
+        "status": "covered",
+        "via": "SND_PCM4_startPlay"
+      },
+      "SND_PCM4_stopPlay": {
+        "status": "covered",
+        "via": "SND_PCM4_stopPlay"
+      },
+      "SND_PCM4_setVolume": {
+        "status": "covered",
+        "via": "SND_PCM4_setVolume"
+      },
+      "SND_PCM4_getVolume": {
+        "status": "covered",
+        "via": "SND_PCM4_getVolume"
+      }
+    },
+    "snd/sound.h": {
+      "SND_NULL_loadDriver": {
+        "status": "covered",
+        "via": "SND_NULL_loadDriver"
+      }
+    },
+    "snd/xgm.h": {
+      "XGM_loadDriver": {
+        "status": "covered",
+        "via": "XGM_loadDriver"
+      },
+      "XGM_isPlaying": {
+        "status": "covered",
+        "via": "XGM_isPlaying"
+      },
+      "XGM_startPlay": {
+        "status": "covered",
+        "via": "XGM_startPlay"
+      },
+      "XGM_startPlay_FAR": {
+        "status": "covered",
+        "via": "XGM_startPlay_FAR"
+      },
+      "XGM_stopPlay": {
+        "status": "covered",
+        "via": "XGM_stopPlay"
+      },
+      "XGM_pausePlay": {
+        "status": "covered",
+        "via": "XGM_pausePlay"
+      },
+      "XGM_resumePlay": {
+        "status": "covered",
+        "via": "XGM_resumePlay"
+      },
+      "XGM_isPlayingPCM": {
+        "status": "covered",
+        "via": "XGM_isPlayingPCM"
+      },
+      "XGM_setPCM": {
+        "status": "covered",
+        "via": "XGM_setPCM"
+      },
+      "XGM_setPCMFast": {
+        "status": "covered",
+        "via": "XGM_setPCMFast"
+      },
+      "XGM_setPCM_FAR": {
+        "status": "covered",
+        "via": "XGM_setPCM_FAR"
+      },
+      "XGM_setPCMFast_FAR": {
+        "status": "covered",
+        "via": "XGM_setPCMFast_FAR"
+      },
+      "XGM_startPlayPCM": {
+        "status": "covered",
+        "via": "XGM_startPlayPCM"
+      },
+      "XGM_stopPlayPCM": {
+        "status": "covered",
+        "via": "XGM_stopPlayPCM"
+      },
+      "XGM_getElapsed": {
+        "status": "covered",
+        "via": "XGM_getElapsed"
+      },
+      "XGM_getMusicTempo": {
+        "status": "covered",
+        "via": "XGM_getMusicTempo"
+      },
+      "XGM_setMusicTempo": {
+        "status": "covered",
+        "via": "XGM_setMusicTempo"
+      },
+      "XGM_getManualSync": {
+        "status": "covered",
+        "via": "XGM_getManualSync"
+      },
+      "XGM_setManualSync": {
+        "status": "covered",
+        "via": "XGM_setManualSync"
+      },
+      "XGM_nextXFrame": {
+        "status": "covered",
+        "via": "XGM_nextXFrame"
+      },
+      "XGM_setLoopNumber": {
+        "status": "covered",
+        "via": "XGM_setLoopNumber"
+      },
+      "XGM_set68KBUSProtection": {
+        "status": "covered",
+        "via": "XGM_set68KBUSProtection"
+      },
+      "XGM_getForceDelayDMA": {
+        "status": "covered",
+        "via": "XGM_getForceDelayDMA"
+      },
+      "XGM_setForceDelayDMA": {
+        "status": "covered",
+        "via": "XGM_setForceDelayDMA"
+      },
+      "XGM_getCPULoad": {
+        "status": "covered",
+        "via": "XGM_getCPULoad"
+      }
+    },
+    "snd/xgm2.h": {
+      "XGM2_loadDriver": {
+        "status": "covered",
+        "via": "XGM2_loadDriver,music,sfx"
+      },
+      "XGM2_isPlaying": {
+        "status": "covered",
+        "via": "XGM2_isPlaying"
+      },
+      "XGM2_load": {
+        "status": "covered",
+        "via": "XGM2_load"
+      },
+      "XGM2_load_FAR": {
+        "status": "covered",
+        "via": "XGM2_load_FAR"
+      },
+      "XGM2_playTrack": {
+        "status": "covered",
+        "via": "XGM2_playTrack"
+      },
+      "XGM2_play": {
+        "status": "covered",
+        "via": "XGM2_play,music"
+      },
+      "XGM2_play_FAR": {
+        "status": "covered",
+        "via": "XGM2_play_FAR"
+      },
+      "XGM2_stop": {
+        "status": "covered",
+        "via": "XGM2_stop"
+      },
+      "XGM2_pause": {
+        "status": "covered",
+        "via": "XGM2_pause"
+      },
+      "XGM2_resume": {
+        "status": "covered",
+        "via": "XGM2_resume"
+      },
+      "XGM2_isPlayingPCM": {
+        "status": "covered",
+        "via": "XGM2_isPlayingPCM"
+      },
+      "XGM2_playPCM": {
+        "status": "covered",
+        "via": "XGM2_playPCM,sfx"
+      },
+      "XGM2_playPCMEx": {
+        "status": "covered",
+        "via": "XGM2_playPCMEx"
+      },
+      "XGM2_stopPCM": {
+        "status": "covered",
+        "via": "XGM2_stopPCM"
+      },
+      "XGM2_isProcessingFade": {
+        "status": "covered",
+        "via": "XGM2_isProcessingFade"
+      },
+      "XGM2_fadeIn": {
+        "status": "covered",
+        "via": "XGM2_fadeIn"
+      },
+      "XGM2_fadeOut": {
+        "status": "covered",
+        "via": "XGM2_fadeOut"
+      },
+      "XGM2_fadeOutAndStop": {
+        "status": "covered",
+        "via": "XGM2_fadeOutAndStop"
+      },
+      "XGM2_fadeOutAndPause": {
+        "status": "covered",
+        "via": "XGM2_fadeOutAndPause"
+      },
+      "XGM2_fadeTo": {
+        "status": "covered",
+        "via": "XGM2_fadeTo"
+      },
+      "XGM2_setLoopNumber": {
+        "status": "covered",
+        "via": "XGM2_setLoopNumber"
+      },
+      "XGM2_getElapsed": {
+        "status": "covered",
+        "via": "XGM2_getElapsed"
+      },
+      "XGM2_getMusicTempo": {
+        "status": "covered",
+        "via": "XGM2_getMusicTempo"
+      },
+      "XGM2_setMusicTempo": {
+        "status": "covered",
+        "via": "XGM2_setMusicTempo"
+      },
+      "XGM2_setFMVolume": {
+        "status": "covered",
+        "via": "XGM2_setFMVolume"
+      },
+      "XGM2_setPSGVolume": {
+        "status": "covered",
+        "via": "XGM2_setPSGVolume"
+      },
+      "XGM2_isPAL": {
+        "status": "covered",
+        "via": "XGM2_isPAL"
+      },
+      "XGM2_getCPULoad": {
+        "status": "covered",
+        "via": "XGM2_getCPULoad"
+      },
+      "XGM2_getDMAWaitTime": {
+        "status": "covered",
+        "via": "XGM2_getDMAWaitTime"
+      },
+      "XGM2_getDebugFrameCounter": {
+        "status": "covered",
+        "via": "XGM2_getDebugFrameCounter"
+      },
+      "XGM2_getDebugPCMRate": {
+        "status": "covered",
+        "via": "XGM2_getDebugPCMRate"
+      },
+      "XGM2_getDebugMissedFrames": {
+        "status": "covered",
+        "via": "XGM2_getDebugMissedFrames"
+      },
+      "XGM2_getDebugProcessDuration": {
+        "status": "covered",
+        "via": "XGM2_getDebugProcessDuration"
       }
     }
   }

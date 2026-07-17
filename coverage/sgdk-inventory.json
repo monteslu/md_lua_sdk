@@ -6556,15 +6556,638 @@
       ],
       "unparsed": [],
       "inlineOnly": []
+    },
+    "snd/pcm/snd_dpcm2.h": {
+      "functions": [
+        {
+          "name": "SND_DPCM2_loadDriver",
+          "ret": "void",
+          "params": [
+            "const bool waitReady"
+          ],
+          "line": 27
+        },
+        {
+          "name": "SND_DPCM2_isPlaying",
+          "ret": "bool",
+          "params": [
+            "const u16 channel_mask"
+          ],
+          "line": 45
+        },
+        {
+          "name": "SND_DPCM2_startPlay",
+          "ret": "void",
+          "params": [
+            "const u8 *sample",
+            "const u32 len",
+            "const SoundPCMChannel channel",
+            "const bool loop"
+          ],
+          "line": 66
+        },
+        {
+          "name": "SND_DPCM2_stopPlay",
+          "ret": "void",
+          "params": [
+            "const SoundPCMChannel channel"
+          ],
+          "line": 77
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "snd/pcm/snd_pcm.h": {
+      "functions": [
+        {
+          "name": "SND_PCM_loadDriver",
+          "ret": "void",
+          "params": [
+            "const bool waitReady"
+          ],
+          "line": 51
+        },
+        {
+          "name": "SND_PCM_isPlaying",
+          "ret": "bool",
+          "params": [],
+          "line": 60
+        },
+        {
+          "name": "SND_PCM_startPlay",
+          "ret": "void",
+          "params": [
+            "const u8 *sample",
+            "const u32 len",
+            "const SoundPcmSampleRate rate",
+            "const SoundPanning pan",
+            "const bool loop"
+          ],
+          "line": 90
+        },
+        {
+          "name": "SND_PCM_stopPlay",
+          "ret": "void",
+          "params": [],
+          "line": 96
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "snd/pcm/snd_pcm4.h": {
+      "functions": [
+        {
+          "name": "SND_PCM4_loadDriver",
+          "ret": "void",
+          "params": [
+            "const bool waitReady"
+          ],
+          "line": 38
+        },
+        {
+          "name": "SND_PCM4_isPlaying",
+          "ret": "bool",
+          "params": [
+            "const u16 channel_mask"
+          ],
+          "line": 58
+        },
+        {
+          "name": "SND_PCM4_startPlay",
+          "ret": "void",
+          "params": [
+            "const u8 *sample",
+            "const u32 len",
+            "const SoundPCMChannel channel",
+            "const bool loop"
+          ],
+          "line": 81
+        },
+        {
+          "name": "SND_PCM4_stopPlay",
+          "ret": "void",
+          "params": [
+            "const SoundPCMChannel channel"
+          ],
+          "line": 94
+        },
+        {
+          "name": "SND_PCM4_setVolume",
+          "ret": "void",
+          "params": [
+            "const SoundPCMChannel channel",
+            "const u8 volume"
+          ],
+          "line": 108
+        },
+        {
+          "name": "SND_PCM4_getVolume",
+          "ret": "u8",
+          "params": [
+            "const SoundPCMChannel channel"
+          ],
+          "line": 123
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "snd/pcm/tab_vol.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "snd/smp_null_dpcm.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "snd/smp_null.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "snd/sound.h": {
+      "functions": [
+        {
+          "name": "SND_NULL_loadDriver",
+          "ret": "void",
+          "params": [],
+          "line": 67
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "snd/xgm.h": {
+      "functions": [
+        {
+          "name": "XGM_loadDriver",
+          "ret": "void",
+          "params": [
+            "const bool waitReady"
+          ],
+          "line": 112
+        },
+        {
+          "name": "XGM_isPlaying",
+          "ret": "bool",
+          "params": [],
+          "line": 118
+        },
+        {
+          "name": "XGM_startPlay",
+          "ret": "void",
+          "params": [
+            "const u8 *song"
+          ],
+          "line": 131
+        },
+        {
+          "name": "XGM_startPlay_FAR",
+          "ret": "void",
+          "params": [
+            "const u8 *song",
+            "u32 size"
+          ],
+          "line": 146
+        },
+        {
+          "name": "XGM_stopPlay",
+          "ret": "void",
+          "params": [],
+          "line": 154
+        },
+        {
+          "name": "XGM_pausePlay",
+          "ret": "void",
+          "params": [],
+          "line": 164
+        },
+        {
+          "name": "XGM_resumePlay",
+          "ret": "void",
+          "params": [],
+          "line": 174
+        },
+        {
+          "name": "XGM_isPlayingPCM",
+          "ret": "u8",
+          "params": [
+            "const u16 channel_mask"
+          ],
+          "line": 195
+        },
+        {
+          "name": "XGM_setPCM",
+          "ret": "void",
+          "params": [
+            "const u8 id",
+            "const u8 *sample",
+            "const u32 len"
+          ],
+          "line": 214
+        },
+        {
+          "name": "XGM_setPCMFast",
+          "ret": "void",
+          "params": [
+            "const u8 id",
+            "const u8 *sample",
+            "const u32 len"
+          ],
+          "line": 232
+        },
+        {
+          "name": "XGM_setPCM_FAR",
+          "ret": "void",
+          "params": [
+            "const u8 id",
+            "const u8 *sample",
+            "const u32 len"
+          ],
+          "line": 237
+        },
+        {
+          "name": "XGM_setPCMFast_FAR",
+          "ret": "void",
+          "params": [
+            "const u8 id",
+            "const u8 *sample",
+            "const u32 len"
+          ],
+          "line": 242
+        },
+        {
+          "name": "XGM_startPlayPCM",
+          "ret": "void",
+          "params": [
+            "const u8 id",
+            "const u8 priority",
+            "const SoundPCMChannel channel"
+          ],
+          "line": 261
+        },
+        {
+          "name": "XGM_stopPlayPCM",
+          "ret": "void",
+          "params": [
+            "const SoundPCMChannel channel"
+          ],
+          "line": 274
+        },
+        {
+          "name": "XGM_getElapsed",
+          "ret": "u32",
+          "params": [],
+          "line": 284
+        },
+        {
+          "name": "XGM_getMusicTempo",
+          "ret": "u16",
+          "params": [],
+          "line": 297
+        },
+        {
+          "name": "XGM_setMusicTempo",
+          "ret": "void",
+          "params": [
+            "const u16 value"
+          ],
+          "line": 310
+        },
+        {
+          "name": "XGM_getManualSync",
+          "ret": "u16",
+          "params": [],
+          "line": 318
+        },
+        {
+          "name": "XGM_setManualSync",
+          "ret": "void",
+          "params": [
+            "const bool value"
+          ],
+          "line": 327
+        },
+        {
+          "name": "XGM_nextXFrame",
+          "ret": "void",
+          "params": [
+            "const u16 num"
+          ],
+          "line": 355
+        },
+        {
+          "name": "XGM_setLoopNumber",
+          "ret": "void",
+          "params": [
+            "const s8 value"
+          ],
+          "line": 363
+        },
+        {
+          "name": "XGM_set68KBUSProtection",
+          "ret": "void",
+          "params": [
+            "const bool value"
+          ],
+          "line": 371
+        },
+        {
+          "name": "XGM_getForceDelayDMA",
+          "ret": "bool",
+          "params": [],
+          "line": 378
+        },
+        {
+          "name": "XGM_setForceDelayDMA",
+          "ret": "void",
+          "params": [
+            "const bool value"
+          ],
+          "line": 383
+        },
+        {
+          "name": "XGM_getCPULoad",
+          "ret": "u32",
+          "params": [],
+          "line": 396
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "snd/xgm2.h": {
+      "functions": [
+        {
+          "name": "XGM2_loadDriver",
+          "ret": "void",
+          "params": [
+            "bool waitReady"
+          ],
+          "line": 22
+        },
+        {
+          "name": "XGM2_isPlaying",
+          "ret": "bool",
+          "params": [],
+          "line": 28
+        },
+        {
+          "name": "XGM2_load",
+          "ret": "void",
+          "params": [
+            "const u8 *song"
+          ],
+          "line": 41
+        },
+        {
+          "name": "XGM2_load_FAR",
+          "ret": "void",
+          "params": [
+            "const u8 *song",
+            "const u32 len"
+          ],
+          "line": 55
+        },
+        {
+          "name": "XGM2_playTrack",
+          "ret": "void",
+          "params": [
+            "const u16 track"
+          ],
+          "line": 67
+        },
+        {
+          "name": "XGM2_play",
+          "ret": "void",
+          "params": [
+            "const u8* song"
+          ],
+          "line": 79
+        },
+        {
+          "name": "XGM2_play_FAR",
+          "ret": "void",
+          "params": [
+            "const u8* song",
+            "const u32 len"
+          ],
+          "line": 93
+        },
+        {
+          "name": "XGM2_stop",
+          "ret": "void",
+          "params": [],
+          "line": 104
+        },
+        {
+          "name": "XGM2_pause",
+          "ret": "void",
+          "params": [],
+          "line": 114
+        },
+        {
+          "name": "XGM2_resume",
+          "ret": "void",
+          "params": [],
+          "line": 124
+        },
+        {
+          "name": "XGM2_isPlayingPCM",
+          "ret": "u8",
+          "params": [
+            "const u16 channel_mask"
+          ],
+          "line": 147
+        },
+        {
+          "name": "XGM2_playPCM",
+          "ret": "bool",
+          "params": [
+            "const u8 *sample",
+            "const u32 len",
+            "const SoundPCMChannel channel"
+          ],
+          "line": 171
+        },
+        {
+          "name": "XGM2_playPCMEx",
+          "ret": "bool",
+          "params": [
+            "const u8 *sample",
+            "const u32 len",
+            "const SoundPCMChannel channel",
+            "const u8 priority",
+            "const bool halfRate",
+            "const bool loop"
+          ],
+          "line": 203
+        },
+        {
+          "name": "XGM2_stopPCM",
+          "ret": "void",
+          "params": [
+            "const SoundPCMChannel channel"
+          ],
+          "line": 218
+        },
+        {
+          "name": "XGM2_isProcessingFade",
+          "ret": "bool",
+          "params": [],
+          "line": 224
+        },
+        {
+          "name": "XGM2_fadeIn",
+          "ret": "void",
+          "params": [
+            "const u16 numFrame"
+          ],
+          "line": 233
+        },
+        {
+          "name": "XGM2_fadeOut",
+          "ret": "void",
+          "params": [
+            "const u16 numFrame"
+          ],
+          "line": 242
+        },
+        {
+          "name": "XGM2_fadeOutAndStop",
+          "ret": "void",
+          "params": [
+            "const u16 numFrame"
+          ],
+          "line": 251
+        },
+        {
+          "name": "XGM2_fadeOutAndPause",
+          "ret": "void",
+          "params": [
+            "const u16 numFrame"
+          ],
+          "line": 260
+        },
+        {
+          "name": "XGM2_fadeTo",
+          "ret": "void",
+          "params": [
+            "const u16 fmVolume",
+            "const u16 psgVolume",
+            "const u16 numFrame"
+          ],
+          "line": 273
+        },
+        {
+          "name": "XGM2_setLoopNumber",
+          "ret": "void",
+          "params": [
+            "const s8 value"
+          ],
+          "line": 281
+        },
+        {
+          "name": "XGM2_getElapsed",
+          "ret": "u32",
+          "params": [],
+          "line": 292
+        },
+        {
+          "name": "XGM2_getMusicTempo",
+          "ret": "u16",
+          "params": [],
+          "line": 305
+        },
+        {
+          "name": "XGM2_setMusicTempo",
+          "ret": "void",
+          "params": [
+            "const u16 value"
+          ],
+          "line": 317
+        },
+        {
+          "name": "XGM2_setFMVolume",
+          "ret": "void",
+          "params": [
+            "const u16 value"
+          ],
+          "line": 328
+        },
+        {
+          "name": "XGM2_setPSGVolume",
+          "ret": "void",
+          "params": [
+            "const u16 value"
+          ],
+          "line": 338
+        },
+        {
+          "name": "XGM2_isPAL",
+          "ret": "bool",
+          "params": [
+            "const u8 *xgm2"
+          ],
+          "line": 344
+        },
+        {
+          "name": "XGM2_getCPULoad",
+          "ret": "u16",
+          "params": [
+            "const bool mean"
+          ],
+          "line": 353
+        },
+        {
+          "name": "XGM2_getDMAWaitTime",
+          "ret": "u16",
+          "params": [
+            "const bool mean"
+          ],
+          "line": 361
+        },
+        {
+          "name": "XGM2_getDebugFrameCounter",
+          "ret": "u16",
+          "params": [],
+          "line": 368
+        },
+        {
+          "name": "XGM2_getDebugPCMRate",
+          "ret": "u16",
+          "params": [],
+          "line": 374
+        },
+        {
+          "name": "XGM2_getDebugMissedFrames",
+          "ret": "u8",
+          "params": [],
+          "line": 380
+        },
+        {
+          "name": "XGM2_getDebugProcessDuration",
+          "ret": "u8",
+          "params": [
+            "const u16 ind"
+          ],
+          "line": 386
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
     }
   },
   "notSurveyed": {
     "dirs": [
-      "ext",
-      "snd"
+      "ext"
     ],
-    "headerCount": 29,
-    "functionCount": 253,
+    "headerCount": 20,
+    "functionCount": 180,
     "files": {
       "ext/console.h": 13,
       "ext/everdrive.h": 6,
@@ -6585,16 +7208,7 @@
       "ext/mw/ssf_ed_x7.h": 6,
       "ext/serial/buffer.h": 6,
       "ext/serial/serial.h": 13,
-      "ext/stb/stb_sprintf.h": 14,
-      "snd/pcm/snd_dpcm2.h": 4,
-      "snd/pcm/snd_pcm.h": 4,
-      "snd/pcm/snd_pcm4.h": 6,
-      "snd/pcm/tab_vol.h": 0,
-      "snd/smp_null_dpcm.h": 0,
-      "snd/smp_null.h": 0,
-      "snd/sound.h": 1,
-      "snd/xgm.h": 25,
-      "snd/xgm2.h": 33
+      "ext/stb/stb_sprintf.h": 14
     }
   }
 }

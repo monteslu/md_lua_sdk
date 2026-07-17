@@ -33,7 +33,7 @@ export const SGDK_INCLUDE = path.join(
 export const INVENTORY_PATH = path.join(REPO, "coverage/sgdk-inventory.json");
 
 // Subdirs excluded from the denominator for now (counted separately).
-const NOT_SURVEYED_DIRS = ["ext", "snd"];
+const NOT_SURVEYED_DIRS = ["ext"];   // snd/ (XGM2/PSG) IS surveyed - we use it
 
 // ---- source cleaning (offset/line-preserving) --------------------------------
 // Every stripper replaces removed characters with spaces (newlines kept) so
@@ -307,6 +307,11 @@ export function buildInventory() {
   const headers = {};
   for (const h of listPublicHeaders()) {
     headers[h] = parseHeaderFile(path.join(SGDK_INCLUDE, h));
+  }
+  // snd/ IS surveyed (XGM2/PSG/PCM are real API we target). Key by "snd/xxx.h".
+  for (const rel of listHeadersUnder("snd")) {
+    const key = rel.split(path.sep).join("/");
+    headers[key] = parseHeaderFile(path.join(SGDK_INCLUDE, rel));
   }
 
   const notSurveyed = {
