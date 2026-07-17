@@ -116,3 +116,21 @@ P8 buttons: 0-3 = dpad, 4 O→BUTTON_B, 5 X→BUTTON_C.
   (minimal WAV reader + linear resample in build-md); md_sfx plays XGM2 PCM
   channels 2-4, PSG blip fallback when no bank. Music+SFX share the driver.
 - 6-button pad: btn(8..11) = X/Y/Z/MODE.
+
+### Examples set (2026-07-16)
+- mvp (sheet art + anim + input), starfall (VERBATIM gbalua port; the parity
+  proof), anim + hello (verbatim ports), raster (the Genesis showcase: window
+  HUD + per-line waves + CRAM cycling + FM). All build + render in gpgx.
+- KNOWN POLISH ITEM: window-plane text shows a duplicate glyph artifact at
+  far right (window plane is 64 tiles wide vs 40 shown; needs width clamp or
+  plane-size set). Track in Phase-3 polish.
+
+### IN FLIGHT (if resuming after compaction, check these agents' outputs)
+- coverage harness agent: tools/sgdk-coverage.mjs + coverage/ledger.json +
+  report + never-decrease test (Phase 3's measuring stick).
+- docs agent: docs/CHEATSHEET.md + CHEATSHEET_FOR_PICO8_USERS.md + README.md.
+### NEXT AFTER AGENTS LAND: review+commit their output, then the Phase-3
+### coverage grind (builtins direct-call rows for scalar SGDK fns; opaque
+### handles for Sprite*/Map*; static-named callbacks - flat ROM makes them
+### safe; N/A ledger honest). Genre examples: port the 10 romdev C templates
+### to Lua. Then version 0.1.0, tag, HOLD for monteslu's npm publish.
