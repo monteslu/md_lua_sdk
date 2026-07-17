@@ -2,10 +2,62 @@
   "name": "mdlua",
   "version": "0.1.0",
   "type": "module",
+  "description": "Write Sega Mega Drive / Genesis games in a PICO-8-flavored Lua that compiles to native 68000 via SGDK. Full SGDK API surface, XGM2 music, PCM sfx, PNG asset pipeline, bundled WASM toolchain and emulator - no devkit install.",
+  "keywords": [
+    "sega",
+    "genesis",
+    "megadrive",
+    "mega-drive",
+    "sgdk",
+    "lua",
+    "pico-8",
+    "68000",
+    "m68k",
+    "gamedev",
+    "retro",
+    "homebrew",
+    "rom"
+  ],
   "license": "MIT",
   "author": "Luis Montes",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monteslu/md_lua_sdk.git"
+  },
+  "homepage": "https://github.com/monteslu/md_lua_sdk#readme",
+  "bugs": {
+    "url": "https://github.com/monteslu/md_lua_sdk/issues"
+  },
   "bin": {
     "mdlua": "bin/mdlua.js"
+  },
+  "files": [
+    "bin",
+    "compiler",
+    "md-sdk",
+    "docs",
+    "examples",
+    "coverage/ledger.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": "./compiler/index.js",
+    "./compiler/index.js": "./compiler/index.js",
+    "./compiler/builtins.js": "./compiler/builtins.js",
+    "./compiler/builtins-sgdk.js": "./compiler/builtins-sgdk.js",
+    "./compiler/build-md.mjs": "./compiler/build-md.mjs",
+    "./compiler/audio-assets.mjs": "./compiler/audio-assets.mjs",
+    "./compiler/asset-headers.mjs": "./compiler/asset-headers.mjs",
+    "./compiler/png-tiles.mjs": "./compiler/png-tiles.mjs",
+    "./compiler/png-encode.mjs": "./compiler/png-encode.mjs",
+    "./compiler/ase-import.mjs": "./compiler/ase-import.mjs",
+    "./compiler/tmx-import.mjs": "./compiler/tmx-import.mjs",
+    "./md-sdk/*": "./md-sdk/*",
+    "./docs/*": "./docs/*",
+    "./examples/*": "./examples/*",
+    "./coverage/ledger.json": "./coverage/ledger.json",
+    "./package.json": "./package.json"
   },
   "engines": {
     "node": ">=24"

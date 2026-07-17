@@ -312,3 +312,28 @@ Bound (optr sprite handle + fn callback). Two things surfaced:
 - Dialect note hit while writing the example: top-level locals must init to
   CONSTANT NUMBERS (booleans cascade-fail into "conditions must be boolean");
   int flags + explicit == are the idiom.
+
+### Publish readiness + the BMP nibble bug (caught by the README screenshot)
+Taking the README screenshots the sibling SDKs have exposed a REAL renderer
+bug: every bitmap verb (pset/line/rect/circfill) drew STRIPES - only every
+other pixel. SGDK BMP contract (bmp.h doc): the col param must be "8 bits
+filled" (0x00, 0x11 - the color in BOTH nibbles); the 4bpp buffer packs 2
+px/byte and BMP_setPixel masks YOUR byte to the target nibble, so a plain
+0-15 colors half the pixels. Fix: (col << 4) | col in plot_clip (+ mask
+BMP_getPixel's return to 0-15). Verified solid-color repro in gpgx. Lesson:
+"screenshot-verified" earlier missed it because the verified examples lean
+on sprites/tiles/text, not the BMP verbs - the READ ME example is the one
+place plain shapes carry the whole frame. Screenshot gates catch what
+render-health heuristics don't.
+
+Publish kit added: LICENSE (MIT), package.json description/keywords/repo/
+files (tarball 141.7kB/55 files - the files field keeps 11MB of build_out
+out)/exports map (deep paths incl. audio-assets.mjs, md-sdk/*, docs/*,
+examples/*, coverage/ledger.json - what the web IDE stages), README
+screenshots (docs/img/hello.png + starfall.png, gpgx captures), examples
+table refreshed (13), test/build.test.js (5 end-to-end WASM-toolchain
+gates: ROM shape ($100 SEGA + $18E checksum + 128KB padding), DETERMINISM
+(byte-identical rebuild), assets, music bank bytes present in ROM,
+callbacks through the real linker), .github/workflows/ci.yml (fresh-
+checkout tests + all 13 examples + gen-sgdk-builtins regen-sync gate).
+61 tests. Remaining for publish: monteslu creates the remote + npm publish.

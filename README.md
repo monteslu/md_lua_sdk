@@ -39,6 +39,10 @@ function _draw()
 end
 ```
 
+<p align="center">
+  <img src="docs/img/hello.png" width="640" alt="a yellow smiley face and 'hello genesis' text on a dark blue 320x224 screen">
+</p>
+
 Build it to a ROM and run it:
 
 ```sh
@@ -143,9 +147,11 @@ The reason this target is fun:
   lesson so you don't have to).
 - **`hscroll(line, x)`** sets the map plane's horizontal scroll per scanline
   - wavy water, heat shimmer, split-screen parallax. 224 lines, one DMA.
-- **FM music.** `music(0)` starts a YM2612 track through the XGM2 driver on
-  the Z80 - the sound of the platform. `sfx(n)` plays PCM samples from your
-  `--sfx` bank (PSG blip fallback so you hear something before assets exist).
+- **FM music.** `music(n)` plays song n from your `--music` bank through the
+  XGM2 driver on the Z80 - the sound of the platform. `music(-1)` stops,
+  `music(n, false)` plays once. `sfx(n)` fires PCM samples from your `--sfx`
+  bank OVER the music (PSG blip fallback so you hear something before assets
+  exist; a built-in demo tune answers `music()` before you add songs).
 - **`hud(rows)`** claims the VDP's third plane as an unscrollable status bar;
   `print` routes into it automatically.
 - **Two players are real**: `btn(i, 1)` reads the second pad.
@@ -157,11 +163,15 @@ opaque colors + transparent), `--map level.png` a tilemap (deduped tiles),
 via a self-contained PNG → VDP-tile converter (`compiler/png-tiles.mjs`).
 `--sfx a.wav,b.wav` builds the PCM sample bank (converted to the XGM2
 contract: 8-bit signed 13.3 kHz, 256-byte aligned).
+`--music intro.vgm,level.vgm` builds the song bank - bank order is the
+`music(n)` index. `.vgm` comes from any Mega Drive tracker (DefleMask,
+Furnace: export VGM); gzipped `.vgz` and precompiled `.xgc` work too. The
+VGM → XGM2 conversion is byte-identical to SGDK's own xgm2tool.
 
 ```sh
 mdlua build mygame/main.lua \
   --sheet mygame/sprites.png --map mygame/level.png \
-  --sfx mygame/laser.wav -o mygame/game.bin
+  --sfx mygame/laser.wav --music mygame/theme.vgm -o mygame/game.bin
 ```
 
 `mdlua c main.lua` prints the generated C for debugging.
@@ -174,14 +184,27 @@ The `examples/` directory shows each subsystem in use:
 | `mvp` | a sheet, animated + flipped sprites, text colors, input |
 | `anim` | the frame-range animation helpers (loop / ping-pong / once) |
 | `raster` | the Genesis showcase: `hscroll` waves + live `pal()` cycling + window HUD + FM |
+| `platformer` | tiles + sprites + gravity/jump - the genre starter |
 | `starfall` | a complete shmup - scrolling tile plane, sprites, HUD, music |
+| `music` | the `--music` song bank: switch / stop / play-once / sfx over music |
+| `pcm` | raw PCM through SGDK's standalone `SND_PCM` driver |
+| `sgdk_direct` | raw SGDK calls (`VDP_*`, `PAL_*`) mixed with PICO-8 verbs |
+| `coroutine` | an SGDK user task (`TSK_userSet`) running a Lua function |
+| `vint_callback` | a Lua function as the vblank interrupt hook |
+| `sprite_callback` | the SGDK sprite engine calling back into Lua |
+
+<p align="center">
+  <img src="docs/img/starfall.png" width="640" alt="the starfall shmup: enemy formation, starfield, score and lives HUD">
+</p>
 
 ## Not-Lua walls (loud, never silent)
 
 Conditions must be boolean (`if x ~= 0 then`, not `if x then` - Lua calls 0
 truthy, C doesn't, and the compiler refuses to guess). No `nil`, closures,
-metatables, coroutines, string concatenation, or `goto`. Every unsupported
-feature is a compile-time error that says what to write instead.
+metatables, Lua coroutines, string concatenation, or `goto` (SGDK's 68k
+task API - `TSK_userSet` and friends - covers the background-work use case
+natively; see `examples/coroutine`). Every unsupported feature is a
+compile-time error that says what to write instead.
 
 ## Repo layout
 

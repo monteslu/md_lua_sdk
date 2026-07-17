@@ -144,13 +144,17 @@ static void bmp_ensure(void) {
 static void plot_clip(int x, int y, u16 col) {
     if (x < clip_x0 || x > clip_x1 || y < clip_y0 || y > clip_y1) return;
     if ((unsigned)x >= 256u || (unsigned)y >= 160u) return;
-    BMP_setPixel((u16)x, (u16)y, (u8)col);
+    // SGDK BMP contract: col must be "8 bits filled" (0x00, 0x11, ... - the
+    // color in BOTH nibbles). The 4bpp buffer packs 2 pixels/byte and
+    // BMP_setPixel masks YOUR byte down to the target nibble; a plain 0-15
+    // value colors only every other pixel (measured: striped circles).
+    BMP_setPixel((u16)x, (u16)y, (u8)((col << 4) | col));
 }
 void md_pset(int x, int y, int color) { bmp_ensure(); plot_clip(x, y, resolve_color(color)); }
 int md_pget(int x, int y) {
     if (!bmp_on) return 0;
     if ((unsigned)x >= 256u || (unsigned)y >= 160u) return 0;
-    return (int)BMP_getPixel((u16)x, (u16)y);
+    return (int)(BMP_getPixel((u16)x, (u16)y) & 0x0F);  // back to a 0-15 index
 }
 void md_clip(int x, int y, int w, int h) {
     if (w <= 0 || h <= 0) { clip_x0 = 0; clip_y0 = 0; clip_x1 = 319; clip_y1 = 223; return; }

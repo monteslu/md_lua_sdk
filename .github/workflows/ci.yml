@@ -1,0 +1,43 @@
+# CI: the SDK must stand alone - fresh checkout, registry deps, no romdev
+# server, no sibling checkouts. Unit + full-build tests (the in-process WASM
+# toolchain: cc1-m68k -> as -> ld -> objcopy, sjasm/bintos for the Z80
+# driver), then every example built end-to-end with its real assets.
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      - name: tests (compiler + coverage gates + audio codecs + full builds)
+        run: npm test
+
+      - name: build every example (WASM toolchain, no server)
+        run: |
+          set -e
+          DEMO=node_modules/romdev-toolchain-m68k-gcc/share/genesis/lib/sgdk/music/demo.vgm
+          for ex in hello mvp anim raster platformer starfall sgdk_direct parity coroutine pcm vint_callback sprite_callback music; do
+            args=""
+            [ "$ex" = "starfall" ] && args="--sheet examples/starfall/shmup_sheet.png --map examples/starfall/space_bg.png"
+            [ "$ex" = "anim" ] && args="--sheet examples/anim/critter.png --map examples/anim/bg.png"
+            [ "$ex" = "mvp" ] && args="--sheet examples/anim/critter.png"
+            [ "$ex" = "music" ] && args="--music $DEMO"
+            echo "== $ex =="
+            node bin/mdlua.js build "examples/$ex/main.lua" $args -o "$RUNNER_TEMP/$ex.bin"
+            test -s "$RUNNER_TEMP/$ex.bin"
+          done
+
+      - name: generated SGDK table is in sync (regen must match committed bytes)
+        run: |
+          node tools/gen-sgdk-builtins.mjs
+          git diff --exit-code -- compiler/builtins-sgdk.js
