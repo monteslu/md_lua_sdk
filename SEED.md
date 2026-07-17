@@ -161,3 +161,35 @@ the Phase-3 perf pass. (Same state gbalua shipped in, but DOCUMENTED here.)
   libmd, and run in gpgx. Front-end fix: string literals now allowed in any
   str-kind builtin arg (was print()-only) - needed for VDP_drawText et al.
 - example sgdk_direct: raw SGDK calls next to PICO-8 verbs in one cart.
+
+### v0.1.0 — DONE 2026-07-16 (all phases complete, HELD for npm publish)
+Every plan phase is done:
+- Spike 0/1: pipeline + Genesis flavor proven.
+- Phase 1: full core PICO-8 API + asset pipeline (PNG->VDP) + runtime + run
+  window + tests + examples.
+- Phase 2: SRAM, WINDOW hud, shadow/highlight, fade, PCM sfx, 6-button, docs.
+- Phase 3: 100% SGDK coverage (724 auto-generated direct-call verbs + 75
+  curated = 799 total), coverage CI gate, genre examples, 4-way parity cart.
+
+STATUS: 31 tests pass, 8 examples build+run in gpgx (all screenshot-verified),
+100.00% SGDK coverage (baseline-locked). Deps: published packages only
+(romdev-toolchain-m68k-gcc@0.3.0 + romdev-core-gpgx + xgm2/resampler), zero
+romdevtools. NOT pushed to a remote (monteslu creates it); NOT npm-published
+(monteslu's manual step) - version bumped to 0.1.0 and HELD, same flow as gtlua.
+
+KNOWN POLISH (non-blocking, tracked for later):
+- window-plane text: far-right duplicate glyph (plane width vs shown clamp).
+- VDP_drawText (raw SGDK) text-palette selection interacts with mdlua print()'s
+  cache (both fight PAL selection); direct SGDK text + mdlua print in ONE frame
+  needs a shared text-palette convention.
+- bitmap verbs (BMP engine) vs tile/sprite mode don't compose in one frame
+  (BMP claims plane A). Documented; games pick a mode.
+- num8 wiring (deferred - md_math is 16.16-only; needs -DMD_NUM8 tables).
+- ase/tmx import exists in compiler/ but build-md doesn't wire it (PNG only).
+
+For the shared-core `lua-c` extraction (now 3 impls exist): see
+internal-gtlua/CORE_EXTRACTION.md + gtlua-core-extraction-retro memory. The
+mdlua fork copied curated files (SEED origin map) and added: the FINAL REMAP
+PASS (fixes gbalua's unlinkable gt_p8_rnd_int class), the CRAM-shadow palette
+flush (mid-frame PAL_setColor races the DMA queue), and the generated-SGDK
+direct-call table (the 100%-coverage engine) - candidates for the shared core.

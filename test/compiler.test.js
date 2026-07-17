@@ -24,7 +24,7 @@ function cOf(src) {
 
 // ---- examples --------------------------------------------------------------
 
-for (const ex of ["mvp", "hello", "anim", "starfall", "raster", "platformer", "sgdk_direct"]) {
+for (const ex of ["mvp", "hello", "anim", "starfall", "raster", "platformer", "sgdk_direct", "parity"]) {
   test(`example ${ex} compiles`, () => {
     const src = readFileSync(path.join(REPO, `examples/${ex}/main.lua`), "utf8");
     const r = compile(src, "main.lua", { target: "md" });
