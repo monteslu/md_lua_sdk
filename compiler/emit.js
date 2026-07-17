@@ -994,6 +994,9 @@ export function emit(chunk, symbols, file, opts = {}) {
     if (name === "sprf") {
       return `${cName(b.c)}(${args[0]}, ${args[1]}, ${args[2]}, ${args[3]} | (${args[4]} << 1))`;
     }
+    // a pointer-returning SGDK call (retptr) hands back a Sprite*/Map*/... - cast
+    // it to int so the handle assigns cleanly to an int global under -Werror.
+    if (b.retptr) return `(int)${cName(b.c)}(${args.join(", ")})`;
     return `${cName(b.c)}(${args.join(", ")})`;
   }
 

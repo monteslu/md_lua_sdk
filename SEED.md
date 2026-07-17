@@ -264,3 +264,23 @@ rules as task.h: pass the bare function NAME (address handed to SGDK), and use a
 MEMORY-BACKED array for anything the handler mutates + the loop reads (interrupt
 context saves regs, but a scalar bump may never reach RAM). gpgx: vints:N ==
 frame:N lockstep. 43 tests, 11 examples.
+
+### SPR_setFrameChangeCallback: sprite-engine callback + the retptr fix
+Bound (optr sprite handle + fn callback). Two things surfaced:
+- mdlua's PICO-8 sprite verbs drive VDP hardware sprites directly; the SGDK
+  sprite ENGINE (SPR_*) needs a SpriteDefinition the asset path never builds.
+  Added a runtime helper demo_sprite() (curated builtin) = a minimal 2-frame
+  animated SpriteDefinition (one 8x8 tile, TileSet, Animation) so SPR_addSprite
+  + callbacks work. examples/sprite_callback: hits climbs live as the engine
+  calls our Lua fn. HONEST framing: the callback fires from the engine's vblank
+  processing (SYS_doVBlankProcess, which the runtime runs each frame calls
+  SPR_update internally) - with a minimal def that re-uploads tiles each frame
+  it fires ~every frame, NOT strictly per animation-frame-advance. Don't claim
+  "once per advance"; it's "the engine invokes your Lua fn during frame
+  processing." Enough to prove the binding end to end.
+- retptr fix (a CLASS, like optr/flip): SPR_addSprite and every pointer-
+  RETURNING SGDK fn hands back a Sprite*/Map*/... Assigning that to an int
+  handle global was -Wint-conversion under -Werror. Generator now emits the
+  return as int + a `retptr: true` marker; emit wraps the call in `(int)`.
+  (optr = pointer PARAMS -> (void*); retptr = pointer RETURNS -> (int).)
+46 tests (+3), 12 examples (+sprite_callback).

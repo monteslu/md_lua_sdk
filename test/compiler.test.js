@@ -24,7 +24,7 @@ function cOf(src) {
 
 // ---- examples --------------------------------------------------------------
 
-for (const ex of ["mvp", "hello", "anim", "starfall", "raster", "platformer", "sgdk_direct", "parity", "coroutine", "pcm", "vint_callback"]) {
+for (const ex of ["mvp", "hello", "anim", "starfall", "raster", "platformer", "sgdk_direct", "parity", "coroutine", "pcm", "vint_callback", "sprite_callback"]) {
   test(`example ${ex} compiles`, () => {
     const src = readFileSync(path.join(REPO, `examples/${ex}/main.lua`), "utf8");
     const r = compile(src, "main.lua", { target: "md" });
@@ -202,6 +202,29 @@ test("SYS_setVIntCallback: installs a Lua fn as the vblank hook, keeps it live",
   );
   assert.match(c, /SYS_setVIntCallback\(\(void\*\)&gtl_on_vblank\)/);  // address-of
   assert.match(c, /gtl_on_vblank\(void\)\s*\{/);                        // NOT eliminated
+});
+
+test("SPR_setFrameChangeCallback: sprite-engine callback + pointer-return handle", () => {
+  // the SGDK sprite engine: SPR_addSprite RETURNS a Sprite* (cast to int handle,
+  // retptr), and the frame-change callback takes that handle + a Lua fn.
+  const c = cOf(
+    "local s = 0\nfunction on_frame()\nend\n" +
+    "function _init()\n  SPR_init()\n  s = SPR_addSprite(demo_sprite(), 100, 100, 0)\n" +
+    "  SPR_setFrameChangeCallback(s, on_frame)\nend\n" +
+    "function _update60()\n  SPR_update()\nend\nfunction _draw()\nend\n"
+  );
+  assert.match(c, /s = \(int\)SPR_addSprite\(/);                        // pointer return -> (int)
+  assert.match(c, /SPR_setFrameChangeCallback\(\(void\*\)\(gtl_s\), \(void\*\)&gtl_on_frame\)/);
+  assert.match(c, /gtl_on_frame\(void\)\s*\{/);                         // callback kept live
+});
+
+test("pointer-returning SGDK calls cast to int (retptr, assigns cleanly)", () => {
+  // regression: SPR_addSprite/etc. return Sprite*; without the (int) cast the
+  // assignment to an int global is -Wint-conversion under -Werror.
+  const c = cOf(
+    "local m = 0\nfunction _update60()\n  m = SPR_addSprite(demo_sprite(), 0, 0, 0)\nend\nfunction _draw()\nend\n"
+  );
+  assert.match(c, /\(int\)SPR_addSprite\(/);
 });
 
 // ---- raw PCM (SND_PCM driver) ------------------------------------------------

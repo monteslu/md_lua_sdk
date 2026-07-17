@@ -78,6 +78,10 @@ int  md_pcm_len(int n);      // byte length of --sfx blob n
 void md_pcm_driver(void);    // SND_PCM_loadDriver(TRUE) once
 void md_pcm_play(int n, int rate, int loop);  // whole-recipe convenience
 
+// a minimal 2-frame animated SpriteDefinition (handle) for the SGDK sprite
+// engine - lets SPR_addSprite + auto-animation exercise frame-change callbacks
+int  md_demo_sprite(void);
+
 // animation helpers (slot-based frame-range cycling — the cross-SDK contract)
 int  md_anim(int slot, int first, int last, long fps);
 int  md_anim_once(int slot, int first, int last, long fps);

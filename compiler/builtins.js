@@ -212,6 +212,17 @@ export const CURATED_BUILTINS = {
   pcm_driver: { params: [], ret: "void", c: "md_pcm_driver", audio: true },
   pcm_play:   { params: [["int", false], ["int", true], ["flip", true]], ret: "void", c: "md_pcm_play", audio: true },
 
+  // ---- SGDK sprite engine helper -------------------------------------------
+  // demo_sprite(): a minimal 2-frame animated SpriteDefinition handle. mdlua's
+  // PICO-8 sprite verbs use VDP hardware sprites directly; SGDK's sprite ENGINE
+  // (SPR_addSprite/SPR_update/animations) needs a SpriteDefinition the asset
+  // path doesn't build. This gives one so callbacks like frame-change work:
+  //   SPR_init()
+  //   local s = SPR_addSprite(demo_sprite(), 100, 100, 0)
+  //   SPR_setFrameChangeCallback(s, on_frame)
+  //   SPR_setAnim(s, 0)            -- then SPR_update() each frame
+  demo_sprite: { params: [], ret: "int", c: "md_demo_sprite" },
+
   // ---- math ------------------------------------------------------------------
   flr:   { params: [["num", false]], ret: "int", c: null, special: "flr" },
   ceil:  { params: [["num", false]], ret: "int", c: null, special: "ceil" },

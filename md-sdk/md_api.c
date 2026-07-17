@@ -433,6 +433,29 @@ void md_pcm_play(int n, int rate, int loop) {
                       (SoundPcmSampleRate)rate, SOUND_PAN_CENTER, loop ? TRUE : FALSE);
 }
 
+// ---- demo animated sprite (for SGDK sprite-engine callbacks) ------------------
+// mdlua's own sprite verbs drive VDP hardware sprites directly; the SGDK sprite
+// ENGINE (SPR_*) needs a SpriteDefinition, which the PICO-8 asset path doesn't
+// build. demo_sprite() returns a minimal 2-frame animated definition (one 8x8
+// tile, both frames, short per-frame timer) so SPR_addSprite + auto-animation +
+// SPR_update() actually advance frames - which is what fires a frame-change
+// callback. Enough to exercise SPR_setFrameChangeCallback end to end.
+static const u32 md_ds_tiles[8] = {   // one solid 8x8 tile (color index 1)
+    0x11111111, 0x11111111, 0x11111111, 0x11111111,
+    0x11111111, 0x11111111, 0x11111111, 0x11111111,
+};
+static TileSet md_ds_tileset = { 0 /*no compression*/, 1 /*numTile*/, (u32 *)md_ds_tiles };
+// two frames, each one 8x8 VDP sprite, timer=8 (advance every 8 vblanks).
+static AnimationFrame md_ds_frame0 = { 1, 8, &md_ds_tileset, NULL, { { 0, 0, SPRITE_SIZE(1, 1), 0, 0, 1 } } };
+static AnimationFrame md_ds_frame1 = { 1, 8, &md_ds_tileset, NULL, { { 0, 0, SPRITE_SIZE(1, 1), 0, 0, 1 } } };
+static AnimationFrame *md_ds_frames[2] = { &md_ds_frame0, &md_ds_frame1 };
+static Animation md_ds_anim = { 2 /*numFrame*/, 0 /*loop to frame 0*/, md_ds_frames };
+static Animation *md_ds_anims[1] = { &md_ds_anim };
+static SpriteDefinition md_ds_def = {
+    8, 8, NULL /*palette*/, 1 /*numAnimation*/, md_ds_anims, 1 /*maxNumTile*/, 1 /*maxNumSprite*/
+};
+int md_demo_sprite(void) { return (int)&md_ds_def; }
+
 // ---- frame harness ------------------------------------------------------------
 void md_init(void) {
     u16 i;
