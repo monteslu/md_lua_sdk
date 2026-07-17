@@ -116,6 +116,8 @@ P8 buttons: 0-3 = dpad, 4 O→BUTTON_B, 5 X→BUTTON_C.
   (minimal WAV reader + linear resample in build-md); md_sfx plays XGM2 PCM
   channels 2-4, PSG blip fallback when no bank. Music+SFX share the driver.
 - 6-button pad: btn(8..11) = X/Y/Z/MODE.
+- RUN-VERIFIED in gpgx: SRAM round-trip ("sram ok: 1" cart), hud strip, fade
+  sequence, pcm-fallback sfx path. Phase-2 verbs all exercised on the core.
 
 ### Examples set (2026-07-16)
 - mvp (sheet art + anim + input), starfall (VERBATIM gbalua port; the parity

@@ -1,0 +1,6605 @@
+{
+  "toolchain": "romdev-toolchain-m68k-gcc@0.3.0",
+  "include": "node_modules/romdev-toolchain-m68k-gcc/share/genesis/lib/sgdk/include",
+  "headers": {
+    "asm.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "bmp.h": {
+      "functions": [
+        {
+          "name": "BMP_init",
+          "ret": "void",
+          "params": [
+            "u16 double_buffer",
+            "VDPPlane plane",
+            "u16 palette",
+            "u16 priority"
+          ],
+          "line": 260
+        },
+        {
+          "name": "BMP_end",
+          "ret": "void",
+          "params": [],
+          "line": 267
+        },
+        {
+          "name": "BMP_reset",
+          "ret": "void",
+          "params": [],
+          "line": 274
+        },
+        {
+          "name": "BMP_setBufferCopy",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 286
+        },
+        {
+          "name": "BMP_flip",
+          "ret": "u16",
+          "params": [
+            "u16 async"
+          ],
+          "line": 311
+        },
+        {
+          "name": "BMP_clear",
+          "ret": "void",
+          "params": [],
+          "line": 317
+        },
+        {
+          "name": "BMP_getWritePointer",
+          "ret": "u8*",
+          "params": [
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 331
+        },
+        {
+          "name": "BMP_getReadPointer",
+          "ret": "u8*",
+          "params": [
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 344
+        },
+        {
+          "name": "BMP_hasFlipRequestPending",
+          "ret": "u16",
+          "params": [],
+          "line": 351
+        },
+        {
+          "name": "BMP_waitWhileFlipRequestPending",
+          "ret": "void",
+          "params": [],
+          "line": 356
+        },
+        {
+          "name": "BMP_hasFlipInProgess",
+          "ret": "u16",
+          "params": [],
+          "line": 361
+        },
+        {
+          "name": "BMP_waitFlipComplete",
+          "ret": "void",
+          "params": [],
+          "line": 367
+        },
+        {
+          "name": "BMP_drawText",
+          "ret": "void",
+          "params": [
+            "const char *str",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 380
+        },
+        {
+          "name": "BMP_clearText",
+          "ret": "void",
+          "params": [
+            "u16 x",
+            "u16 y",
+            "u16 w"
+          ],
+          "line": 392
+        },
+        {
+          "name": "BMP_clearTextLine",
+          "ret": "void",
+          "params": [
+            "u16 y"
+          ],
+          "line": 400
+        },
+        {
+          "name": "BMP_showFPS",
+          "ret": "void",
+          "params": [
+            "u16 float_display",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 413
+        },
+        {
+          "name": "BMP_getPixel",
+          "ret": "u8",
+          "params": [
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 427
+        },
+        {
+          "name": "BMP_getPixelFast",
+          "ret": "u8",
+          "params": [
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 440
+        },
+        {
+          "name": "BMP_setPixel",
+          "ret": "void",
+          "params": [
+            "u16 x",
+            "u16 y",
+            "u8 col"
+          ],
+          "line": 455
+        },
+        {
+          "name": "BMP_setPixelFast",
+          "ret": "void",
+          "params": [
+            "u16 x",
+            "u16 y",
+            "u8 col"
+          ],
+          "line": 470
+        },
+        {
+          "name": "BMP_setPixels_V2D",
+          "ret": "void",
+          "params": [
+            "const Vect2D_u16 *crd",
+            "u8 col",
+            "u16 num"
+          ],
+          "line": 483
+        },
+        {
+          "name": "BMP_setPixelsFast_V2D",
+          "ret": "void",
+          "params": [
+            "const Vect2D_u16 *crd",
+            "u8 col",
+            "u16 num"
+          ],
+          "line": 496
+        },
+        {
+          "name": "BMP_setPixels",
+          "ret": "void",
+          "params": [
+            "const Pixel *pixels",
+            "u16 num"
+          ],
+          "line": 506
+        },
+        {
+          "name": "BMP_setPixelsFast",
+          "ret": "void",
+          "params": [
+            "const Pixel *pixels",
+            "u16 num"
+          ],
+          "line": 516
+        },
+        {
+          "name": "BMP_clipLine",
+          "ret": "u16",
+          "params": [
+            "Line *l"
+          ],
+          "line": 528
+        },
+        {
+          "name": "BMP_drawLine",
+          "ret": "void",
+          "params": [
+            "Line *l"
+          ],
+          "line": 537
+        },
+        {
+          "name": "BMP_isPolygonCulled",
+          "ret": "u16",
+          "params": [
+            "const Vect2D_s16 *pts",
+            "u16 num"
+          ],
+          "line": 550
+        },
+        {
+          "name": "BMP_drawPolygon",
+          "ret": "u16",
+          "params": [
+            "const Vect2D_s16 *pts",
+            "u16 num",
+            "u8 col"
+          ],
+          "line": 565
+        },
+        {
+          "name": "BMP_drawBitmapData",
+          "ret": "void",
+          "params": [
+            "const u8 *data",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "u32 pitch"
+          ],
+          "line": 587
+        },
+        {
+          "name": "BMP_drawBitmap",
+          "ret": "bool",
+          "params": [
+            "const Bitmap *bitmap",
+            "u16 x",
+            "u16 y",
+            "bool loadpal"
+          ],
+          "line": 610
+        },
+        {
+          "name": "BMP_drawBitmapScaled",
+          "ret": "bool",
+          "params": [
+            "const Bitmap *bitmap",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "bool loadpal"
+          ],
+          "line": 638
+        },
+        {
+          "name": "BMP_scale",
+          "ret": "void",
+          "params": [
+            "const u8 *src_buf",
+            "u16 src_wb",
+            "u16 src_h",
+            "u16 src_pitch",
+            "u8 *dst_buf",
+            "u16 dst_wb",
+            "u16 dst_h",
+            "u16 dst_pitch"
+          ],
+          "line": 686
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "config.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "dma.h": {
+      "functions": [
+        {
+          "name": "DMA_init",
+          "ret": "void",
+          "params": [],
+          "line": 94
+        },
+        {
+          "name": "DMA_initEx",
+          "ret": "void",
+          "params": [
+            "u16 size",
+            "u16 capacity",
+            "u16 bufferSize"
+          ],
+          "line": 114
+        },
+        {
+          "name": "DMA_getAutoFlush",
+          "ret": "bool",
+          "params": [],
+          "line": 124
+        },
+        {
+          "name": "DMA_setAutoFlush",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 133
+        },
+        {
+          "name": "DMA_getMaxQueueSize",
+          "ret": "u16",
+          "params": [],
+          "line": 140
+        },
+        {
+          "name": "DMA_setMaxQueueSize",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 152
+        },
+        {
+          "name": "DMA_setMaxQueueSizeToDefault",
+          "ret": "void",
+          "params": [],
+          "line": 160
+        },
+        {
+          "name": "DMA_getMaxTransferSize",
+          "ret": "u16",
+          "params": [],
+          "line": 168
+        },
+        {
+          "name": "DMA_setMaxTransferSize",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 181
+        },
+        {
+          "name": "DMA_setMaxTransferSizeToDefault",
+          "ret": "void",
+          "params": [],
+          "line": 188
+        },
+        {
+          "name": "DMA_getBufferSize",
+          "ret": "u16",
+          "params": [],
+          "line": 196
+        },
+        {
+          "name": "DMA_setBufferSize",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 210
+        },
+        {
+          "name": "DMA_setBufferSizeToDefault",
+          "ret": "void",
+          "params": [],
+          "line": 217
+        },
+        {
+          "name": "DMA_getIgnoreOverCapacity",
+          "ret": "bool",
+          "params": [],
+          "line": 224
+        },
+        {
+          "name": "DMA_setIgnoreOverCapacity",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 235
+        },
+        {
+          "name": "DMA_clearQueue",
+          "ret": "void",
+          "params": [],
+          "line": 242
+        },
+        {
+          "name": "DMA_flushQueue",
+          "ret": "void",
+          "params": [],
+          "line": 255
+        },
+        {
+          "name": "DMA_getQueueSize",
+          "ret": "u16",
+          "params": [],
+          "line": 261
+        },
+        {
+          "name": "DMA_getQueueTransferSize",
+          "ret": "u16",
+          "params": [],
+          "line": 268
+        },
+        {
+          "name": "DMA_allocateTemp",
+          "ret": "void*",
+          "params": [
+            "u16 len"
+          ],
+          "line": 283
+        },
+        {
+          "name": "DMA_releaseTemp",
+          "ret": "void",
+          "params": [
+            "u16 len"
+          ],
+          "line": 293
+        },
+        {
+          "name": "DMA_transfer",
+          "ret": "bool",
+          "params": [
+            "TransferMethod tm",
+            "u8 location",
+            "void* from",
+            "u16 to",
+            "u16 len",
+            "u16 step"
+          ],
+          "line": 326
+        },
+        {
+          "name": "DMA_canQueue",
+          "ret": "bool",
+          "params": [
+            "u8 location",
+            "u16 len"
+          ],
+          "line": 345
+        },
+        {
+          "name": "DMA_allocateAndQueueDma",
+          "ret": "void*",
+          "params": [
+            "u8 location",
+            "u16 to",
+            "u16 len",
+            "u16 step"
+          ],
+          "line": 373
+        },
+        {
+          "name": "DMA_copyAndQueueDma",
+          "ret": "bool",
+          "params": [
+            "u8 location",
+            "void* from",
+            "u16 to",
+            "u16 len",
+            "u16 step"
+          ],
+          "line": 400
+        },
+        {
+          "name": "DMA_queueDma",
+          "ret": "bool",
+          "params": [
+            "u8 location",
+            "void* from",
+            "u16 to",
+            "u16 len",
+            "u16 step"
+          ],
+          "line": 426
+        },
+        {
+          "name": "DMA_queueDmaFast",
+          "ret": "bool",
+          "params": [
+            "u8 location",
+            "void* from",
+            "u16 to",
+            "u16 len",
+            "u16 step"
+          ],
+          "line": 432
+        },
+        {
+          "name": "DMA_doDma",
+          "ret": "void",
+          "params": [
+            "u8 location",
+            "void* from",
+            "u16 to",
+            "u16 len",
+            "s16 step"
+          ],
+          "line": 456
+        },
+        {
+          "name": "DMA_doDmaFast",
+          "ret": "void",
+          "params": [
+            "u8 location",
+            "void* from",
+            "u16 to",
+            "u16 len",
+            "s16 step"
+          ],
+          "line": 462
+        },
+        {
+          "name": "DMA_doCPUCopy",
+          "ret": "void",
+          "params": [
+            "u8 location",
+            "void* from",
+            "u16 to",
+            "u16 len",
+            "s16 step"
+          ],
+          "line": 485
+        },
+        {
+          "name": "DMA_doCPUCopyDirect",
+          "ret": "void",
+          "params": [
+            "u32 cmd",
+            "void* from",
+            "u16 len",
+            "s16 step"
+          ],
+          "line": 501
+        },
+        {
+          "name": "DMA_doVRamFill",
+          "ret": "void",
+          "params": [
+            "u16 to",
+            "u16 len",
+            "u8 value",
+            "s16 step"
+          ],
+          "line": 518
+        },
+        {
+          "name": "DMA_doVRamCopy",
+          "ret": "void",
+          "params": [
+            "u16 from",
+            "u16 to",
+            "u16 len",
+            "s16 step"
+          ],
+          "line": 533
+        },
+        {
+          "name": "DMA_waitCompletion",
+          "ret": "void",
+          "params": [],
+          "line": 539
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "genesis.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "joy.h": {
+      "functions": [
+        {
+          "name": "JOY_init",
+          "ret": "void",
+          "params": [],
+          "line": 150
+        },
+        {
+          "name": "JOY_reset",
+          "ret": "void",
+          "params": [],
+          "line": 159
+        },
+        {
+          "name": "JOY_getEventHandler",
+          "ret": "JoyEventCallback*",
+          "params": [],
+          "line": 171
+        },
+        {
+          "name": "JOY_setEventHandler",
+          "ret": "void",
+          "params": [
+            "JoyEventCallback *CB"
+          ],
+          "line": 189
+        },
+        {
+          "name": "JOY_setSupport",
+          "ret": "void",
+          "params": [
+            "u16 port",
+            "u16 support"
+          ],
+          "line": 221
+        },
+        {
+          "name": "JOY_getPortType",
+          "ret": "u8",
+          "params": [
+            "u16 port"
+          ],
+          "line": 249
+        },
+        {
+          "name": "JOY_getJoypadType",
+          "ret": "u8",
+          "params": [
+            "u16 joy"
+          ],
+          "line": 273
+        },
+        {
+          "name": "JOY_readJoypad",
+          "ret": "u16",
+          "params": [
+            "u16 joy"
+          ],
+          "line": 308
+        },
+        {
+          "name": "JOY_readJoypadX",
+          "ret": "s16",
+          "params": [
+            "u16 joy"
+          ],
+          "line": 332
+        },
+        {
+          "name": "JOY_writeJoypadX",
+          "ret": "s16",
+          "params": [
+            "u16 joy",
+            "u16 pos"
+          ],
+          "line": 347
+        },
+        {
+          "name": "JOY_readJoypadY",
+          "ret": "s16",
+          "params": [
+            "u16 joy"
+          ],
+          "line": 371
+        },
+        {
+          "name": "JOY_writeJoypadY",
+          "ret": "s16",
+          "params": [
+            "u16 joy",
+            "u16 pos"
+          ],
+          "line": 386
+        },
+        {
+          "name": "JOY_waitPressBtn",
+          "ret": "void",
+          "params": [],
+          "line": 392
+        },
+        {
+          "name": "JOY_waitPressBtnTime",
+          "ret": "u16",
+          "params": [
+            "u16 ms"
+          ],
+          "line": 397
+        },
+        {
+          "name": "JOY_waitPress",
+          "ret": "u16",
+          "params": [
+            "u16 joy",
+            "u16 btn"
+          ],
+          "line": 432
+        },
+        {
+          "name": "JOY_waitPressTime",
+          "ret": "u16",
+          "params": [
+            "u16 joy",
+            "u16 btn",
+            "u16 ms"
+          ],
+          "line": 470
+        },
+        {
+          "name": "JOY_update",
+          "ret": "void",
+          "params": [],
+          "line": 479
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "kdebug.h": {
+      "functions": [
+        {
+          "name": "KDebug_Halt",
+          "ret": "void",
+          "params": [],
+          "line": 14
+        },
+        {
+          "name": "KDebug_Alert",
+          "ret": "void",
+          "params": [
+            "const char *str"
+          ],
+          "line": 15
+        },
+        {
+          "name": "KDebug_AlertNumber",
+          "ret": "void",
+          "params": [
+            "u32 nVal"
+          ],
+          "line": 16
+        },
+        {
+          "name": "KDebug_StartTimer",
+          "ret": "void",
+          "params": [],
+          "line": 17
+        },
+        {
+          "name": "KDebug_StopTimer",
+          "ret": "void",
+          "params": [],
+          "line": 18
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "map.h": {
+      "functions": [
+        {
+          "name": "MAP_create",
+          "ret": "Map*",
+          "params": [
+            "const MapDefinition* mapDef",
+            "VDPPlane plane",
+            "u16 baseTile"
+          ],
+          "line": 230
+        },
+        {
+          "name": "MAP_release",
+          "ret": "void",
+          "params": [
+            "Map* map"
+          ],
+          "line": 239
+        },
+        {
+          "name": "MAP_scrollTo",
+          "ret": "void",
+          "params": [
+            "Map* map",
+            "u32 x",
+            "u32 y"
+          ],
+          "line": 259
+        },
+        {
+          "name": "MAP_scrollToEx",
+          "ret": "void",
+          "params": [
+            "Map* map",
+            "u32 x",
+            "u32 y",
+            "bool forceRedraw"
+          ],
+          "line": 275
+        },
+        {
+          "name": "MAP_getMetaTile",
+          "ret": "u16",
+          "params": [
+            "Map* map",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 295
+        },
+        {
+          "name": "MAP_getTile",
+          "ret": "u16",
+          "params": [
+            "Map* map",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 319
+        },
+        {
+          "name": "MAP_getMetaTilemapRect",
+          "ret": "void",
+          "params": [
+            "Map* map",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "u16* dest"
+          ],
+          "line": 343
+        },
+        {
+          "name": "MAP_getTilemapRect",
+          "ret": "void",
+          "params": [
+            "Map* map",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "bool column",
+            "u16* dest"
+          ],
+          "line": 375
+        },
+        {
+          "name": "MAP_setDataPatchCallback",
+          "ret": "void",
+          "params": [
+            "Map* map",
+            "MapDataPatchCallback *CB"
+          ],
+          "line": 392
+        },
+        {
+          "name": "MAP_overridePlaneSize",
+          "ret": "void",
+          "params": [
+            "Map* map",
+            "u16 w",
+            "u16 h"
+          ],
+          "line": 406
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "mapper.h": {
+      "functions": [
+        {
+          "name": "SYS_resetBanks",
+          "ret": "void",
+          "params": [],
+          "line": 69
+        },
+        {
+          "name": "SYS_getBank",
+          "ret": "u16",
+          "params": [
+            "u16 regionIndex"
+          ],
+          "line": 78
+        },
+        {
+          "name": "SYS_setBank",
+          "ret": "void",
+          "params": [
+            "u16 regionIndex",
+            "u16 bankIndex"
+          ],
+          "line": 86
+        },
+        {
+          "name": "SYS_getFarData",
+          "ret": "void*",
+          "params": [
+            "void* data"
+          ],
+          "line": 102
+        },
+        {
+          "name": "SYS_getFarDataEx",
+          "ret": "void*",
+          "params": [
+            "void* data",
+            "bool high"
+          ],
+          "line": 116
+        },
+        {
+          "name": "SYS_isCrossingBank",
+          "ret": "bool",
+          "params": [
+            "void* data",
+            "u32 size"
+          ],
+          "line": 128
+        },
+        {
+          "name": "SYS_getFarDataSafe",
+          "ret": "void*",
+          "params": [
+            "void* data",
+            "u32 size"
+          ],
+          "line": 146
+        },
+        {
+          "name": "SYS_getFarDataSafeEx",
+          "ret": "void*",
+          "params": [
+            "void* data",
+            "u32 size",
+            "bool high"
+          ],
+          "line": 162
+        },
+        {
+          "name": "SYS_getNextFarAccessRegion",
+          "ret": "bool",
+          "params": [],
+          "line": 173
+        },
+        {
+          "name": "SYS_setNextFarAccessRegion",
+          "ret": "void",
+          "params": [
+            "bool high"
+          ],
+          "line": 184
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "maths.h": {
+      "functions": [
+        {
+          "name": "rol8",
+          "ret": "u8",
+          "params": [
+            "u8 value",
+            "u16 number"
+          ],
+          "line": 338
+        },
+        {
+          "name": "rol16",
+          "ret": "u16",
+          "params": [
+            "u16 value",
+            "u16 number"
+          ],
+          "line": 348
+        },
+        {
+          "name": "rol32",
+          "ret": "u32",
+          "params": [
+            "u32 value",
+            "u16 number"
+          ],
+          "line": 358
+        },
+        {
+          "name": "ror8",
+          "ret": "u8",
+          "params": [
+            "u8 value",
+            "u16 number"
+          ],
+          "line": 368
+        },
+        {
+          "name": "ror16",
+          "ret": "u16",
+          "params": [
+            "u16 value",
+            "u16 number"
+          ],
+          "line": 378
+        },
+        {
+          "name": "ror32",
+          "ret": "u32",
+          "params": [
+            "u32 value",
+            "u16 number"
+          ],
+          "line": 388
+        },
+        {
+          "name": "mulu",
+          "ret": "u32",
+          "params": [
+            "u16 op1",
+            "u16 op2"
+          ],
+          "line": 400
+        },
+        {
+          "name": "muls",
+          "ret": "s32",
+          "params": [
+            "s16 op1",
+            "s16 op2"
+          ],
+          "line": 411
+        },
+        {
+          "name": "divu",
+          "ret": "u16",
+          "params": [
+            "u32 op1",
+            "u16 op2"
+          ],
+          "line": 423
+        },
+        {
+          "name": "divs",
+          "ret": "s16",
+          "params": [
+            "s32 op1",
+            "s16 op2"
+          ],
+          "line": 435
+        },
+        {
+          "name": "modu",
+          "ret": "u16",
+          "params": [
+            "u32 op1",
+            "u16 op2"
+          ],
+          "line": 446
+        },
+        {
+          "name": "mods",
+          "ret": "s16",
+          "params": [
+            "s32 op1",
+            "s16 op2"
+          ],
+          "line": 457
+        },
+        {
+          "name": "divmodu",
+          "ret": "u32",
+          "params": [
+            "u32 op1",
+            "u16 op2"
+          ],
+          "line": 471
+        },
+        {
+          "name": "divmods",
+          "ret": "s32",
+          "params": [
+            "s32 op1",
+            "s16 op2"
+          ],
+          "line": 484
+        },
+        {
+          "name": "u16ToBCD",
+          "ret": "u32",
+          "params": [
+            "u16 value"
+          ],
+          "line": 493
+        },
+        {
+          "name": "u32ToBCD",
+          "ret": "u32",
+          "params": [
+            "u32 value"
+          ],
+          "line": 501
+        },
+        {
+          "name": "getNextPow2",
+          "ret": "u32",
+          "params": [
+            "u32 value"
+          ],
+          "line": 510
+        },
+        {
+          "name": "getLog2",
+          "ret": "u16",
+          "params": [
+            "u32 value"
+          ],
+          "line": 521
+        },
+        {
+          "name": "getApproximatedDistance",
+          "ret": "u32",
+          "params": [
+            "s32 dx",
+            "s32 dy"
+          ],
+          "line": 533
+        },
+        {
+          "name": "getApproximatedDistanceV",
+          "ret": "u32",
+          "params": [
+            "V2s32* v"
+          ],
+          "line": 542
+        },
+        {
+          "name": "F16_toInt",
+          "ret": "s16",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 558
+        },
+        {
+          "name": "F16_toFix32",
+          "ret": "fix32",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 563
+        },
+        {
+          "name": "F16_toFastFix16",
+          "ret": "fastfix16",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 568
+        },
+        {
+          "name": "F16_toFastFix32",
+          "ret": "fastfix32",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 573
+        },
+        {
+          "name": "F16_frac",
+          "ret": "fix16",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 578
+        },
+        {
+          "name": "F16_int",
+          "ret": "fix16",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 583
+        },
+        {
+          "name": "F16_abs",
+          "ret": "fix16",
+          "params": [
+            "fix16 x"
+          ],
+          "line": 588
+        },
+        {
+          "name": "F16_round",
+          "ret": "fix16",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 593
+        },
+        {
+          "name": "F16_toRoundedInt",
+          "ret": "s16",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 598
+        },
+        {
+          "name": "F16_mul",
+          "ret": "fix16",
+          "params": [
+            "fix16 val1",
+            "fix16 val2"
+          ],
+          "line": 604
+        },
+        {
+          "name": "F16_div",
+          "ret": "fix16",
+          "params": [
+            "fix16 val1",
+            "fix16 val2"
+          ],
+          "line": 609
+        },
+        {
+          "name": "F16_avg",
+          "ret": "fix16",
+          "params": [
+            "fix16 val1",
+            "fix16 val2"
+          ],
+          "line": 614
+        },
+        {
+          "name": "F16_log2",
+          "ret": "fix16",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 620
+        },
+        {
+          "name": "F16_log10",
+          "ret": "fix16",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 625
+        },
+        {
+          "name": "F16_sqrt",
+          "ret": "fix16",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 630
+        },
+        {
+          "name": "F16_normalizeAngle",
+          "ret": "fix16",
+          "params": [
+            "fix16 angle"
+          ],
+          "line": 637
+        },
+        {
+          "name": "F16_sin",
+          "ret": "fix16",
+          "params": [
+            "fix16 angle"
+          ],
+          "line": 642
+        },
+        {
+          "name": "F16_cos",
+          "ret": "fix16",
+          "params": [
+            "fix16 angle"
+          ],
+          "line": 647
+        },
+        {
+          "name": "F16_tan",
+          "ret": "fix16",
+          "params": [
+            "fix16 angle"
+          ],
+          "line": 652
+        },
+        {
+          "name": "F16_atan",
+          "ret": "fix16",
+          "params": [
+            "fix16 x"
+          ],
+          "line": 657
+        },
+        {
+          "name": "F16_atan2",
+          "ret": "fix16",
+          "params": [
+            "fix16 y",
+            "fix16 x"
+          ],
+          "line": 662
+        },
+        {
+          "name": "sinFix16",
+          "ret": "fix16",
+          "params": [
+            "u16 value"
+          ],
+          "line": 670
+        },
+        {
+          "name": "cosFix16",
+          "ret": "fix16",
+          "params": [
+            "u16 value"
+          ],
+          "line": 677
+        },
+        {
+          "name": "F16_degreeToRadian",
+          "ret": "fix16",
+          "params": [
+            "fix16 degree"
+          ],
+          "line": 683
+        },
+        {
+          "name": "F16_radianToDegree",
+          "ret": "fix16",
+          "params": [
+            "fix16 radian"
+          ],
+          "line": 688
+        },
+        {
+          "name": "F16_getAngle",
+          "ret": "fix16",
+          "params": [
+            "fix16 x1",
+            "fix16 y1",
+            "fix16 x2",
+            "fix16 y2"
+          ],
+          "line": 693
+        },
+        {
+          "name": "F16_computePosition",
+          "ret": "void",
+          "params": [
+            "fix16 *x2",
+            "fix16 *y2",
+            "fix16 x1",
+            "fix16 y1",
+            "fix16 ang",
+            "fix16 dist"
+          ],
+          "line": 712
+        },
+        {
+          "name": "F16_computePositionEx",
+          "ret": "void",
+          "params": [
+            "fix16 *x2",
+            "fix16 *y2",
+            "fix16 x1",
+            "fix16 y1",
+            "fix16 ang",
+            "fix16 dist",
+            "fix16 cosMul",
+            "fix16 sinMul"
+          ],
+          "line": 735
+        },
+        {
+          "name": "F32_toInt",
+          "ret": "s32",
+          "params": [
+            "fix32 value"
+          ],
+          "line": 765
+        },
+        {
+          "name": "F32_toFix16",
+          "ret": "fix16",
+          "params": [
+            "fix32 value"
+          ],
+          "line": 770
+        },
+        {
+          "name": "F32_toFastFix16",
+          "ret": "fastfix16",
+          "params": [
+            "fix32 value"
+          ],
+          "line": 775
+        },
+        {
+          "name": "F32_toFastFix32",
+          "ret": "fastfix32",
+          "params": [
+            "fix32 value"
+          ],
+          "line": 780
+        },
+        {
+          "name": "F32_frac",
+          "ret": "fix32",
+          "params": [
+            "fix32 value"
+          ],
+          "line": 785
+        },
+        {
+          "name": "F32_int",
+          "ret": "fix32",
+          "params": [
+            "fix32 value"
+          ],
+          "line": 790
+        },
+        {
+          "name": "F32_round",
+          "ret": "fix32",
+          "params": [
+            "fix32 value"
+          ],
+          "line": 795
+        },
+        {
+          "name": "F32_toRoundedInt",
+          "ret": "s32",
+          "params": [
+            "fix32 value"
+          ],
+          "line": 800
+        },
+        {
+          "name": "F32_mul",
+          "ret": "fix32",
+          "params": [
+            "fix32 val1",
+            "fix32 val2"
+          ],
+          "line": 807
+        },
+        {
+          "name": "F32_div",
+          "ret": "fix32",
+          "params": [
+            "fix32 val1",
+            "fix32 val2"
+          ],
+          "line": 813
+        },
+        {
+          "name": "F32_avg",
+          "ret": "fix32",
+          "params": [
+            "fix32 val1",
+            "fix32 val2"
+          ],
+          "line": 818
+        },
+        {
+          "name": "F32_sin",
+          "ret": "fix32",
+          "params": [
+            "fix16 angle"
+          ],
+          "line": 824
+        },
+        {
+          "name": "F32_cos",
+          "ret": "fix32",
+          "params": [
+            "fix16 angle"
+          ],
+          "line": 829
+        },
+        {
+          "name": "sinFix32",
+          "ret": "fix32",
+          "params": [
+            "u16 value"
+          ],
+          "line": 837
+        },
+        {
+          "name": "cosFix32",
+          "ret": "fix32",
+          "params": [
+            "u16 value"
+          ],
+          "line": 844
+        },
+        {
+          "name": "FF16_toInt",
+          "ret": "s16",
+          "params": [
+            "fastfix16 value"
+          ],
+          "line": 871
+        },
+        {
+          "name": "FF16_toFix16",
+          "ret": "fix16",
+          "params": [
+            "fastfix16 value"
+          ],
+          "line": 876
+        },
+        {
+          "name": "FF16_toFix32",
+          "ret": "fix32",
+          "params": [
+            "fastfix16 value"
+          ],
+          "line": 881
+        },
+        {
+          "name": "FF16_toFastFix32",
+          "ret": "fastfix32",
+          "params": [
+            "fastfix16 value"
+          ],
+          "line": 886
+        },
+        {
+          "name": "FF16_frac",
+          "ret": "fastfix16",
+          "params": [
+            "fastfix16 value"
+          ],
+          "line": 891
+        },
+        {
+          "name": "FF16_int",
+          "ret": "fastfix16",
+          "params": [
+            "fastfix16 value"
+          ],
+          "line": 896
+        },
+        {
+          "name": "FF16_round",
+          "ret": "fastfix16",
+          "params": [
+            "fastfix16 value"
+          ],
+          "line": 901
+        },
+        {
+          "name": "FF16_toRoundedInt",
+          "ret": "s16",
+          "params": [
+            "fastfix16 value"
+          ],
+          "line": 906
+        },
+        {
+          "name": "FF16_mul",
+          "ret": "fastfix16",
+          "params": [
+            "fastfix16 val1",
+            "fastfix16 val2"
+          ],
+          "line": 912
+        },
+        {
+          "name": "FF16_div",
+          "ret": "fastfix16",
+          "params": [
+            "fastfix16 val1",
+            "fastfix16 val2"
+          ],
+          "line": 917
+        },
+        {
+          "name": "FF32_fromInt",
+          "ret": "fastfix32",
+          "params": [
+            "s16 value"
+          ],
+          "line": 939
+        },
+        {
+          "name": "FF32_toInt",
+          "ret": "s16",
+          "params": [
+            "fastfix32 value"
+          ],
+          "line": 944
+        },
+        {
+          "name": "FF32_toFix16",
+          "ret": "fix16",
+          "params": [
+            "fastfix32 value"
+          ],
+          "line": 949
+        },
+        {
+          "name": "FF32_toFix32",
+          "ret": "fix32",
+          "params": [
+            "fastfix32 value"
+          ],
+          "line": 954
+        },
+        {
+          "name": "FF32_toFastFix16",
+          "ret": "fastfix16",
+          "params": [
+            "fastfix32 value"
+          ],
+          "line": 959
+        },
+        {
+          "name": "FF32_frac",
+          "ret": "fastfix32",
+          "params": [
+            "fastfix32 value"
+          ],
+          "line": 964
+        },
+        {
+          "name": "FF32_int",
+          "ret": "fastfix32",
+          "params": [
+            "fastfix32 value"
+          ],
+          "line": 969
+        },
+        {
+          "name": "FF32_round",
+          "ret": "fastfix32",
+          "params": [
+            "fastfix32 value"
+          ],
+          "line": 974
+        },
+        {
+          "name": "FF32_toRoundedInt",
+          "ret": "s32",
+          "params": [
+            "fastfix32 value"
+          ],
+          "line": 979
+        },
+        {
+          "name": "FF32_mul",
+          "ret": "fastfix32",
+          "params": [
+            "fastfix32 val1",
+            "fastfix32 val2"
+          ],
+          "line": 986
+        },
+        {
+          "name": "FF32_div",
+          "ret": "fastfix32",
+          "params": [
+            "fastfix32 val1",
+            "fastfix32 val2"
+          ],
+          "line": 992
+        },
+        {
+          "name": "FF32_getLog2Fast",
+          "ret": "fastfix32",
+          "params": [
+            "fastfix32 value"
+          ],
+          "line": 1004
+        },
+        {
+          "name": "V2D_F16_getAngle",
+          "ret": "fix16",
+          "params": [
+            "V2f16* pt1",
+            "V2f16* pt2"
+          ],
+          "line": 1026
+        },
+        {
+          "name": "V2D_F16_computePosition",
+          "ret": "void",
+          "params": [
+            "V2f16* pt",
+            "fix16 ang",
+            "fix16 dist"
+          ],
+          "line": 1039
+        },
+        {
+          "name": "V2D_F16_computePositionEx",
+          "ret": "void",
+          "params": [
+            "V2f16* pt",
+            "fix16 ang",
+            "fix16 dist",
+            "fix16 cosMul",
+            "fix16 sinMUl"
+          ],
+          "line": 1055
+        },
+        {
+          "name": "V2D_S32_getApproximatedDistance",
+          "ret": "u32",
+          "params": [
+            "V2s32* v"
+          ],
+          "line": 1065
+        }
+      ],
+      "unparsed": [
+        {
+          "line": 19,
+          "text": "const fix32 trigtab_f32[(90 * 4) + 1]"
+        }
+      ],
+      "inlineOnly": []
+    },
+    "maths3D.h": {
+      "functions": [
+        {
+          "name": "M3D_reset",
+          "ret": "void",
+          "params": [],
+          "line": 268
+        },
+        {
+          "name": "M3D_setLightEnabled",
+          "ret": "void",
+          "params": [
+            "u16 enabled"
+          ],
+          "line": 274
+        },
+        {
+          "name": "M3D_getLightEnabled",
+          "ret": "u16",
+          "params": [],
+          "line": 279
+        },
+        {
+          "name": "M3D_setViewport",
+          "ret": "void",
+          "params": [
+            "u16 w",
+            "u16 h"
+          ],
+          "line": 290
+        },
+        {
+          "name": "M3D_setCamDistance",
+          "ret": "void",
+          "params": [
+            "fix16 value"
+          ],
+          "line": 298
+        },
+        {
+          "name": "M3D_setLightXYZ",
+          "ret": "void",
+          "params": [
+            "fix16 x",
+            "fix16 y",
+            "fix16 z"
+          ],
+          "line": 303
+        },
+        {
+          "name": "M3D_setLight",
+          "ret": "void",
+          "params": [
+            "V3f16* value"
+          ],
+          "line": 308
+        },
+        {
+          "name": "M3D_resetTransform",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t"
+          ],
+          "line": 314
+        },
+        {
+          "name": "M3D_setTransform",
+          "ret": "void",
+          "params": [
+            "Transformation3D* tr",
+            "Translation3D* t",
+            "Rotation3D *r"
+          ],
+          "line": 320
+        },
+        {
+          "name": "M3D_setTranslation",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t",
+            "fix16 x",
+            "fix16 y",
+            "fix16 z"
+          ],
+          "line": 326
+        },
+        {
+          "name": "M3D_setRotation",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t",
+            "fix16 x",
+            "fix16 y",
+            "fix16 z"
+          ],
+          "line": 332
+        },
+        {
+          "name": "M3D_combineTransform",
+          "ret": "void",
+          "params": [
+            "Transformation3D* left",
+            "Transformation3D* right",
+            "Transformation3D* result"
+          ],
+          "line": 346
+        },
+        {
+          "name": "M3D_combineTranslationLeft",
+          "ret": "void",
+          "params": [
+            "Translation3D* left",
+            "Transformation3D* right",
+            "Transformation3D* result"
+          ],
+          "line": 359
+        },
+        {
+          "name": "M3D_combineTranslationRight",
+          "ret": "void",
+          "params": [
+            "Transformation3D* left",
+            "Translation3D* right",
+            "Transformation3D* result"
+          ],
+          "line": 372
+        },
+        {
+          "name": "M3D_buildMat3D",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t"
+          ],
+          "line": 382
+        },
+        {
+          "name": "M3D_buildMat3DOnly",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t"
+          ],
+          "line": 391
+        },
+        {
+          "name": "M3D_buildMat3DExtras",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t"
+          ],
+          "line": 399
+        },
+        {
+          "name": "M3D_translate",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t",
+            "V3f16* vertices",
+            "u16 numv"
+          ],
+          "line": 412
+        },
+        {
+          "name": "M3D_rotate",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t",
+            "const V3f16* src",
+            "V3f16* dest",
+            "u16 numv"
+          ],
+          "line": 426
+        },
+        {
+          "name": "M3D_rotateInv",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t",
+            "const V3f16* src",
+            "V3f16* dest"
+          ],
+          "line": 438
+        },
+        {
+          "name": "M3D_transform",
+          "ret": "void",
+          "params": [
+            "Transformation3D* t",
+            "const V3f16* src",
+            "V3f16* dest",
+            "u16 numv"
+          ],
+          "line": 452
+        },
+        {
+          "name": "M3D_project_f16",
+          "ret": "void",
+          "params": [
+            "const V3f16* src",
+            "V2f16* dest",
+            "u16 numv"
+          ],
+          "line": 465
+        },
+        {
+          "name": "M3D_project_s16",
+          "ret": "void",
+          "params": [
+            "const V3f16* src",
+            "V2s16* dest",
+            "u16 numv"
+          ],
+          "line": 477
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "memory.h": {
+      "functions": [
+        {
+          "name": "MEM_getFree",
+          "ret": "u16",
+          "params": [],
+          "line": 148
+        },
+        {
+          "name": "MEM_getAllocated",
+          "ret": "u16",
+          "params": [],
+          "line": 153
+        },
+        {
+          "name": "MEM_getLargestFreeBlock",
+          "ret": "u16",
+          "params": [],
+          "line": 158
+        },
+        {
+          "name": "MEM_free",
+          "ret": "void",
+          "params": [
+            "void* ptr"
+          ],
+          "line": 171
+        },
+        {
+          "name": "MEM_alloc",
+          "ret": "void*",
+          "params": [
+            "u16 size"
+          ],
+          "line": 186
+        },
+        {
+          "name": "MEM_allocAt",
+          "ret": "void*",
+          "params": [
+            "u32 addr",
+            "u16 size"
+          ],
+          "line": 203
+        },
+        {
+          "name": "MEM_pack",
+          "ret": "void",
+          "params": [],
+          "line": 211
+        },
+        {
+          "name": "MEM_checkIntegrity",
+          "ret": "bool",
+          "params": [],
+          "line": 221
+        },
+        {
+          "name": "MEM_dump",
+          "ret": "void",
+          "params": [],
+          "line": 228
+        },
+        {
+          "name": "memset",
+          "ret": "void",
+          "params": [
+            "void* to",
+            "u8 value",
+            "u16 len"
+          ],
+          "line": 244
+        },
+        {
+          "name": "memsetU16",
+          "ret": "void",
+          "params": [
+            "u16* to",
+            "u16 value",
+            "u16 len"
+          ],
+          "line": 260
+        },
+        {
+          "name": "memsetU32",
+          "ret": "void",
+          "params": [
+            "u32* to",
+            "u32 value",
+            "u16 len"
+          ],
+          "line": 274
+        },
+        {
+          "name": "memcpy",
+          "ret": "void",
+          "params": [
+            "void* to",
+            "const void* from",
+            "u16 len"
+          ],
+          "line": 292
+        },
+        {
+          "name": "memcmp",
+          "ret": "s8",
+          "params": [
+            "const void* pointer1",
+            "const void* pointer2",
+            "size_t len"
+          ],
+          "line": 309
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "memory_base.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "object.h": {
+      "functions": [
+        {
+          "name": "OBJ_createObjectPool",
+          "ret": "Pool*",
+          "params": [
+            "u16 size",
+            "u16 objectSize"
+          ],
+          "line": 87
+        },
+        {
+          "name": "OBJ_create",
+          "ret": "Object*",
+          "params": [
+            "Pool* pool"
+          ],
+          "line": 101
+        },
+        {
+          "name": "OBJ_release",
+          "ret": "void",
+          "params": [
+            "Pool* pool",
+            "Object* object",
+            "bool maintainCoherency"
+          ],
+          "line": 117
+        },
+        {
+          "name": "OBJ_updateAll",
+          "ret": "void",
+          "params": [
+            "Pool* pool"
+          ],
+          "line": 128
+        },
+        {
+          "name": "OBJ_setInitMethod",
+          "ret": "void",
+          "params": [
+            "Object* object",
+            "ObjectCallback* initMethod"
+          ],
+          "line": 142
+        },
+        {
+          "name": "OBJ_setUpdateMethod",
+          "ret": "void",
+          "params": [
+            "Object* object",
+            "ObjectCallback* updateMethod"
+          ],
+          "line": 155
+        },
+        {
+          "name": "OBJ_setEndMethod",
+          "ret": "void",
+          "params": [
+            "Object* object",
+            "ObjectCallback* endMethod"
+          ],
+          "line": 168
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "pal.h": {
+      "functions": [
+        {
+          "name": "PAL_getColor",
+          "ret": "u16",
+          "params": [
+            "u16 index"
+          ],
+          "line": 124
+        },
+        {
+          "name": "PAL_getColors",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "u16* dest",
+            "u16 count"
+          ],
+          "line": 136
+        },
+        {
+          "name": "PAL_getPalette",
+          "ret": "void",
+          "params": [
+            "u16 numPal",
+            "u16* dest"
+          ],
+          "line": 146
+        },
+        {
+          "name": "PAL_setColor",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "u16 value"
+          ],
+          "line": 157
+        },
+        {
+          "name": "PAL_setColors",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "const u16* pal",
+            "u16 count",
+            "TransferMethod tm"
+          ],
+          "line": 176
+        },
+        {
+          "name": "PAL_setPaletteColors",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "const Palette* pal",
+            "TransferMethod tm"
+          ],
+          "line": 193
+        },
+        {
+          "name": "PAL_setPalette",
+          "ret": "void",
+          "params": [
+            "u16 numPal",
+            "const u16* pal",
+            "TransferMethod tm"
+          ],
+          "line": 210
+        },
+        {
+          "name": "PAL_initFade",
+          "ret": "bool",
+          "params": [
+            "u16 fromCol",
+            "u16 toCol",
+            "const u16* palSrc",
+            "const u16* palDst",
+            "u16 numFrame"
+          ],
+          "line": 247
+        },
+        {
+          "name": "PAL_doFadeStep",
+          "ret": "bool",
+          "params": [],
+          "line": 258
+        },
+        {
+          "name": "PAL_isManualFadeDone",
+          "ret": "bool",
+          "params": [],
+          "line": 267
+        },
+        {
+          "name": "PAL_fade",
+          "ret": "void",
+          "params": [
+            "u16 fromCol",
+            "u16 toCol",
+            "const u16* palSrc",
+            "const u16* palDst",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 291
+        },
+        {
+          "name": "PAL_fadeTo",
+          "ret": "void",
+          "params": [
+            "u16 fromCol",
+            "u16 toCol",
+            "const u16* pal",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 310
+        },
+        {
+          "name": "PAL_fadeOut",
+          "ret": "void",
+          "params": [
+            "u16 fromCol",
+            "u16 toCol",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 327
+        },
+        {
+          "name": "PAL_fadeIn",
+          "ret": "void",
+          "params": [
+            "u16 fromCol",
+            "u16 toCol",
+            "const u16* pal",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 346
+        },
+        {
+          "name": "PAL_fadePalette",
+          "ret": "void",
+          "params": [
+            "u16 numPal",
+            "const u16* palSrc",
+            "const u16* palDst",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 367
+        },
+        {
+          "name": "PAL_fadeToPalette",
+          "ret": "void",
+          "params": [
+            "u16 numPal",
+            "const u16* pal",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 384
+        },
+        {
+          "name": "PAL_fadeOutPalette",
+          "ret": "void",
+          "params": [
+            "u16 numPal",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 399
+        },
+        {
+          "name": "PAL_fadeInPalette",
+          "ret": "void",
+          "params": [
+            "u16 numPal",
+            "const u16* pal",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 416
+        },
+        {
+          "name": "PAL_fadeAll",
+          "ret": "void",
+          "params": [
+            "const u16* palSrc",
+            "const u16* palDst",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 434
+        },
+        {
+          "name": "PAL_fadeToAll",
+          "ret": "void",
+          "params": [
+            "const u16* pal",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 450
+        },
+        {
+          "name": "PAL_fadeOutAll",
+          "ret": "void",
+          "params": [
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 464
+        },
+        {
+          "name": "PAL_fadeInAll",
+          "ret": "void",
+          "params": [
+            "const u16* pal",
+            "u16 numFrame",
+            "bool async"
+          ],
+          "line": 480
+        },
+        {
+          "name": "PAL_isDoingFade",
+          "ret": "bool",
+          "params": [],
+          "line": 487
+        },
+        {
+          "name": "PAL_waitFadeCompletion",
+          "ret": "void",
+          "params": [],
+          "line": 492
+        },
+        {
+          "name": "PAL_interruptFade",
+          "ret": "void",
+          "params": [],
+          "line": 497
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "pool.h": {
+      "functions": [
+        {
+          "name": "POOL_create",
+          "ret": "Pool*",
+          "params": [
+            "u16 size",
+            "u16 objectSize"
+          ],
+          "line": 80
+        },
+        {
+          "name": "POOL_destroy",
+          "ret": "void",
+          "params": [
+            "Pool* pool"
+          ],
+          "line": 90
+        },
+        {
+          "name": "POOL_reset",
+          "ret": "void",
+          "params": [
+            "Pool* pool",
+            "bool clear"
+          ],
+          "line": 101
+        },
+        {
+          "name": "POOL_allocate",
+          "ret": "void*",
+          "params": [
+            "Pool* pool"
+          ],
+          "line": 114
+        },
+        {
+          "name": "POOL_release",
+          "ret": "void",
+          "params": [
+            "Pool* pool",
+            "void* object",
+            "bool maintainCoherency"
+          ],
+          "line": 129
+        },
+        {
+          "name": "POOL_getFree",
+          "ret": "u16",
+          "params": [
+            "Pool* pool"
+          ],
+          "line": 138
+        },
+        {
+          "name": "POOL_getNumAllocated",
+          "ret": "u16",
+          "params": [
+            "Pool* pool"
+          ],
+          "line": 146
+        },
+        {
+          "name": "POOL_getFirst",
+          "ret": "void* *",
+          "params": [
+            "Pool* pool"
+          ],
+          "line": 157
+        },
+        {
+          "name": "POOL_find",
+          "ret": "s16",
+          "params": [
+            "Pool* pool",
+            "void* object"
+          ],
+          "line": 168
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "psg.h": {
+      "functions": [
+        {
+          "name": "PSG_reset",
+          "ret": "void",
+          "params": [],
+          "line": 72
+        },
+        {
+          "name": "PSG_write",
+          "ret": "void",
+          "params": [
+            "u8 data"
+          ],
+          "line": 84
+        },
+        {
+          "name": "PSG_setEnvelope",
+          "ret": "void",
+          "params": [
+            "u8 channel",
+            "u8 value"
+          ],
+          "line": 97
+        },
+        {
+          "name": "PSG_setTone",
+          "ret": "void",
+          "params": [
+            "u8 channel",
+            "u16 value"
+          ],
+          "line": 109
+        },
+        {
+          "name": "PSG_setToneLow",
+          "ret": "void",
+          "params": [
+            "u8 channel",
+            "u8 value"
+          ],
+          "line": 121
+        },
+        {
+          "name": "PSG_setFrequency",
+          "ret": "void",
+          "params": [
+            "u8 channel",
+            "u16 value"
+          ],
+          "line": 134
+        },
+        {
+          "name": "PSG_setNoise",
+          "ret": "void",
+          "params": [
+            "u8 type",
+            "u8 frequency"
+          ],
+          "line": 150
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "sprite_eng.h": {
+      "functions": [
+        {
+          "name": "SPR_init",
+          "ret": "void",
+          "params": [],
+          "line": 389
+        },
+        {
+          "name": "SPR_initEx",
+          "ret": "void",
+          "params": [
+            "u16 vramSize"
+          ],
+          "line": 404
+        },
+        {
+          "name": "SPR_end",
+          "ret": "void",
+          "params": [],
+          "line": 412
+        },
+        {
+          "name": "SPR_isInitialized",
+          "ret": "bool",
+          "params": [],
+          "line": 417
+        },
+        {
+          "name": "SPR_reset",
+          "ret": "void",
+          "params": [],
+          "line": 425
+        },
+        {
+          "name": "SPR_addSpriteEx",
+          "ret": "Sprite*",
+          "params": [
+            "const SpriteDefinition* spriteDef",
+            "s16 x",
+            "s16 y",
+            "u16 attribut",
+            "u16 flag"
+          ],
+          "line": 471
+        },
+        {
+          "name": "SPR_addSprite",
+          "ret": "Sprite*",
+          "params": [
+            "const SpriteDefinition* spriteDef",
+            "s16 x",
+            "s16 y",
+            "u16 attribut"
+          ],
+          "line": 496
+        },
+        {
+          "name": "SPR_addSpriteExSafe",
+          "ret": "Sprite*",
+          "params": [
+            "const SpriteDefinition* spriteDef",
+            "s16 x",
+            "s16 y",
+            "u16 attribut",
+            "u16 flag"
+          ],
+          "line": 539
+        },
+        {
+          "name": "SPR_addSpriteSafe",
+          "ret": "Sprite*",
+          "params": [
+            "const SpriteDefinition* spriteDef",
+            "s16 x",
+            "s16 y",
+            "u16 attribut"
+          ],
+          "line": 562
+        },
+        {
+          "name": "SPR_releaseSprite",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 575
+        },
+        {
+          "name": "SPR_getNumActiveSprite",
+          "ret": "u16",
+          "params": [],
+          "line": 580
+        },
+        {
+          "name": "SPR_getUsedVDPSprite",
+          "ret": "u16",
+          "params": [],
+          "line": 585
+        },
+        {
+          "name": "SPR_getFreeVRAM",
+          "ret": "u16",
+          "params": [],
+          "line": 590
+        },
+        {
+          "name": "SPR_getLargestFreeVRAMBlock",
+          "ret": "u16",
+          "params": [],
+          "line": 595
+        },
+        {
+          "name": "SPR_enableVDPSpriteChecking",
+          "ret": "void",
+          "params": [],
+          "line": 607
+        },
+        {
+          "name": "SPR_disableVDPSpriteChecking",
+          "ret": "void",
+          "params": [],
+          "line": 616
+        },
+        {
+          "name": "SPR_defragVRAM",
+          "ret": "void",
+          "params": [],
+          "line": 621
+        },
+        {
+          "name": "SPR_loadAllFramesEx",
+          "ret": "u16* *",
+          "params": [
+            "const SpriteDefinition* sprDef",
+            "u16 index",
+            "u16* totalNumTile",
+            "TransferMethod tm"
+          ],
+          "line": 658
+        },
+        {
+          "name": "SPR_loadAllFrames",
+          "ret": "u16* *",
+          "params": [
+            "const SpriteDefinition* sprDef",
+            "u16 index",
+            "u16* totalNumTile"
+          ],
+          "line": 687
+        },
+        {
+          "name": "SPR_loadAllIndexes",
+          "ret": "u16* *",
+          "params": [
+            "const SpriteDefinition* sprDef",
+            "u16 index",
+            "u16* totalNumTile"
+          ],
+          "line": 703
+        },
+        {
+          "name": "SPR_loadAllTiles",
+          "ret": "u16",
+          "params": [
+            "const SpriteDefinition* sprDef",
+            "u16 index",
+            "u16** indexes",
+            "const TransferMethod tm"
+          ],
+          "line": 726
+        },
+        {
+          "name": "SPR_setDefinition",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite",
+            "const SpriteDefinition* spriteDef"
+          ],
+          "line": 742
+        },
+        {
+          "name": "SPR_getPositionX",
+          "ret": "s16",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 747
+        },
+        {
+          "name": "SPR_getPositionY",
+          "ret": "s16",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 752
+        },
+        {
+          "name": "SPR_setPosition",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 x",
+            "s16 y"
+          ],
+          "line": 764
+        },
+        {
+          "name": "SPR_setHFlip",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 774
+        },
+        {
+          "name": "SPR_setVFlip",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 784
+        },
+        {
+          "name": "SPR_setPalette",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "u16 value"
+          ],
+          "line": 794
+        },
+        {
+          "name": "SPR_setPriority",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 804
+        },
+        {
+          "name": "SPR_setDepth",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 value"
+          ],
+          "line": 822
+        },
+        {
+          "name": "SPR_setZ",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 value"
+          ],
+          "line": 827
+        },
+        {
+          "name": "SPR_setAlwaysOnTop",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 837
+        },
+        {
+          "name": "SPR_setAlwaysAtBottom",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 847
+        },
+        {
+          "name": "SPR_setAnimAndFrame",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 anim",
+            "s16 frame"
+          ],
+          "line": 859
+        },
+        {
+          "name": "SPR_setAnim",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 anim"
+          ],
+          "line": 869
+        },
+        {
+          "name": "SPR_setFrame",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 frame"
+          ],
+          "line": 879
+        },
+        {
+          "name": "SPR_nextFrame",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 887
+        },
+        {
+          "name": "SPR_setAutoAnimation",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 899
+        },
+        {
+          "name": "SPR_getAutoAnimation",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 906
+        },
+        {
+          "name": "SPR_setAnimationLoop",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 920
+        },
+        {
+          "name": "SPR_isAnimationDone",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 930
+        },
+        {
+          "name": "SPR_setVRAMTileIndex",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite",
+            "s16 value"
+          ],
+          "line": 945
+        },
+        {
+          "name": "SPR_setAutoTileUpload",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 956
+        },
+        {
+          "name": "SPR_setDelayedFrameUpdate",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 969
+        },
+        {
+          "name": "SPR_setFrameChangeCallback",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "FrameChangeCallback* callback"
+          ],
+          "line": 985
+        },
+        {
+          "name": "SPR_getVisibility",
+          "ret": "SpriteVisibility",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 1005
+        },
+        {
+          "name": "SPR_isVisible",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite",
+            "bool recompute"
+          ],
+          "line": 1023
+        },
+        {
+          "name": "SPR_setVisibility",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "SpriteVisibility value"
+          ],
+          "line": 1048
+        },
+        {
+          "name": "SPR_clear",
+          "ret": "void",
+          "params": [],
+          "line": 1069
+        },
+        {
+          "name": "SPR_update",
+          "ret": "void",
+          "params": [],
+          "line": 1079
+        },
+        {
+          "name": "SPR_logProfil",
+          "ret": "void",
+          "params": [],
+          "line": 1085
+        },
+        {
+          "name": "SPR_logSprites",
+          "ret": "void",
+          "params": [],
+          "line": 1090
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "sprite_eng_legacy.h": {
+      "functions": [
+        {
+          "name": "SPR_init",
+          "ret": "void",
+          "params": [],
+          "line": 407
+        },
+        {
+          "name": "SPR_initEx",
+          "ret": "void",
+          "params": [
+            "u16 vramSize"
+          ],
+          "line": 422
+        },
+        {
+          "name": "SPR_end",
+          "ret": "void",
+          "params": [],
+          "line": 430
+        },
+        {
+          "name": "SPR_isInitialized",
+          "ret": "bool",
+          "params": [],
+          "line": 435
+        },
+        {
+          "name": "SPR_reset",
+          "ret": "void",
+          "params": [],
+          "line": 443
+        },
+        {
+          "name": "SPR_addSpriteEx",
+          "ret": "Sprite*",
+          "params": [
+            "const SpriteDefinition* spriteDef",
+            "s16 x",
+            "s16 y",
+            "u16 attribut",
+            "u16 spriteIndex",
+            "u16 flag"
+          ],
+          "line": 494
+        },
+        {
+          "name": "SPR_addSprite",
+          "ret": "Sprite*",
+          "params": [
+            "const SpriteDefinition* spriteDef",
+            "s16 x",
+            "s16 y",
+            "u16 attribut"
+          ],
+          "line": 519
+        },
+        {
+          "name": "SPR_addSpriteExSafe",
+          "ret": "Sprite*",
+          "params": [
+            "const SpriteDefinition* spriteDef",
+            "s16 x",
+            "s16 y",
+            "u16 attribut",
+            "u16 spriteIndex",
+            "u16 flag"
+          ],
+          "line": 567
+        },
+        {
+          "name": "SPR_addSpriteSafe",
+          "ret": "Sprite*",
+          "params": [
+            "const SpriteDefinition* spriteDef",
+            "s16 x",
+            "s16 y",
+            "u16 attribut"
+          ],
+          "line": 590
+        },
+        {
+          "name": "SPR_releaseSprite",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 603
+        },
+        {
+          "name": "SPR_getNumActiveSprite",
+          "ret": "u16",
+          "params": [],
+          "line": 608
+        },
+        {
+          "name": "SPR_defragVRAM",
+          "ret": "void",
+          "params": [],
+          "line": 613
+        },
+        {
+          "name": "SPR_loadAllFrames",
+          "ret": "u16* *",
+          "params": [
+            "const SpriteDefinition* sprDef",
+            "u16 index",
+            "u16* totalNumTile"
+          ],
+          "line": 642
+        },
+        {
+          "name": "SPR_setDefinition",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite",
+            "const SpriteDefinition* spriteDef"
+          ],
+          "line": 658
+        },
+        {
+          "name": "SPR_getPositionX",
+          "ret": "s16",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 663
+        },
+        {
+          "name": "SPR_getPositionY",
+          "ret": "s16",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 668
+        },
+        {
+          "name": "SPR_setPosition",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 x",
+            "s16 y"
+          ],
+          "line": 680
+        },
+        {
+          "name": "SPR_setHFlip",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 690
+        },
+        {
+          "name": "SPR_setVFlip",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 700
+        },
+        {
+          "name": "SPR_setPalette",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "u16 value"
+          ],
+          "line": 710
+        },
+        {
+          "name": "SPR_setPriority",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 720
+        },
+        {
+          "name": "SPR_setDepth",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 value"
+          ],
+          "line": 738
+        },
+        {
+          "name": "SPR_setZ",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 value"
+          ],
+          "line": 743
+        },
+        {
+          "name": "SPR_setAlwaysOnTop",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 754
+        },
+        {
+          "name": "SPR_setAlwaysAtBottom",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 764
+        },
+        {
+          "name": "SPR_setAnimAndFrame",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 anim",
+            "s16 frame"
+          ],
+          "line": 776
+        },
+        {
+          "name": "SPR_setAnim",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 anim"
+          ],
+          "line": 786
+        },
+        {
+          "name": "SPR_setFrame",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "s16 frame"
+          ],
+          "line": 796
+        },
+        {
+          "name": "SPR_nextFrame",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 804
+        },
+        {
+          "name": "SPR_setAutoAnimation",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 816
+        },
+        {
+          "name": "SPR_getAutoAnimation",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 823
+        },
+        {
+          "name": "SPR_setAnimationLoop",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 837
+        },
+        {
+          "name": "SPR_isAnimationDone",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 847
+        },
+        {
+          "name": "SPR_setVRAMTileIndex",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite",
+            "s16 value"
+          ],
+          "line": 862
+        },
+        {
+          "name": "SPR_setSpriteTableIndex",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite",
+            "s16 value"
+          ],
+          "line": 880
+        },
+        {
+          "name": "SPR_setAutoTileUpload",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 891
+        },
+        {
+          "name": "SPR_setDelayedFrameUpdate",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "bool value"
+          ],
+          "line": 904
+        },
+        {
+          "name": "SPR_setFrameChangeCallback",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "FrameChangeCallback* callback"
+          ],
+          "line": 920
+        },
+        {
+          "name": "SPR_getVisibility",
+          "ret": "SpriteVisibility",
+          "params": [
+            "Sprite* sprite"
+          ],
+          "line": 940
+        },
+        {
+          "name": "SPR_isVisible",
+          "ret": "bool",
+          "params": [
+            "Sprite* sprite",
+            "bool recompute"
+          ],
+          "line": 958
+        },
+        {
+          "name": "SPR_setVisibility",
+          "ret": "void",
+          "params": [
+            "Sprite* sprite",
+            "SpriteVisibility value"
+          ],
+          "line": 983
+        },
+        {
+          "name": "SPR_clear",
+          "ret": "void",
+          "params": [],
+          "line": 1004
+        },
+        {
+          "name": "SPR_update",
+          "ret": "void",
+          "params": [],
+          "line": 1014
+        },
+        {
+          "name": "SPR_logProfil",
+          "ret": "void",
+          "params": [],
+          "line": 1020
+        },
+        {
+          "name": "SPR_logSprites",
+          "ret": "void",
+          "params": [],
+          "line": 1025
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "sram.h": {
+      "functions": [
+        {
+          "name": "SRAM_enable",
+          "ret": "void",
+          "params": [],
+          "line": 39
+        },
+        {
+          "name": "SRAM_enableRO",
+          "ret": "void",
+          "params": [],
+          "line": 44
+        },
+        {
+          "name": "SRAM_disable",
+          "ret": "void",
+          "params": [],
+          "line": 49
+        },
+        {
+          "name": "SRAM_readByte",
+          "ret": "u8",
+          "params": [
+            "u32 offset"
+          ],
+          "line": 59
+        },
+        {
+          "name": "SRAM_readWord",
+          "ret": "u16",
+          "params": [
+            "u32 offset"
+          ],
+          "line": 68
+        },
+        {
+          "name": "SRAM_readLong",
+          "ret": "u32",
+          "params": [
+            "u32 offset"
+          ],
+          "line": 77
+        },
+        {
+          "name": "SRAM_writeByte",
+          "ret": "void",
+          "params": [
+            "u32 offset",
+            "u8 val"
+          ],
+          "line": 87
+        },
+        {
+          "name": "SRAM_writeWord",
+          "ret": "void",
+          "params": [
+            "u32 offset",
+            "u16 val"
+          ],
+          "line": 97
+        },
+        {
+          "name": "SRAM_writeLong",
+          "ret": "void",
+          "params": [
+            "u32 offset",
+            "u32 val"
+          ],
+          "line": 107
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "string.h": {
+      "functions": [
+        {
+          "name": "strlen",
+          "ret": "u16",
+          "params": [
+            "const char *str"
+          ],
+          "line": 49
+        },
+        {
+          "name": "strnlen",
+          "ret": "u16",
+          "params": [
+            "const char *str",
+            "u16 maxlen"
+          ],
+          "line": 64
+        },
+        {
+          "name": "strcmp",
+          "ret": "s8",
+          "params": [
+            "const char *str1",
+            "const char *str2"
+          ],
+          "line": 82
+        },
+        {
+          "name": "strcpy",
+          "ret": "char*",
+          "params": [
+            "char *dest",
+            "const char *src"
+          ],
+          "line": 96
+        },
+        {
+          "name": "strncpy",
+          "ret": "char*",
+          "params": [
+            "char *dest",
+            "const char *src",
+            "u16 len"
+          ],
+          "line": 111
+        },
+        {
+          "name": "strcat",
+          "ret": "char*",
+          "params": [
+            "char *dest",
+            "const char *src"
+          ],
+          "line": 124
+        },
+        {
+          "name": "strchr",
+          "ret": "char*",
+          "params": [
+            "const char *from",
+            "char c"
+          ],
+          "line": 138
+        },
+        {
+          "name": "vsprintf",
+          "ret": "int",
+          "params": [
+            "char *buffer",
+            "const char *fmt",
+            "va_list args"
+          ],
+          "line": 163
+        },
+        {
+          "name": "sprintf",
+          "ret": "int",
+          "params": [
+            "char *buffer",
+            "const char *fmt",
+            "..."
+          ],
+          "line": 188
+        },
+        {
+          "name": "strclr",
+          "ret": "char*",
+          "params": [
+            "char *str"
+          ],
+          "line": 202
+        },
+        {
+          "name": "strreplacechar",
+          "ret": "char*",
+          "params": [
+            "char *str",
+            "char oldc",
+            "char newc"
+          ],
+          "line": 217
+        },
+        {
+          "name": "intToStr",
+          "ret": "u16",
+          "params": [
+            "s32 value",
+            "char *str",
+            "u16 minsize"
+          ],
+          "line": 233
+        },
+        {
+          "name": "uintToStr",
+          "ret": "u16",
+          "params": [
+            "u32 value",
+            "char *str",
+            "u16 minsize"
+          ],
+          "line": 249
+        },
+        {
+          "name": "intToHex",
+          "ret": "u16",
+          "params": [
+            "u32 value",
+            "char *str",
+            "u16 minsize"
+          ],
+          "line": 265
+        },
+        {
+          "name": "fix16ToStr",
+          "ret": "void",
+          "params": [
+            "fix16 value",
+            "char *str",
+            "u16 numdec"
+          ],
+          "line": 280
+        },
+        {
+          "name": "fix32ToStr",
+          "ret": "void",
+          "params": [
+            "fix32 value",
+            "char *str",
+            "u16 numdec"
+          ],
+          "line": 294
+        },
+        {
+          "name": "fastFix16ToStr",
+          "ret": "void",
+          "params": [
+            "fastfix16 value",
+            "char *str",
+            "u16 numdec"
+          ],
+          "line": 308
+        },
+        {
+          "name": "fastFix32ToStr",
+          "ret": "void",
+          "params": [
+            "fastfix32 value",
+            "char *str",
+            "u16 numdec"
+          ],
+          "line": 322
+        },
+        {
+          "name": "F16_toStr",
+          "ret": "void",
+          "params": [
+            "fix16 value",
+            "char *str",
+            "u16 numdec"
+          ],
+          "line": 328
+        },
+        {
+          "name": "F32_toStr",
+          "ret": "void",
+          "params": [
+            "fix32 value",
+            "char *str",
+            "u16 numdec"
+          ],
+          "line": 334
+        },
+        {
+          "name": "FF16_toStr",
+          "ret": "void",
+          "params": [
+            "fastfix16 value",
+            "char *str",
+            "u16 numdec"
+          ],
+          "line": 340
+        },
+        {
+          "name": "FF32_toStr",
+          "ret": "void",
+          "params": [
+            "fastfix32 value",
+            "char *str",
+            "u16 numdec"
+          ],
+          "line": 346
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "sys.h": {
+      "functions": [
+        {
+          "name": "SYS_assertReset",
+          "ret": "void",
+          "params": [],
+          "line": 189
+        },
+        {
+          "name": "SYS_reset",
+          "ret": "void",
+          "params": [],
+          "line": 196
+        },
+        {
+          "name": "SYS_hardReset",
+          "ret": "void",
+          "params": [],
+          "line": 203
+        },
+        {
+          "name": "SYS_doVBlankProcess",
+          "ret": "bool",
+          "params": [],
+          "line": 222
+        },
+        {
+          "name": "SYS_doVBlankProcessEx",
+          "ret": "bool",
+          "params": [
+            "VBlankProcessTime processTime"
+          ],
+          "line": 253
+        },
+        {
+          "name": "SYS_nextFrame",
+          "ret": "bool",
+          "params": [],
+          "line": 263
+        },
+        {
+          "name": "SYS_getStackPointer",
+          "ret": "u32",
+          "params": [],
+          "line": 269
+        },
+        {
+          "name": "SYS_getInterruptMaskLevel",
+          "ret": "u16",
+          "params": [],
+          "line": 277
+        },
+        {
+          "name": "SYS_setInterruptMaskLevel",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 296
+        },
+        {
+          "name": "SYS_getAndSetInterruptMaskLevel",
+          "ret": "u16",
+          "params": [
+            "u16 value"
+          ],
+          "line": 316
+        },
+        {
+          "name": "SYS_disableInts",
+          "ret": "void",
+          "params": [],
+          "line": 331
+        },
+        {
+          "name": "SYS_enableInts",
+          "ret": "void",
+          "params": [],
+          "line": 341
+        },
+        {
+          "name": "SYS_setVBlankCallback",
+          "ret": "void",
+          "params": [
+            "VoidCallback *CB"
+          ],
+          "line": 358
+        },
+        {
+          "name": "SYS_setVIntCallback",
+          "ret": "void",
+          "params": [
+            "VoidCallback *CB"
+          ],
+          "line": 378
+        },
+        {
+          "name": "SYS_setHIntCallback",
+          "ret": "void",
+          "params": [
+            "VoidCallback *CB"
+          ],
+          "line": 397
+        },
+        {
+          "name": "SYS_setExtIntCallback",
+          "ret": "void",
+          "params": [
+            "VoidCallback *CB"
+          ],
+          "line": 408
+        },
+        {
+          "name": "SYS_isInVInt",
+          "ret": "bool",
+          "params": [],
+          "line": 416
+        },
+        {
+          "name": "SYS_isNTSC",
+          "ret": "u16",
+          "params": [],
+          "line": 424
+        },
+        {
+          "name": "SYS_isPAL",
+          "ret": "u16",
+          "params": [],
+          "line": 431
+        },
+        {
+          "name": "SYS_getFPS",
+          "ret": "u32",
+          "params": [],
+          "line": 440
+        },
+        {
+          "name": "SYS_getFPSAsFloat",
+          "ret": "fix32",
+          "params": [],
+          "line": 448
+        },
+        {
+          "name": "SYS_getCPULoad",
+          "ret": "u16",
+          "params": [],
+          "line": 459
+        },
+        {
+          "name": "SYS_getShowFrameLoad",
+          "ret": "bool",
+          "params": [],
+          "line": 466
+        },
+        {
+          "name": "SYS_showFrameLoad",
+          "ret": "void",
+          "params": [
+            "bool mean"
+          ],
+          "line": 480
+        },
+        {
+          "name": "SYS_hideFrameLoad",
+          "ret": "void",
+          "params": [],
+          "line": 487
+        },
+        {
+          "name": "SYS_computeChecksum",
+          "ret": "u16",
+          "params": [],
+          "line": 494
+        },
+        {
+          "name": "SYS_isChecksumOk",
+          "ret": "bool",
+          "params": [],
+          "line": 499
+        },
+        {
+          "name": "SYS_die",
+          "ret": "void",
+          "params": [
+            "char *err",
+            "..."
+          ],
+          "line": 509
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "tab_cnv.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "task.h": {
+      "functions": [
+        {
+          "name": "TSK_init",
+          "ret": "void",
+          "params": [],
+          "line": 31
+        },
+        {
+          "name": "TSK_userSet",
+          "ret": "void",
+          "params": [
+            "VoidCallback *task"
+          ],
+          "line": 39
+        },
+        {
+          "name": "TSK_stop",
+          "ret": "void",
+          "params": [],
+          "line": 45
+        },
+        {
+          "name": "TSK_userYield",
+          "ret": "void",
+          "params": [],
+          "line": 52
+        },
+        {
+          "name": "TSK_superPend",
+          "ret": "bool",
+          "params": [
+            "s16 wait"
+          ],
+          "line": 66
+        },
+        {
+          "name": "TSK_superPost",
+          "ret": "void",
+          "params": [
+            "bool immediate"
+          ],
+          "line": 75
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "task_cst.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "timer.h": {
+      "functions": [
+        {
+          "name": "getSubTick",
+          "ret": "u32",
+          "params": [],
+          "line": 48
+        },
+        {
+          "name": "getTick",
+          "ret": "u32",
+          "params": [],
+          "line": 55
+        },
+        {
+          "name": "getTime",
+          "ret": "u32",
+          "params": [
+            "u16 fromTick"
+          ],
+          "line": 66
+        },
+        {
+          "name": "getTimeAsFix32",
+          "ret": "fix32",
+          "params": [
+            "u16 fromTick"
+          ],
+          "line": 77
+        },
+        {
+          "name": "startTimer",
+          "ret": "void",
+          "params": [
+            "u16 numTimer"
+          ],
+          "line": 86
+        },
+        {
+          "name": "getTimer",
+          "ret": "u32",
+          "params": [
+            "u16 numTimer",
+            "u16 restart"
+          ],
+          "line": 98
+        },
+        {
+          "name": "waitSubTick",
+          "ret": "void",
+          "params": [
+            "u32 subtick"
+          ],
+          "line": 109
+        },
+        {
+          "name": "waitTick",
+          "ret": "void",
+          "params": [
+            "u32 tick"
+          ],
+          "line": 119
+        },
+        {
+          "name": "waitMs",
+          "ret": "void",
+          "params": [
+            "u32 ms"
+          ],
+          "line": 129
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "tools.h": {
+      "functions": [
+        {
+          "name": "setRandomSeed",
+          "ret": "void",
+          "params": [
+            "u16 seed"
+          ],
+          "line": 66
+        },
+        {
+          "name": "random",
+          "ret": "u16",
+          "params": [],
+          "line": 71
+        },
+        {
+          "name": "kprintf",
+          "ret": "int",
+          "params": [
+            "const char *fmt",
+            "..."
+          ],
+          "line": 98
+        },
+        {
+          "name": "KLog",
+          "ret": "void",
+          "params": [
+            "char* text"
+          ],
+          "line": 105
+        },
+        {
+          "name": "KLog_U1",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "u32 v1"
+          ],
+          "line": 106
+        },
+        {
+          "name": "KLog_U2",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2"
+          ],
+          "line": 107
+        },
+        {
+          "name": "KLog_U3",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3",
+            "u32 v3"
+          ],
+          "line": 108
+        },
+        {
+          "name": "KLog_U4",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3",
+            "u32 v3",
+            "char* t4",
+            "u32 v4"
+          ],
+          "line": 109
+        },
+        {
+          "name": "KLog_U1_",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "u32 v1",
+            "char* t2"
+          ],
+          "line": 110
+        },
+        {
+          "name": "KLog_U2_",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3"
+          ],
+          "line": 111
+        },
+        {
+          "name": "KLog_U3_",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3",
+            "u32 v3",
+            "char* t4"
+          ],
+          "line": 112
+        },
+        {
+          "name": "KLog_U4_",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3",
+            "u32 v3",
+            "char* t4",
+            "u32 v4",
+            "char* t5"
+          ],
+          "line": 113
+        },
+        {
+          "name": "KLog_U1x",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "u32 v1"
+          ],
+          "line": 114
+        },
+        {
+          "name": "KLog_U2x",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2"
+          ],
+          "line": 115
+        },
+        {
+          "name": "KLog_U3x",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3",
+            "u32 v3"
+          ],
+          "line": 116
+        },
+        {
+          "name": "KLog_U4x",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3",
+            "u32 v3",
+            "char* t4",
+            "u32 v4"
+          ],
+          "line": 117
+        },
+        {
+          "name": "KLog_U1x_",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "u32 v1",
+            "char* t2"
+          ],
+          "line": 118
+        },
+        {
+          "name": "KLog_U2x_",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3"
+          ],
+          "line": 119
+        },
+        {
+          "name": "KLog_U3x_",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3",
+            "u32 v3",
+            "char* t4"
+          ],
+          "line": 120
+        },
+        {
+          "name": "KLog_U4x_",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "u32 v1",
+            "char* t2",
+            "u32 v2",
+            "char* t3",
+            "u32 v3",
+            "char* t4",
+            "u32 v4",
+            "char* t5"
+          ],
+          "line": 121
+        },
+        {
+          "name": "KLog_S1",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "s32 v1"
+          ],
+          "line": 122
+        },
+        {
+          "name": "KLog_S2",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "s32 v1",
+            "char* t2",
+            "s32 v2"
+          ],
+          "line": 123
+        },
+        {
+          "name": "KLog_S3",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "s32 v1",
+            "char* t2",
+            "s32 v2",
+            "char* t3",
+            "s32 v3"
+          ],
+          "line": 124
+        },
+        {
+          "name": "KLog_S4",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "s32 v1",
+            "char* t2",
+            "s32 v2",
+            "char* t3",
+            "s32 v3",
+            "char* t4",
+            "s32 v4"
+          ],
+          "line": 125
+        },
+        {
+          "name": "KLog_S1_",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "s32 v1",
+            "char* t2"
+          ],
+          "line": 126
+        },
+        {
+          "name": "KLog_S2_",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "s32 v1",
+            "char* t2",
+            "s32 v2",
+            "char* t3"
+          ],
+          "line": 127
+        },
+        {
+          "name": "KLog_S3_",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "s32 v1",
+            "char* t2",
+            "s32 v2",
+            "char* t3",
+            "s32 v3",
+            "char* t4"
+          ],
+          "line": 128
+        },
+        {
+          "name": "KLog_S4_",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "s32 v1",
+            "char* t2",
+            "s32 v2",
+            "char* t3",
+            "s32 v3",
+            "char* t4",
+            "s32 v4",
+            "char* t5"
+          ],
+          "line": 129
+        },
+        {
+          "name": "KLog_S1x",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "s32 v1"
+          ],
+          "line": 130
+        },
+        {
+          "name": "KLog_S2x",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "s32 v1",
+            "char* t2",
+            "s32 v2"
+          ],
+          "line": 131
+        },
+        {
+          "name": "KLog_S3x",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "s32 v1",
+            "char* t2",
+            "s32 v2",
+            "char* t3",
+            "s32 v3"
+          ],
+          "line": 132
+        },
+        {
+          "name": "KLog_S4x",
+          "ret": "void",
+          "params": [
+            "u16 minSize",
+            "char* t1",
+            "s32 v1",
+            "char* t2",
+            "s32 v2",
+            "char* t3",
+            "s32 v3",
+            "char* t4",
+            "s32 v4"
+          ],
+          "line": 133
+        },
+        {
+          "name": "KLog_f1",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "fix16 v1"
+          ],
+          "line": 134
+        },
+        {
+          "name": "KLog_f2",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "fix16 v1",
+            "char* t2",
+            "fix16 v2"
+          ],
+          "line": 135
+        },
+        {
+          "name": "KLog_f3",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "fix16 v1",
+            "char* t2",
+            "fix16 v2",
+            "char* t3",
+            "fix16 v3"
+          ],
+          "line": 136
+        },
+        {
+          "name": "KLog_f4",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "fix16 v1",
+            "char* t2",
+            "fix16 v2",
+            "char* t3",
+            "fix16 v3",
+            "char* t4",
+            "fix16 v4"
+          ],
+          "line": 137
+        },
+        {
+          "name": "KLog_f1x",
+          "ret": "void",
+          "params": [
+            "s16 numDec",
+            "char* t1",
+            "fix16 v1"
+          ],
+          "line": 138
+        },
+        {
+          "name": "KLog_f2x",
+          "ret": "void",
+          "params": [
+            "s16 numDec",
+            "char* t1",
+            "fix16 v1",
+            "char* t2",
+            "fix16 v2"
+          ],
+          "line": 139
+        },
+        {
+          "name": "KLog_f3x",
+          "ret": "void",
+          "params": [
+            "s16 numDec",
+            "char* t1",
+            "fix16 v1",
+            "char* t2",
+            "fix16 v2",
+            "char* t3",
+            "fix16 v3"
+          ],
+          "line": 140
+        },
+        {
+          "name": "KLog_f4x",
+          "ret": "void",
+          "params": [
+            "s16 numDec",
+            "char* t1",
+            "fix16 v1",
+            "char* t2",
+            "fix16 v2",
+            "char* t3",
+            "fix16 v3",
+            "char* t4",
+            "fix16 v4"
+          ],
+          "line": 141
+        },
+        {
+          "name": "KLog_F1",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "fix32 v1"
+          ],
+          "line": 142
+        },
+        {
+          "name": "KLog_F2",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "fix32 v1",
+            "char* t2",
+            "fix32 v2"
+          ],
+          "line": 143
+        },
+        {
+          "name": "KLog_F3",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "fix32 v1",
+            "char* t2",
+            "fix32 v2",
+            "char* t3",
+            "fix32 v3"
+          ],
+          "line": 144
+        },
+        {
+          "name": "KLog_F4",
+          "ret": "void",
+          "params": [
+            "char* t1",
+            "fix32 v1",
+            "char* t2",
+            "fix32 v2",
+            "char* t3",
+            "fix32 v3",
+            "char* t4",
+            "fix32 v4"
+          ],
+          "line": 145
+        },
+        {
+          "name": "KLog_F1x",
+          "ret": "void",
+          "params": [
+            "s16 numDec",
+            "char* t1",
+            "fix32 v1"
+          ],
+          "line": 146
+        },
+        {
+          "name": "KLog_F2x",
+          "ret": "void",
+          "params": [
+            "s16 numDec",
+            "char* t1",
+            "fix32 v1",
+            "char* t2",
+            "fix32 v2"
+          ],
+          "line": 147
+        },
+        {
+          "name": "KLog_F3x",
+          "ret": "void",
+          "params": [
+            "s16 numDec",
+            "char* t1",
+            "fix32 v1",
+            "char* t2",
+            "fix32 v2",
+            "char* t3",
+            "fix32 v3"
+          ],
+          "line": 148
+        },
+        {
+          "name": "KLog_F4x",
+          "ret": "void",
+          "params": [
+            "s16 numDec",
+            "char* t1",
+            "fix32 v1",
+            "char* t2",
+            "fix32 v2",
+            "char* t3",
+            "fix32 v3",
+            "char* t4",
+            "fix32 v4"
+          ],
+          "line": 149
+        },
+        {
+          "name": "allocateBitmap",
+          "ret": "Bitmap*",
+          "params": [
+            "const Bitmap *bitmap"
+          ],
+          "line": 164
+        },
+        {
+          "name": "allocateBitmapEx",
+          "ret": "Bitmap*",
+          "params": [
+            "u16 width",
+            "u16 heigth"
+          ],
+          "line": 179
+        },
+        {
+          "name": "allocateTileSet",
+          "ret": "TileSet*",
+          "params": [
+            "const TileSet *tileset"
+          ],
+          "line": 191
+        },
+        {
+          "name": "allocateTileSetEx",
+          "ret": "TileSet*",
+          "params": [
+            "u16 numTile"
+          ],
+          "line": 203
+        },
+        {
+          "name": "allocateTileMap",
+          "ret": "TileMap*",
+          "params": [
+            "const TileMap *tilemap"
+          ],
+          "line": 215
+        },
+        {
+          "name": "allocateTileMapEx",
+          "ret": "TileMap*",
+          "params": [
+            "u16 width",
+            "u16 heigth"
+          ],
+          "line": 229
+        },
+        {
+          "name": "allocateImage",
+          "ret": "Image*",
+          "params": [
+            "const Image *image"
+          ],
+          "line": 242
+        },
+        {
+          "name": "allocateMap",
+          "ret": "Map*",
+          "params": [
+            "const MapDefinition *mapDef"
+          ],
+          "line": 254
+        },
+        {
+          "name": "unpackBitmap",
+          "ret": "Bitmap*",
+          "params": [
+            "const Bitmap *src",
+            "Bitmap *dest"
+          ],
+          "line": 270
+        },
+        {
+          "name": "unpackTileSet",
+          "ret": "TileSet*",
+          "params": [
+            "const TileSet *src",
+            "TileSet *dest"
+          ],
+          "line": 285
+        },
+        {
+          "name": "unpackTileMap",
+          "ret": "TileMap*",
+          "params": [
+            "const TileMap *src",
+            "TileMap *dest"
+          ],
+          "line": 300
+        },
+        {
+          "name": "unpackImage",
+          "ret": "Image*",
+          "params": [
+            "const Image *src",
+            "Image *dest"
+          ],
+          "line": 315
+        },
+        {
+          "name": "unpack",
+          "ret": "u32",
+          "params": [
+            "u16 compression",
+            "u8 *src",
+            "u8 *dest"
+          ],
+          "line": 333
+        },
+        {
+          "name": "aplib_unpack",
+          "ret": "u32",
+          "params": [
+            "u8 *src",
+            "u8 *dest"
+          ],
+          "line": 346
+        },
+        {
+          "name": "lz4w_unpack",
+          "ret": "u32",
+          "params": [
+            "const u8 *src",
+            "u8 *dest"
+          ],
+          "line": 359
+        },
+        {
+          "name": "qsort_u8",
+          "ret": "void",
+          "params": [
+            "u8 *data",
+            "u16 left",
+            "u16 right"
+          ],
+          "line": 373
+        },
+        {
+          "name": "qsort_s8",
+          "ret": "void",
+          "params": [
+            "s8 *data",
+            "u16 left",
+            "u16 right"
+          ],
+          "line": 385
+        },
+        {
+          "name": "qsort_u16",
+          "ret": "void",
+          "params": [
+            "u16 *data",
+            "u16 left",
+            "u16 right"
+          ],
+          "line": 397
+        },
+        {
+          "name": "qsort_s16",
+          "ret": "void",
+          "params": [
+            "s16 *data",
+            "u16 left",
+            "u16 right"
+          ],
+          "line": 409
+        },
+        {
+          "name": "qsort_u32",
+          "ret": "void",
+          "params": [
+            "u32 *data",
+            "u16 left",
+            "u16 right"
+          ],
+          "line": 421
+        },
+        {
+          "name": "qsort_s32",
+          "ret": "void",
+          "params": [
+            "s32 *data",
+            "u16 left",
+            "u16 right"
+          ],
+          "line": 433
+        },
+        {
+          "name": "qsort",
+          "ret": "void",
+          "params": [
+            "void** data",
+            "u16 len",
+            "_comparatorCallback* cb"
+          ],
+          "line": 446
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "types.h": {
+      "functions": [
+        {
+          "name": "getZeroU8",
+          "ret": "u8",
+          "params": [],
+          "line": 315
+        },
+        {
+          "name": "getZeroU16",
+          "ret": "u16",
+          "params": [],
+          "line": 316
+        },
+        {
+          "name": "getZeroU32",
+          "ret": "u32",
+          "params": [],
+          "line": 317
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "vdp.h": {
+      "functions": [
+        {
+          "name": "VDP_init",
+          "ret": "void",
+          "params": [],
+          "line": 608
+        },
+        {
+          "name": "VDP_resetScreen",
+          "ret": "void",
+          "params": [],
+          "line": 616
+        },
+        {
+          "name": "VDP_getReg",
+          "ret": "u8",
+          "params": [
+            "u16 reg"
+          ],
+          "line": 626
+        },
+        {
+          "name": "VDP_setReg",
+          "ret": "void",
+          "params": [
+            "u16 reg",
+            "u8 value"
+          ],
+          "line": 638
+        },
+        {
+          "name": "VDP_getEnable",
+          "ret": "bool",
+          "params": [],
+          "line": 644
+        },
+        {
+          "name": "VDP_isEnable",
+          "ret": "bool",
+          "params": [],
+          "line": 649
+        },
+        {
+          "name": "VDP_setEnable",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 656
+        },
+        {
+          "name": "VDP_getScanlineNumber",
+          "ret": "u16",
+          "params": [],
+          "line": 664
+        },
+        {
+          "name": "VDP_getScreenHeight",
+          "ret": "u16",
+          "params": [],
+          "line": 672
+        },
+        {
+          "name": "VDP_setScreenHeight224",
+          "ret": "void",
+          "params": [],
+          "line": 679
+        },
+        {
+          "name": "VDP_setScreenHeight240",
+          "ret": "void",
+          "params": [],
+          "line": 686
+        },
+        {
+          "name": "VDP_getScreenWidth",
+          "ret": "u16",
+          "params": [],
+          "line": 693
+        },
+        {
+          "name": "VDP_setScreenWidth256",
+          "ret": "void",
+          "params": [],
+          "line": 698
+        },
+        {
+          "name": "VDP_setScreenWidth320",
+          "ret": "void",
+          "params": [],
+          "line": 703
+        },
+        {
+          "name": "VDP_getPlaneWidth",
+          "ret": "u16",
+          "params": [],
+          "line": 709
+        },
+        {
+          "name": "VDP_getPlaneHeight",
+          "ret": "u16",
+          "params": [],
+          "line": 714
+        },
+        {
+          "name": "VDP_setPlaneSize",
+          "ret": "void",
+          "params": [
+            "u16 w",
+            "u16 h",
+            "bool setupVram"
+          ],
+          "line": 731
+        },
+        {
+          "name": "VDP_getHorizontalScrollingMode",
+          "ret": "u8",
+          "params": [],
+          "line": 746
+        },
+        {
+          "name": "VDP_getVerticalScrollingMode",
+          "ret": "u8",
+          "params": [],
+          "line": 755
+        },
+        {
+          "name": "VDP_setScrollingMode",
+          "ret": "void",
+          "params": [
+            "u16 hscroll",
+            "u16 vscroll"
+          ],
+          "line": 776
+        },
+        {
+          "name": "VDP_getBackgroundColor",
+          "ret": "u8",
+          "params": [],
+          "line": 782
+        },
+        {
+          "name": "VDP_setBackgroundColor",
+          "ret": "void",
+          "params": [
+            "u8 value"
+          ],
+          "line": 787
+        },
+        {
+          "name": "VDP_getAutoInc",
+          "ret": "u8",
+          "params": [],
+          "line": 793
+        },
+        {
+          "name": "VDP_setAutoInc",
+          "ret": "void",
+          "params": [
+            "u8 value"
+          ],
+          "line": 798
+        },
+        {
+          "name": "VDP_getDMAEnabled",
+          "ret": "u8",
+          "params": [],
+          "line": 804
+        },
+        {
+          "name": "VDP_setDMAEnabled",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 811
+        },
+        {
+          "name": "VDP_getHVLatching",
+          "ret": "u8",
+          "params": [],
+          "line": 816
+        },
+        {
+          "name": "VDP_setHVLatching",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 823
+        },
+        {
+          "name": "VDP_setVInterrupt",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 830
+        },
+        {
+          "name": "VDP_setHInterrupt",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 837
+        },
+        {
+          "name": "VDP_setExtInterrupt",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 844
+        },
+        {
+          "name": "VDP_setHilightShadow",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 849
+        },
+        {
+          "name": "VDP_getHIntCounter",
+          "ret": "u8",
+          "params": [],
+          "line": 855
+        },
+        {
+          "name": "VDP_setHIntCounter",
+          "ret": "void",
+          "params": [
+            "u8 value"
+          ],
+          "line": 863
+        },
+        {
+          "name": "VDP_getBGAAddress",
+          "ret": "u16",
+          "params": [],
+          "line": 869
+        },
+        {
+          "name": "VDP_getBGBAddress",
+          "ret": "u16",
+          "params": [],
+          "line": 874
+        },
+        {
+          "name": "VDP_getWindowAddress",
+          "ret": "u16",
+          "params": [],
+          "line": 890
+        },
+        {
+          "name": "VDP_getSpriteListAddress",
+          "ret": "u16",
+          "params": [],
+          "line": 900
+        },
+        {
+          "name": "VDP_getHScrollTableAddress",
+          "ret": "u16",
+          "params": [],
+          "line": 905
+        },
+        {
+          "name": "VDP_setBGAAddress",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 916
+        },
+        {
+          "name": "VDP_setBGBAddress",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 926
+        },
+        {
+          "name": "VDP_setWindowAddress",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 948
+        },
+        {
+          "name": "VDP_setSpriteListAddress",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 963
+        },
+        {
+          "name": "VDP_setHScrollTableAddress",
+          "ret": "void",
+          "params": [
+            "u16 value"
+          ],
+          "line": 973
+        },
+        {
+          "name": "VDP_setScanMode",
+          "ret": "void",
+          "params": [
+            "u16 mode"
+          ],
+          "line": 987
+        },
+        {
+          "name": "VDP_setWindowHPos",
+          "ret": "void",
+          "params": [
+            "u16 right",
+            "u16 pos"
+          ],
+          "line": 999
+        },
+        {
+          "name": "VDP_setWindowVPos",
+          "ret": "void",
+          "params": [
+            "u16 down",
+            "u16 pos"
+          ],
+          "line": 1010
+        },
+        {
+          "name": "VDP_setWindowOff",
+          "ret": "void",
+          "params": [],
+          "line": 1015
+        },
+        {
+          "name": "VDP_setWindowOnTop",
+          "ret": "void",
+          "params": [
+            "u16 rows"
+          ],
+          "line": 1023
+        },
+        {
+          "name": "VDP_setWindowOnBottom",
+          "ret": "void",
+          "params": [
+            "u16 rows"
+          ],
+          "line": 1031
+        },
+        {
+          "name": "VDP_setWindowOnLeft",
+          "ret": "void",
+          "params": [
+            "u16 cols"
+          ],
+          "line": 1039
+        },
+        {
+          "name": "VDP_setWindowOnRight",
+          "ret": "void",
+          "params": [
+            "u16 cols"
+          ],
+          "line": 1047
+        },
+        {
+          "name": "VDP_setWindowFullScreen",
+          "ret": "void",
+          "params": [],
+          "line": 1052
+        },
+        {
+          "name": "VDP_waitDMACompletion",
+          "ret": "void",
+          "params": [],
+          "line": 1058
+        },
+        {
+          "name": "VDP_waitFIFOEmpty",
+          "ret": "void",
+          "params": [],
+          "line": 1063
+        },
+        {
+          "name": "VDP_waitVInt",
+          "ret": "bool",
+          "params": [],
+          "line": 1074
+        },
+        {
+          "name": "VDP_waitVBlank",
+          "ret": "bool",
+          "params": [
+            "bool forceNext"
+          ],
+          "line": 1086
+        },
+        {
+          "name": "VDP_waitVSync",
+          "ret": "bool",
+          "params": [],
+          "line": 1095
+        },
+        {
+          "name": "VDP_waitVActive",
+          "ret": "void",
+          "params": [
+            "bool forceNext"
+          ],
+          "line": 1105
+        },
+        {
+          "name": "VDP_getAdjustedVCounter",
+          "ret": "u16",
+          "params": [],
+          "line": 1114
+        },
+        {
+          "name": "VDP_showFPS",
+          "ret": "void",
+          "params": [
+            "u16 asFloat",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 1132
+        },
+        {
+          "name": "VDP_showCPULoad",
+          "ret": "void",
+          "params": [
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 1146
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "vdp_bg.h": {
+      "functions": [
+        {
+          "name": "VDP_setHorizontalScroll",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "s16 value"
+          ],
+          "line": 70
+        },
+        {
+          "name": "VDP_setHorizontalScrollVSync",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "s16 value"
+          ],
+          "line": 87
+        },
+        {
+          "name": "VDP_setHorizontalScrollTile",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 tile",
+            "s16* values",
+            "u16 len",
+            "TransferMethod tm"
+          ],
+          "line": 119
+        },
+        {
+          "name": "VDP_setHorizontalScrollLine",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 line",
+            "s16* values",
+            "u16 len",
+            "TransferMethod tm"
+          ],
+          "line": 150
+        },
+        {
+          "name": "VDP_setVerticalScroll",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "s16 value"
+          ],
+          "line": 170
+        },
+        {
+          "name": "VDP_setVerticalScrollVSync",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "s16 value"
+          ],
+          "line": 186
+        },
+        {
+          "name": "VDP_setVerticalScrollTile",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 tile",
+            "s16* values",
+            "u16 len",
+            "TransferMethod tm"
+          ],
+          "line": 216
+        },
+        {
+          "name": "VDP_clearPlane",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "bool wait"
+          ],
+          "line": 232
+        },
+        {
+          "name": "VDP_getTextPlane",
+          "ret": "VDPPlane",
+          "params": [],
+          "line": 243
+        },
+        {
+          "name": "VDP_getTextPalette",
+          "ret": "u16",
+          "params": [],
+          "line": 251
+        },
+        {
+          "name": "VDP_getTextPriority",
+          "ret": "u16",
+          "params": [],
+          "line": 259
+        },
+        {
+          "name": "VDP_setTextPlane",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane"
+          ],
+          "line": 275
+        },
+        {
+          "name": "VDP_setTextPalette",
+          "ret": "void",
+          "params": [
+            "u16 palette"
+          ],
+          "line": 286
+        },
+        {
+          "name": "VDP_setTextPriority",
+          "ret": "void",
+          "params": [
+            "u16 prio"
+          ],
+          "line": 299
+        },
+        {
+          "name": "VDP_drawTextEx",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "const char* str",
+            "u16 basetile",
+            "u16 x",
+            "u16 y",
+            "TransferMethod tm"
+          ],
+          "line": 332
+        },
+        {
+          "name": "VDP_clearTextEx",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 basetile",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "TransferMethod tm"
+          ],
+          "line": 363
+        },
+        {
+          "name": "VDP_clearTextAreaEx",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 basetile",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "TransferMethod tm"
+          ],
+          "line": 395
+        },
+        {
+          "name": "VDP_drawTextBG",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "const char* str",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 420
+        },
+        {
+          "name": "VDP_clearTextBG",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 x",
+            "u16 y",
+            "u16 w"
+          ],
+          "line": 443
+        },
+        {
+          "name": "VDP_clearTextAreaBG",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h"
+          ],
+          "line": 468
+        },
+        {
+          "name": "VDP_clearTextLineBG",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 y"
+          ],
+          "line": 486
+        },
+        {
+          "name": "VDP_drawText",
+          "ret": "void",
+          "params": [
+            "const char* str",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 504
+        },
+        {
+          "name": "VDP_drawTextBGFill",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "const char* str",
+            "u16 x",
+            "u16 y",
+            "u16 len"
+          ],
+          "line": 534
+        },
+        {
+          "name": "VDP_drawTextFill",
+          "ret": "void",
+          "params": [
+            "const char* str",
+            "u16 x",
+            "u16 y",
+            "u16 len"
+          ],
+          "line": 558
+        },
+        {
+          "name": "VDP_clearText",
+          "ret": "void",
+          "params": [
+            "u16 x",
+            "u16 y",
+            "u16 w"
+          ],
+          "line": 574
+        },
+        {
+          "name": "VDP_clearTextArea",
+          "ret": "void",
+          "params": [
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h"
+          ],
+          "line": 592
+        },
+        {
+          "name": "VDP_clearTextLine",
+          "ret": "void",
+          "params": [
+            "u16 y"
+          ],
+          "line": 604
+        },
+        {
+          "name": "VDP_drawBitmap",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const Bitmap *bitmap",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 632
+        },
+        {
+          "name": "VDP_drawBitmapEx",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const Bitmap *bitmap",
+            "u16 basetile",
+            "u16 x",
+            "u16 y",
+            "bool loadpal"
+          ],
+          "line": 663
+        },
+        {
+          "name": "VDP_drawImage",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const Image *image",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 689
+        },
+        {
+          "name": "VDP_drawImageEx",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const Image *image",
+            "u16 basetile",
+            "u16 x",
+            "u16 y",
+            "bool loadpal",
+            "bool dma"
+          ],
+          "line": 720
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "vdp_pal.h": {
+      "functions": [],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "vdp_spr.h": {
+      "functions": [
+        {
+          "name": "VDP_resetSprites",
+          "ret": "void",
+          "params": [],
+          "line": 127
+        },
+        {
+          "name": "VDP_releaseAllSprites",
+          "ret": "void",
+          "params": [],
+          "line": 133
+        },
+        {
+          "name": "VDP_allocateSprites",
+          "ret": "s16",
+          "params": [
+            "u16 num"
+          ],
+          "line": 155
+        },
+        {
+          "name": "VDP_releaseSprites",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "u16 num"
+          ],
+          "line": 171
+        },
+        {
+          "name": "VDP_getAvailableSprites",
+          "ret": "u16",
+          "params": [],
+          "line": 181
+        },
+        {
+          "name": "VDP_refreshHighestAllocatedSpriteIndex",
+          "ret": "s16",
+          "params": [],
+          "line": 192
+        },
+        {
+          "name": "VDP_clearSprites",
+          "ret": "void",
+          "params": [],
+          "line": 198
+        },
+        {
+          "name": "VDP_setSpriteFull",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "s16 x",
+            "s16 y",
+            "u8 size",
+            "u16 attribut",
+            "u8 link"
+          ],
+          "line": 220
+        },
+        {
+          "name": "VDP_setSprite",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "s16 x",
+            "s16 y",
+            "u8 size",
+            "u16 attribut"
+          ],
+          "line": 239
+        },
+        {
+          "name": "VDP_setSpritePosition",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "s16 x",
+            "s16 y"
+          ],
+          "line": 254
+        },
+        {
+          "name": "VDP_setSpriteSize",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "u8 size"
+          ],
+          "line": 267
+        },
+        {
+          "name": "VDP_setSpriteAttribut",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "u16 attribut"
+          ],
+          "line": 280
+        },
+        {
+          "name": "VDP_setSpriteLink",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "u8 link"
+          ],
+          "line": 293
+        },
+        {
+          "name": "VDP_linkSprites",
+          "ret": "VDPSprite*",
+          "params": [
+            "u16 index",
+            "u16 num"
+          ],
+          "line": 306
+        },
+        {
+          "name": "VDP_updateSprites",
+          "ret": "void",
+          "params": [
+            "u16 num",
+            "TransferMethod tm"
+          ],
+          "line": 326
+        },
+        {
+          "name": "VDP_setSpritePriority",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "bool priority"
+          ],
+          "line": 339
+        },
+        {
+          "name": "VDP_getSpritePriority",
+          "ret": "bool",
+          "params": [
+            "u16 index"
+          ],
+          "line": 347
+        },
+        {
+          "name": "VDP_setSpritePalette",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "u16 palette"
+          ],
+          "line": 360
+        },
+        {
+          "name": "VDP_getSpritePalette",
+          "ret": "u16",
+          "params": [
+            "u16 index"
+          ],
+          "line": 368
+        },
+        {
+          "name": "VDP_setSpriteFlip",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "bool flipH",
+            "bool flipV"
+          ],
+          "line": 383
+        },
+        {
+          "name": "VDP_setSpriteFlipH",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "bool flipH"
+          ],
+          "line": 396
+        },
+        {
+          "name": "VDP_setSpriteFlipV",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "bool flipV"
+          ],
+          "line": 409
+        },
+        {
+          "name": "VDP_getSpriteFlipH",
+          "ret": "bool",
+          "params": [
+            "u16 index"
+          ],
+          "line": 417
+        },
+        {
+          "name": "VDP_getSpriteFlipV",
+          "ret": "bool",
+          "params": [
+            "u16 index"
+          ],
+          "line": 425
+        },
+        {
+          "name": "VDP_setSpriteTile",
+          "ret": "void",
+          "params": [
+            "u16 index",
+            "u16 tile"
+          ],
+          "line": 438
+        },
+        {
+          "name": "VDP_getSpriteTile",
+          "ret": "u16",
+          "params": [
+            "u16 index"
+          ],
+          "line": 446
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "vdp_tile.h": {
+      "functions": [
+        {
+          "name": "VDP_getPlaneAddress",
+          "ret": "u16",
+          "params": [
+            "VDPPlane plane",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 159
+        },
+        {
+          "name": "VDP_loadTileData",
+          "ret": "void",
+          "params": [
+            "const u32 *data",
+            "u16 index",
+            "u16 num",
+            "TransferMethod tm"
+          ],
+          "line": 183
+        },
+        {
+          "name": "VDP_loadTileSet",
+          "ret": "bool",
+          "params": [
+            "const TileSet *tileset",
+            "u16 index",
+            "TransferMethod tm"
+          ],
+          "line": 209
+        },
+        {
+          "name": "VDP_loadTileSetEx",
+          "ret": "bool",
+          "params": [
+            "const TileSet *tileset",
+            "u16 index",
+            "u16 fromTile",
+            "u16 count",
+            "TransferMethod tm"
+          ],
+          "line": 240
+        },
+        {
+          "name": "VDP_loadFontData",
+          "ret": "void",
+          "params": [
+            "const u32 *font",
+            "u16 length",
+            "TransferMethod tm"
+          ],
+          "line": 263
+        },
+        {
+          "name": "VDP_loadFont",
+          "ret": "bool",
+          "params": [
+            "const TileSet *font",
+            "TransferMethod tm"
+          ],
+          "line": 288
+        },
+        {
+          "name": "VDP_loadDefaultFont",
+          "ret": "bool",
+          "params": [
+            "TransferMethod tm"
+          ],
+          "line": 307
+        },
+        {
+          "name": "VDP_loadBMPTileData",
+          "ret": "void",
+          "params": [
+            "const u32 *data",
+            "u16 index",
+            "u16 w",
+            "u16 h",
+            "u16 bmp_w"
+          ],
+          "line": 329
+        },
+        {
+          "name": "VDP_loadBMPTileDataEx",
+          "ret": "void",
+          "params": [
+            "const u32 *data",
+            "u16 index",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "u16 bmp_w"
+          ],
+          "line": 354
+        },
+        {
+          "name": "VDP_fillTileData",
+          "ret": "void",
+          "params": [
+            "u8 value",
+            "u16 index",
+            "u16 num",
+            "bool wait"
+          ],
+          "line": 372
+        },
+        {
+          "name": "VDP_clearTileMap",
+          "ret": "void",
+          "params": [
+            "u16 planeAddr",
+            "u16 ind",
+            "u16 num",
+            "bool wait"
+          ],
+          "line": 395
+        },
+        {
+          "name": "VDP_fillTileMap",
+          "ret": "void",
+          "params": [
+            "u16 planeAddr",
+            "u16 tile",
+            "u16 ind",
+            "u16 num"
+          ],
+          "line": 415
+        },
+        {
+          "name": "VDP_setTileMapData",
+          "ret": "void",
+          "params": [
+            "u16 planeAddr",
+            "const u16 *data",
+            "u16 ind",
+            "u16 num",
+            "u16 vramStep",
+            "TransferMethod tm"
+          ],
+          "line": 450
+        },
+        {
+          "name": "VDP_setTileMapDataEx",
+          "ret": "void",
+          "params": [
+            "u16 planeAddr",
+            "const u16 *data",
+            "u16 basetile",
+            "u16 ind",
+            "u16 num",
+            "u16 vramStep"
+          ],
+          "line": 480
+        },
+        {
+          "name": "VDP_setTileMapXY",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 tile",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 501
+        },
+        {
+          "name": "VDP_clearTileMapRect",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h"
+          ],
+          "line": 523
+        },
+        {
+          "name": "VDP_fillTileMapRect",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 tile",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h"
+          ],
+          "line": 550
+        },
+        {
+          "name": "VDP_fillTileMapRectInc",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16 basetile",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h"
+          ],
+          "line": 581
+        },
+        {
+          "name": "VDP_setTileMapDataRect",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "const u16 *data",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "u16 wm",
+            "TransferMethod tm"
+          ],
+          "line": 621
+        },
+        {
+          "name": "VDP_setTileMapDataRectEx",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "const u16 *data",
+            "u16 basetile",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "u16 wm",
+            "TransferMethod tm"
+          ],
+          "line": 665
+        },
+        {
+          "name": "VDP_setTileMapDataRow",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "const u16 *data",
+            "u16 row",
+            "u16 x",
+            "u16 w",
+            "TransferMethod tm"
+          ],
+          "line": 701
+        },
+        {
+          "name": "VDP_setTileMapDataRowEx",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "const u16 *data",
+            "u16 basetile",
+            "u16 row",
+            "u16 x",
+            "u16 w",
+            "TransferMethod tm"
+          ],
+          "line": 741
+        },
+        {
+          "name": "VDP_setTileMapDataColumnFast",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "u16* data",
+            "u16 column",
+            "u16 y",
+            "u16 h",
+            "TransferMethod tm"
+          ],
+          "line": 778
+        },
+        {
+          "name": "VDP_setTileMapDataColumn",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "const u16 *data",
+            "u16 column",
+            "u16 y",
+            "u16 h",
+            "u16 wm",
+            "TransferMethod tm"
+          ],
+          "line": 816
+        },
+        {
+          "name": "VDP_setTileMapDataColumnEx",
+          "ret": "void",
+          "params": [
+            "VDPPlane plane",
+            "const u16 *data",
+            "u16 basetile",
+            "u16 column",
+            "u16 y",
+            "u16 h",
+            "u16 wm",
+            "TransferMethod tm"
+          ],
+          "line": 860
+        },
+        {
+          "name": "VDP_setTileMap",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const TileMap *tilemap",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "TransferMethod tm"
+          ],
+          "line": 901
+        },
+        {
+          "name": "VDP_setTileMapEx",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const TileMap *tilemap",
+            "u16 basetile",
+            "u16 xp",
+            "u16 yp",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "u16 h",
+            "TransferMethod tm"
+          ],
+          "line": 950
+        },
+        {
+          "name": "VDP_setTileMapRow",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const TileMap *tilemap",
+            "u16 row",
+            "u16 x",
+            "u16 w",
+            "TransferMethod tm"
+          ],
+          "line": 989
+        },
+        {
+          "name": "VDP_setTileMapRowEx",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const TileMap *tilemap",
+            "u16 basetile",
+            "u16 row",
+            "u16 x",
+            "u16 y",
+            "u16 w",
+            "TransferMethod tm"
+          ],
+          "line": 1035
+        },
+        {
+          "name": "VDP_setTileMapColumn",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const TileMap *tilemap",
+            "u16 column",
+            "u16 y",
+            "u16 h",
+            "TransferMethod tm"
+          ],
+          "line": 1075
+        },
+        {
+          "name": "VDP_setTileMapColumnEx",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const TileMap *tilemap",
+            "u16 basetile",
+            "u16 column",
+            "u16 x",
+            "u16 y",
+            "u16 h",
+            "TransferMethod tm"
+          ],
+          "line": 1122
+        },
+        {
+          "name": "VDP_setMap",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const TileMap *tilemap",
+            "u16 basetile",
+            "u16 x",
+            "u16 y"
+          ],
+          "line": 1128
+        },
+        {
+          "name": "VDP_setMapEx",
+          "ret": "bool",
+          "params": [
+            "VDPPlane plane",
+            "const TileMap *tilemap",
+            "u16 basetile",
+            "u16 x",
+            "u16 y",
+            "u16 xm",
+            "u16 ym",
+            "u16 wm",
+            "u16 hm"
+          ],
+          "line": 1133
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "vram.h": {
+      "functions": [
+        {
+          "name": "VRAM_createRegion",
+          "ret": "void",
+          "params": [
+            "VRAMRegion *region",
+            "u16 startIndex",
+            "u16 size"
+          ],
+          "line": 188
+        },
+        {
+          "name": "VRAM_releaseRegion",
+          "ret": "void",
+          "params": [
+            "VRAMRegion *region"
+          ],
+          "line": 200
+        },
+        {
+          "name": "VRAM_clearRegion",
+          "ret": "void",
+          "params": [
+            "VRAMRegion *region"
+          ],
+          "line": 208
+        },
+        {
+          "name": "VRAM_getFree",
+          "ret": "u16",
+          "params": [
+            "VRAMRegion *region"
+          ],
+          "line": 219
+        },
+        {
+          "name": "VRAM_getAllocated",
+          "ret": "u16",
+          "params": [
+            "VRAMRegion *region"
+          ],
+          "line": 229
+        },
+        {
+          "name": "VRAM_getLargestFreeBlock",
+          "ret": "u16",
+          "params": [
+            "VRAMRegion *region"
+          ],
+          "line": 239
+        },
+        {
+          "name": "VRAM_alloc",
+          "ret": "s16",
+          "params": [
+            "VRAMRegion *region",
+            "u16 size"
+          ],
+          "line": 255
+        },
+        {
+          "name": "VRAM_free",
+          "ret": "void",
+          "params": [
+            "VRAMRegion *region",
+            "u16 index"
+          ],
+          "line": 267
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "ym2612.h": {
+      "functions": [
+        {
+          "name": "YM2612_reset",
+          "ret": "void",
+          "params": [],
+          "line": 24
+        },
+        {
+          "name": "YM2612_read",
+          "ret": "u8",
+          "params": [
+            "const u16 port"
+          ],
+          "line": 36
+        },
+        {
+          "name": "YM2612_readStatus",
+          "ret": "u8",
+          "params": [],
+          "line": 43
+        },
+        {
+          "name": "YM2612_write",
+          "ret": "void",
+          "params": [
+            "const u16 port",
+            "const u8 data"
+          ],
+          "line": 53
+        },
+        {
+          "name": "YM2612_writeReg",
+          "ret": "void",
+          "params": [
+            "const u16 part",
+            "const u8 reg",
+            "const u8 data"
+          ],
+          "line": 69
+        },
+        {
+          "name": "YM2612_enableDAC",
+          "ret": "void",
+          "params": [],
+          "line": 79
+        },
+        {
+          "name": "YM2612_disableDAC",
+          "ret": "void",
+          "params": [],
+          "line": 84
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    },
+    "z80_ctrl.h": {
+      "functions": [
+        {
+          "name": "Z80_init",
+          "ret": "void",
+          "params": [],
+          "line": 175
+        },
+        {
+          "name": "Z80_isBusTaken",
+          "ret": "bool",
+          "params": [],
+          "line": 181
+        },
+        {
+          "name": "Z80_requestBus",
+          "ret": "void",
+          "params": [
+            "bool wait"
+          ],
+          "line": 188
+        },
+        {
+          "name": "Z80_getAndRequestBus",
+          "ret": "bool",
+          "params": [
+            "bool wait"
+          ],
+          "line": 197
+        },
+        {
+          "name": "Z80_releaseBus",
+          "ret": "void",
+          "params": [],
+          "line": 203
+        },
+        {
+          "name": "Z80_startReset",
+          "ret": "void",
+          "params": [],
+          "line": 209
+        },
+        {
+          "name": "Z80_endReset",
+          "ret": "void",
+          "params": [],
+          "line": 214
+        },
+        {
+          "name": "Z80_setBank",
+          "ret": "void",
+          "params": [
+            "const u16 bank"
+          ],
+          "line": 222
+        },
+        {
+          "name": "Z80_read",
+          "ret": "u8",
+          "params": [
+            "const u16 addr"
+          ],
+          "line": 234
+        },
+        {
+          "name": "Z80_write",
+          "ret": "void",
+          "params": [
+            "const u16 addr",
+            "const u8 value"
+          ],
+          "line": 247
+        },
+        {
+          "name": "Z80_clear",
+          "ret": "void",
+          "params": [],
+          "line": 257
+        },
+        {
+          "name": "Z80_upload",
+          "ret": "void",
+          "params": [
+            "const u16 dest",
+            "const u8 *data",
+            "const u16 size"
+          ],
+          "line": 268
+        },
+        {
+          "name": "Z80_download",
+          "ret": "void",
+          "params": [
+            "const u16 from",
+            "u8 *dest",
+            "const u16 size"
+          ],
+          "line": 280
+        },
+        {
+          "name": "Z80_getLoadedDriver",
+          "ret": "s16",
+          "params": [],
+          "line": 295
+        },
+        {
+          "name": "Z80_unloadDriver",
+          "ret": "void",
+          "params": [],
+          "line": 300
+        },
+        {
+          "name": "Z80_loadCustomDriver",
+          "ret": "void",
+          "params": [
+            "const u8 *drv",
+            "u16 size"
+          ],
+          "line": 316
+        },
+        {
+          "name": "Z80_isDriverReady",
+          "ret": "bool",
+          "params": [],
+          "line": 322
+        },
+        {
+          "name": "Z80_getVIntCallback",
+          "ret": "VoidCallback*",
+          "params": [],
+          "line": 332
+        },
+        {
+          "name": "Z80_setVIntCallback",
+          "ret": "void",
+          "params": [
+            "VoidCallback* CB"
+          ],
+          "line": 348
+        },
+        {
+          "name": "Z80_useBusProtection",
+          "ret": "void",
+          "params": [
+            "u16 signalAddress"
+          ],
+          "line": 358
+        },
+        {
+          "name": "Z80_setBusProtection",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 378
+        },
+        {
+          "name": "Z80_enableBusProtection",
+          "ret": "void",
+          "params": [],
+          "line": 387
+        },
+        {
+          "name": "Z80_disableBusProtection",
+          "ret": "void",
+          "params": [],
+          "line": 396
+        },
+        {
+          "name": "Z80_getForceDelayDMA",
+          "ret": "bool",
+          "params": [],
+          "line": 404
+        },
+        {
+          "name": "Z80_setForceDelayDMA",
+          "ret": "void",
+          "params": [
+            "bool value"
+          ],
+          "line": 418
+        }
+      ],
+      "unparsed": [],
+      "inlineOnly": []
+    }
+  },
+  "notSurveyed": {
+    "dirs": [
+      "ext",
+      "snd"
+    ],
+    "headerCount": 29,
+    "functionCount": 253,
+    "files": {
+      "ext/console.h": 13,
+      "ext/everdrive.h": 6,
+      "ext/fat16.h": 8,
+      "ext/flash-save/flash.h": 8,
+      "ext/flash-save/saveman.h": 6,
+      "ext/link_cable.h": 7,
+      "ext/minimusic/minimus.h": 5,
+      "ext/mw/16c550.h": 10,
+      "ext/mw/comm.h": 10,
+      "ext/mw/gamejolt.h": 29,
+      "ext/mw/jsmn.h": 0,
+      "ext/mw/json.h": 6,
+      "ext/mw/lsd.h": 4,
+      "ext/mw/megawifi.h": 23,
+      "ext/mw/mw-msg.h": 0,
+      "ext/mw/ssf_ed_pro.h": 6,
+      "ext/mw/ssf_ed_x7.h": 6,
+      "ext/serial/buffer.h": 6,
+      "ext/serial/serial.h": 13,
+      "ext/stb/stb_sprintf.h": 14,
+      "snd/pcm/snd_dpcm2.h": 4,
+      "snd/pcm/snd_pcm.h": 4,
+      "snd/pcm/snd_pcm4.h": 6,
+      "snd/pcm/tab_vol.h": 0,
+      "snd/smp_null_dpcm.h": 0,
+      "snd/smp_null.h": 0,
+      "snd/sound.h": 1,
+      "snd/xgm.h": 25,
+      "snd/xgm2.h": 33
+    }
+  }
+}
