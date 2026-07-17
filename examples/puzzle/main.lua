@@ -1,34 +1,44 @@
--- GEM WELL — a complete falling-gem match puzzle for the Genesis, in mdlua.
+-- GEM WELL - a complete falling-gem match puzzle for the Genesis, in mdlua.
 -- A vertical trio of gems drops into a 6x12 well. Move with the d-pad, cycle
 -- the trio's colors with O (Genesis B), hard-drop with X (Genesis C). Any
 -- straight run of 3+ same-colored gems (across, down, or diagonal) clears;
 -- survivors fall and cascades chain for multiplied score. Clearing gems
 -- speeds up the fall; the run ends when the well fills to the rim. START
--- restarts. Uses: hardware sprites for gems + the falling trio, a framed
--- well drawn from wall/floor sprites, a text score HUD, FM music, PSG sfx,
--- and a clear-flash + cascade resolve.
+-- restarts.
+--
+-- RENDERING: locked gems live on the TILE PLANE (plane B), painted with
+-- tset(); the falling trio is drawn as hardware sprites over it. This is the
+-- load-bearing idiom for a puzzle board: a 16x16 sprite costs 4 of the 80
+-- hardware sprites, so a full 6x12 well of gem sprites would blow the budget
+-- many times over. Tiles cost NOTHING against that budget, so the board is
+-- tiles and only the 3 moving gems are sprites.
 --
 -- build: mdlua build examples/puzzle/main.lua \
---          --sheet examples/puzzle/gems.png -o out.bin
+--          --sheet examples/puzzle/gems.png --map examples/puzzle/gems_map.png \
+--          -o out.bin
 --
--- sheet cells are 8x8, row-major (16 per row on this 128x32 sheet). Every
--- gem is a 2x2 (16x16) sprite: gem color k draws from cell (k-1)*2, so
--- ruby=spr(0), emerald=spr(2), sapphire=spr(4), topaz=spr(6), amethyst=spr(8).
--- Frame art is on the second sprite row: wall=spr(32), floor=spr(34).
+-- gems.png (sheet, PAL1) - the trio sprites: gem color k = spr((k-1)*2,...,2,2),
+--   so ruby=spr(0) emerald=spr(2) sapphire=spr(4) topaz=spr(6) amethyst=spr(8).
+-- gems_map.png (map, PAL2) - the board tiles, 8x8: 0=empty 1=well 2=frame,
+--   and gem color k quarter q at tile 3 + (k-1)*4 + q (q: 0=TL 1=TR 2=BL 3=BR).
 
--- ---- board geometry --------------------------------------------------------
--- 6 wide x 12 tall well of 16x16 cells. Interior sits inside a one-cell steel
--- frame. Screen is 320x224; the framed board is 8 cells wide x 14 tall = 128
--- x 224 px, centered horizontally with a HUD gutter on the left.
-local GW = 6           -- well columns
-local GH = 12          -- well rows
-local CELL = 16        -- pixel size of one cell
-local ORGX = 112       -- pixel x of the well interior's left edge
-local ORGY = 32        -- pixel y of the well interior's top edge
+-- ---- board geometry (in 8x8 TILE cells) ------------------------------------
+-- 6 gems wide x 12 tall; each gem is 2x2 tiles. Interior = 12x24 tiles, wrapped
+-- in a 1-tile steel frame, centered on the 40x28-tile screen with a HUD strip
+-- across the top rows.
+local GW = 6           -- well columns (gems)
+local GH = 12          -- well rows (gems)
+local ITX = 14         -- interior left TILE column (12 tiles wide -> 14..25)
+local ITY = 3          -- interior top TILE row (24 tiles tall -> 3..26)
+
+-- map tile ids (must match generate-art.mjs strip order)
+local T_EMPTY = 0
+local T_WELL = 1
+local T_FRAME = 2
+local T_GEM0 = 3       -- gem color 1 quarter 0; color k quarter q = T_GEM0 + (k-1)*4 + q
 
 -- ---- state -----------------------------------------------------------------
 -- the well: GW*GH = 72 bytes, row-major, 1-indexed. 0 = empty, 1..5 = color.
--- (array8 needs a constant capacity, so this is the literal 6*12.)
 local grid = array8(72)
 -- a scratch mask the size of the board: 1 where a gem is part of a match.
 local mask = array8(72)
@@ -46,27 +56,29 @@ local cleared = 0      -- total gems cleared, drives the level
 local fallt = 0        -- frames until the next gravity step
 local state = 0        -- 0 = playing, 1 = game over
 local flasht = 0       -- clear-flash timer (frames the matched cells blink)
-local seed = 137       -- our own PRNG so runs vary without needing t() early
-
--- ---- tiny helpers ----------------------------------------------------------
--- Grid access is inlined as grid[row * GW + col + 1] at every call site: the
--- cells are 0-based (col,row) into a 1-indexed flat byte array. Keeping it
--- inline (rather than a helper taking int params) is deliberate on this
--- target so the accessors never leave a hot inner loop.
-
--- a cheap deterministic PRNG returning a gem color 1..5. The intermediate
--- product stays tiny (< 1300) so it never leaves the 16.16 integer range.
-function nextcolor()
-  seed = (seed * 5 + 3) % 251
-  return (seed % 5) + 1
-end
+local dirty = 1        -- repaint the board tiles this frame (set on any change)
+local seed = 137       -- our own PRNG so runs vary
 
 -- "can the trio fit?" query: set qcol/qrow, then call canplace() (a no-arg
 -- function that reads these globals). Returns 1 if the trio can occupy column
--- qcol at rows qrow..qrow+2, else 0. Cells above the rim are allowed (the
--- trio enters from above); off the floor or on a gem is not.
+-- qcol at rows qrow..qrow+2, else 0. Cells above the rim are allowed (the trio
+-- enters from above); off the floor or on a gem is not.
 local qcol = 0
 local qrow = 0
+
+-- ---- tiny helpers ----------------------------------------------------------
+-- Grid access is inlined as grid[row * GW + col + 1] at every call site (cells
+-- are 0-based col,row into a 1-indexed flat byte array). A no-param helper for
+-- placement keeps the SDK's cheap calling path; passing int params to a helper
+-- takes a slower route on this target, so the query args ride qcol/qrow.
+
+-- a cheap deterministic PRNG returning a gem color 1..5. A small LCG whose
+-- intermediate product stays well inside the 16.16 integer range (< 3300) and
+-- whose period spreads the five colors evenly (no long single-color runs).
+function nextcolor()
+  seed = (seed * 13 + 7) % 251
+  return (seed % 5) + 1
+end
 
 function canplace()
   if qcol < 0 then return 0 end
@@ -210,9 +222,10 @@ function lockpiece()
     if i == 0 then col = c1 end
     if i == 1 then col = c2 end
     if i == 2 then col = c3 end
-    if ry >= 0 then setcell(px, ry, col) end
+    if ry >= 0 then grid[ry * GW + px + 1] = col end
   end
   sfx(20)                            -- landing thunk
+  dirty = 1
   -- locked with a gem left above the rim? the well has topped out.
   if py < 0 then
     state = 1
@@ -233,16 +246,50 @@ function newgame()
   fallt = 0
   flasht = 0
   state = 0
+  dirty = 1
   spawn()
 end
 
+-- clear plane B ONCE. map_show() stamps the whole --map (our 23-tile strip)
+-- into plane B's top-left corner; wipe the visible plane to the empty tile so
+-- only the well + frame we paint below are shown.
+function clearplane()
+  for r = 0, 27 do
+    for c = 0, 39 do
+      tset(0, c, r, T_EMPTY)
+    end
+  end
+end
+
+-- paint the steel frame around the well ONCE (it never changes). The interior
+-- gets repainted from the grid each time the board is dirty.
+function paintframe()
+  -- top + bottom rails (one tile beyond each interior edge)
+  local x0 = ITX - 1
+  local x1 = ITX + GW * 2
+  for c = x0, x1 do
+    tset(0, c, ITY - 1, T_FRAME)
+    tset(0, c, ITY + GH * 2, T_FRAME)
+  end
+  -- left + right rails
+  for r = ITY, ITY + GH * 2 - 1 do
+    tset(0, ITX - 1, r, T_FRAME)
+    tset(0, ITX + GW * 2, r, T_FRAME)
+  end
+end
+
 function _init()
+  map_show(0)                        -- board tiles live on plane B
   music(0)                           -- start the FM tune
+  clearplane()
+  paintframe()
   newgame()
 end
 
 -- ---- update ----------------------------------------------------------------
-function _update()
+-- _update60 runs once per 60 Hz frame (the native rate). (_update would run at
+-- PICO-8's 30 Hz, halving the fall/input cadence.)
+function _update60()
   if state ~= 0 then
     -- game over: wait for START to restart.
     if btnp(7) then
@@ -254,9 +301,17 @@ function _update()
 
   if flasht > 0 then flasht -= 1 end
 
-  -- horizontal move (edge-triggered: one cell per press).
-  if btnp(0) and canplace(px - 1, py) ~= 0 then px -= 1 end
-  if btnp(1) and canplace(px + 1, py) ~= 0 then px += 1 end
+  -- horizontal move (edge-triggered: one cell per press). qcol/qrow feed the
+  -- no-arg canplace() query (see its definition for why it's parameterless).
+  qrow = py
+  if btnp(0) then
+    qcol = px - 1
+    if canplace() ~= 0 then px -= 1 end
+  end
+  if btnp(1) then
+    qcol = px + 1
+    if canplace() ~= 0 then px += 1 end
+  end
 
   -- O cycles the trio's three colors (the classic trio "rotate").
   if btnp(4) then
@@ -269,7 +324,12 @@ function _update()
 
   -- X hard-drops: fall until it can't, then lock.
   if btnp(5) then
-    while canplace(px, py + 1) ~= 0 do py += 1 end
+    qcol = px
+    qrow = py + 1
+    while canplace() ~= 0 do
+      py += 1
+      qrow = py + 1
+    end
     lockpiece()
     return
   end
@@ -281,7 +341,9 @@ function _update()
   local delay = 33 - level * 3
   if fallt >= delay then
     fallt = 0
-    if canplace(px, py + 1) ~= 0 then
+    qcol = px
+    qrow = py + 1
+    if canplace() ~= 0 then
       py += 1
     else
       lockpiece()
@@ -290,72 +352,76 @@ function _update()
 end
 
 -- ---- draw ------------------------------------------------------------------
--- draw the steel frame around the well from wall sprites (one cell thick).
-function drawframe()
-  local top = ORGY - CELL
-  local bot = ORGY + GH * CELL
-  local lft = ORGX - CELL
-  local rgt = ORGX + GW * CELL
-  -- top + bottom rails
-  for col = -1, GW do
-    spr(32, ORGX + col * CELL, top, 2, 2)
-    spr(34, ORGX + col * CELL, bot, 2, 2)
-  end
-  -- side rails
-  for row = 0, GH - 1 do
-    spr(32, lft, ORGY + row * CELL, 2, 2)
-    spr(32, rgt, ORGY + row * CELL, 2, 2)
-  end
-end
-
-function _draw()
-  cls(0)
-
-  if state ~= 0 then
-    print("GAME OVER", 124, 96, 8)
-    print("score", 120, 116, 7)
-    print(score, 168, 116, 10)
-    print("press START", 116, 140, 12)
-    return
-  end
-
-  -- HUD (left gutter): score and level.
-  print("gem well", 8, 8, 11)
-  print("score", 8, 32, 7)
-  print(score, 8, 44, 10)
-  print("level", 8, 64, 7)
-  print(level, 8, 76, 9)
-  print("O cycle", 8, 176, 6)
-  print("X drop", 8, 188, 6)
-
-  drawframe()
-
-  -- locked gems in the well. On a clear-flash, matched cells blink off every
-  -- other frame so the match reads before it vanishes. `blink` is a 0/1 flag.
+-- repaint the interior tiles from the grid. Each gem cell is a 2x2 block of
+-- quarter tiles; an empty cell is the plain well tile. On a clear-flash the
+-- matched cells blink to the empty look so the match reads before it vanishes.
+function paintboard()
   local blink = 0
   if flasht > 0 and flasht % 2 == 0 then blink = 1 end
   for row = 0, GH - 1 do
     for col = 0, GW - 1 do
-      local v = cellat(col, row)
-      if v ~= 0 then
-        local hide = 0
-        if blink ~= 0 and mask[row * GW + col + 1] ~= 0 then hide = 1 end
-        if hide == 0 then
-          spr((v - 1) * 2, ORGX + col * CELL, ORGY + row * CELL, 2, 2)
-        end
+      local v = grid[row * GW + col + 1]
+      if v ~= 0 and blink ~= 0 and mask[row * GW + col + 1] ~= 0 then v = 0 end
+      local tx = ITX + col * 2
+      local ty = ITY + row * 2
+      if v == 0 then
+        tset(0, tx, ty, T_WELL)
+        tset(0, tx + 1, ty, T_WELL)
+        tset(0, tx, ty + 1, T_WELL)
+        tset(0, tx + 1, ty + 1, T_WELL)
+      else
+        local base = T_GEM0 + (v - 1) * 4
+        tset(0, tx, ty, base)         -- TL
+        tset(0, tx + 1, ty, base + 1) -- TR
+        tset(0, tx, ty + 1, base + 2) -- BL
+        tset(0, tx + 1, ty + 1, base + 3) -- BR
       end
     end
   end
+end
 
-  -- the falling trio (only cells that are at or below the rim are drawn).
-  for i = 0, 2 do
-    local ry = py + i
-    if ry >= 0 then
-      local col
-      if i == 0 then col = c1 end
-      if i == 1 then col = c2 end
-      if i == 2 then col = c3 end
-      spr((col - 1) * 2, ORGX + px * CELL, ORGY + ry * CELL, 2, 2)
+function _draw()
+  -- HUD text (rides plane A over the tile board).
+  print("gem well", 8, 8, 11)
+  print("score", 8, 40, 7)
+  print(score, 8, 52, 10)
+  print("level", 8, 80, 7)
+  print(level, 8, 92, 9)
+  print("O cycle", 8, 176, 6)
+  print("X drop", 8, 188, 6)
+
+  if state ~= 0 then
+    print("GAME OVER", 232, 96, 8)
+    print("press", 240, 120, 7)
+    print("START", 240, 132, 12)
+  else
+    -- print text stays on plane A until overwritten, so wipe the game-over
+    -- panel with blanks once we're playing again (else it lingers on restart).
+    print("         ", 232, 96, 7)
+    print("     ", 240, 120, 7)
+    print("     ", 240, 132, 7)
+  end
+
+  -- repaint the board tiles whenever it changed, plus every frame the clear
+  -- flash is active (so the blink animates).
+  if dirty ~= 0 or flasht > 0 then
+    paintboard()
+    dirty = 0
+  end
+
+  -- the falling trio as sprites over the board (only rows at/below the rim).
+  if state == 0 then
+    for i = 0, 2 do
+      local ry = py + i
+      if ry >= 0 then
+        local col
+        if i == 0 then col = c1 end
+        if i == 1 then col = c2 end
+        if i == 2 then col = c3 end
+        local sx = (ITX + px * 2) * 8
+        local sy = (ITY + ry * 2) * 8
+        spr((col - 1) * 2, sx, sy, 2, 2)
+      end
     end
   end
 end
