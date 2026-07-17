@@ -42,7 +42,7 @@ if (cmd === "build") {
   }
   try {
     const { runRom } = await import("./mdlua-run.mjs");
-    await runRom(rom);
+    await runRom(rom, { square: rest.includes("--square") });
   } catch (e) {
     if (e.code === "SDL_UNAVAILABLE") fail("@kmamal/sdl not available - install it or run the .bin in any Genesis emulator");
     fail(String(e.message ?? e));

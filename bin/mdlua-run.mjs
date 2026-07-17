@@ -112,13 +112,16 @@ export async function runRom(romPath, opts = {}) {
   const sampleRate = dv.getFloat64(32, true) || 44100;
 
   // --- window + audio ------------------------------------------------------
-  // 128x128 is unusable on a desktop; default to a 4x (512x512) window and
-  // present with INTEGER scaling + nearest-neighbor so pixels stay crisp and
-  // square (no bilinear blur, no uneven fractional stretch).
+  // A real Genesis displays on a 4:3 CRT: the 320x224 framebuffer's pixels
+  // are NARROWER than square (H40 PAR ~0.93). Default to a 4:3 window and a
+  // 4:3 presentation rect (what the hardware looked like); --square gives
+  // 1:1 pixels for pixel-art inspection.
   const scale = opts.scale ?? 3;
+  const winH = 224 * scale;
   const window = sdl.video.createWindow({
     title: opts.title ?? `mdlua - ${path.basename(romPath)}`,
-    width: 320 * scale, height: 224 * scale, resizable: true,
+    width: opts.square ? 320 * scale : Math.round(winH * 4 / 3),
+    height: winH, resizable: true,
   });
   let audioDev = null;
   try {
@@ -151,14 +154,21 @@ export async function runRom(romPath, opts = {}) {
         out[o] = src[s + 2]; out[o + 1] = src[s + 1]; out[o + 2] = src[s]; out[o + 3] = 255; // BGRA->RGBA
       }
     }
-    // Integer scaling: draw the framebuffer at the largest whole-number
-    // multiple that fits the current window, centered (letterboxed). node-sdl's
-    // dstRect is the built-in way to do this; combined with 'nearest' it keeps
-    // pixels crisp AND square (a fractional stretch would make some pixels wider
-    // than others). Recomputed each frame so resizing the window stays crisp.
+    // Present at the hardware's 4:3 display aspect (default): pick the largest
+    // whole-number VERTICAL multiple that fits, then set the width from the
+    // 4:3 ratio - the horizontal stretch reproduces the CRT's narrow pixels.
+    // --square keeps 1:1 pixels with strict integer scaling instead.
+    // Centered/letterboxed either way; recomputed per frame so resize works.
     const ww = window.width, wh = window.height;
-    const mult = Math.max(1, Math.min(Math.floor(ww / width), Math.floor(wh / height)));
-    const dw = width * mult, dh = height * mult;
+    let dw, dh;
+    if (opts.square) {
+      const mult = Math.max(1, Math.min(Math.floor(ww / width), Math.floor(wh / height)));
+      dw = width * mult; dh = height * mult;
+    } else {
+      const mult = Math.max(1, Math.floor(wh / height));
+      dh = height * mult; dw = Math.round(dh * 4 / 3);
+      if (dw > ww) { dw = ww; dh = Math.round(dw * 3 / 4); }
+    }
     const dstRect = { x: Math.floor((ww - dw) / 2), y: Math.floor((wh - dh) / 2), width: dw, height: dh };
     window.render(width, height, width * 4, "rgba32", out, { scaling: "nearest", dstRect });
   };

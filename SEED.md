@@ -337,3 +337,26 @@ gates: ROM shape ($100 SEGA + $18E checksum + 128KB padding), DETERMINISM
 callbacks through the real linker), .github/workflows/ci.yml (fresh-
 checkout tests + all 13 examples + gen-sgdk-builtins regen-sync gate).
 61 tests. Remaining for publish: monteslu creates the remote + npm publish.
+
+### The starfall port was WRONG two ways + the aspect-ratio audit
+"that space game looks like shit" - correct, and the root causes matter for
+every future cross-SDK port:
+1. **Sprite-cell conventions DIFFER across the family**: gbalua spr(n)
+   indexes 16x16 cells; mdlua spr(n) indexes 8x8 cells (the P8 contract).
+   The "verbatim" port kept gbalua's indices, so spr(1,...,2,2) drew the
+   right half of the SHIP + left half of the INVADER as every enemy. Fixed:
+   ship=spr(0), invader=spr(2), burst=spr(4) (now actually used on kills),
+   shot=spr(6) (the green diamond; bullets had been drawing a corner of the
+   invader). LESSON for ports + the lua-c retro: sprite indices MUST be
+   remapped per-SDK; "verbatim" only holds for code, not asset indices.
+2. **GBA geometry on a Genesis screen**: 240x160 coordinates (px<=220, lose
+   row y=120) huddled everything top-left of 320x224. Retargeted the whole
+   cart to full-screen Genesis geometry.
+3. **camera() semantics diverge**: gbalua's camera scrolls the background
+   only; mdlua's is P8-correct (offsets sprites AND the plane), so the
+   port's camera(0,-scrolly/2) slowly pushed every sprite offscreen.
+   mdlua-native idiom: VDP_setVerticalScroll(1, n) to scroll just BG_B.
+4. **Genesis displays 4:3, not 10:7** (H40 pixels are narrower than square).
+   Fixed the default EVERYWHERE: mdlua run presents a 4:3 rect (nearest,
+   height-integer multiple; --square for 1:1 pixel inspection), README
+   screenshots render at 640x480, web-IDE plan default flipped to 4:3.

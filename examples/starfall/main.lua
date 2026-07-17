@@ -1,15 +1,19 @@
--- STARFALL — a complete little shmup for the GBA, in gbalua.
--- Move with the d-pad, fire with A. Clear all the invaders to win; don't let one
--- reach the bottom or touch you. Uses: hardware tile starfield (scrolling),
--- hardware sprites (ship/enemies/explosions), 8x8 bullet sprites, maxmod music +
--- sfx, score/lives text, and win/lose states.
+-- STARFALL — a complete little shmup for the Genesis, in mdlua.
+-- Move with the d-pad, fire with O (Genesis B). Clear all the invaders to
+-- win; don't let one reach the bottom. Uses: hardware tile starfield
+-- (scrolling plane), hardware sprites (ship/enemies/shots/explosions),
+-- XGM2 music + PCM sfx, score/lives text, win/lose states, palette fades.
 --
--- build: gbalua build --target gba examples/starfall/main.lua \
+-- build: mdlua build examples/starfall/main.lua \
 --          --sheet examples/starfall/shmup_sheet.png --map examples/starfall/space_bg.png
+--
+-- sheet cells are 8x8, row-major (8 per row on this 64x16 sheet); every
+-- actor is 2x2 cells (16x16): ship=spr(0), invader=spr(2), burst=spr(4),
+-- shot=spr(6).
 
 -- ---- state -----------------------------------------------------------------
-local px = 108        -- player x (screen 240 wide, ship 16 wide)
-local py = 130
+local px = 152        -- player x (screen 320 wide, ship 16 wide)
+local py = 194
 local pcool = 0       -- fire cooldown
 
 -- bullets (8 max): x, y, active
@@ -25,6 +29,11 @@ local edir = 1        -- formation drift direction
 local edx = 0         -- accumulated formation x offset
 local alive = 12
 
+-- one explosion burst (the last kill): position + frames left
+local lex = 0
+local ley = 0
+local let = 0
+
 local score = 0
 local lives = 3
 local state = 0       -- 0 = playing, 1 = win, 2 = lose
@@ -33,14 +42,14 @@ local fadet = 0       -- fade-in counter (0..30): screen fades up from black at 
 local endt = 0        -- fade-out counter on win/lose
 
 function _init()
-  map_show(0)         -- the scrolling star background on BG layer 0
-  music(0)            -- start the chiptune
+  map_show(0)         -- the scrolling star background on the tile plane
+  music(0)            -- start the FM tune
   -- lay out the enemy formation (6 columns x 2 rows)
   for i=1,12 do
     local col = (i-1) % 6
     local row = (i-1) \ 6
-    enx[i] = 24 + col*32
-    eny[i] = 20 + row*24
+    enx[i] = 40 + col*40
+    eny[i] = 28 + row*28
     eal[i] = 1
   end
   for i=1,8 do ba[i] = 0 end
@@ -50,8 +59,8 @@ function fire()
   -- find a free bullet slot
   for i=1,8 do
     if ba[i] == 0 then
-      bx[i] = px + 4
-      by[i] = py
+      bx[i] = px
+      by[i] = py - 12
       ba[i] = 1
       sfx(0)
       return
@@ -62,7 +71,7 @@ end
 function _update()
   if state != 0 then
     -- win/lose: dim the scene toward black over ~30 frames (cap at 0.7 so the
-    -- GAME OVER / YOU WIN text stays readable), then wait for A to restart.
+    -- GAME OVER / YOU WIN text stays readable), then wait for O to restart.
     if endt < 30 then endt += 1 end
     fade((endt / 30) * 0.7)
     if btnp(4) then run() end
@@ -75,15 +84,17 @@ function _update()
     fade(1 - fadet / 30)   -- 1.0 (black) -> 0.0 (clear)
   end
 
-  -- scroll the starfield slowly for a sense of motion
+  -- scroll the starfield slowly for a sense of motion. NOT camera(): in
+  -- mdlua camera() is PICO-8-correct (it offsets sprites too); scroll just
+  -- the tile plane with the SGDK verb (plane 1 = BG_B, where the map lives).
   scrolly += 1
-  camera(0, -scrolly \ 2)
+  VDP_setVerticalScroll(1, -(scrolly \ 2))
 
   -- player movement
   if btn(0) then px -= 3 end
   if btn(1) then px += 3 end
   if px < 4 then px = 4 end
-  if px > 220 then px = 220 end
+  if px > 300 then px = 300 end
 
   -- fire
   if pcool > 0 then pcool -= 1 end
@@ -96,14 +107,17 @@ function _update()
   for i=1,8 do
     if ba[i] != 0 then
       by[i] -= 6
-      if by[i] < -8 then ba[i] = 0 end
+      if by[i] < -16 then ba[i] = 0 end
     end
   end
 
-  -- drift the enemy formation side to side, descend at the edges
+  -- drift the enemy formation side to side
   edx += edir
   if edx > 24 then edir = -1 end
   if edx < -24 then edir = 1 end
+
+  -- explosion burst timer
+  if let > 0 then let -= 1 end
 
   -- bullet vs enemy collision + enemy update
   for e=1,12 do
@@ -111,7 +125,7 @@ function _update()
       local ex = enx[e] + edx
       local ey = eny[e] + (scrolly \ 8)   -- slow descent
       -- lose if an enemy reaches the player's row
-      if ey > 120 then
+      if ey > 180 then
         state = 2
         music(-1)
         return
@@ -126,6 +140,9 @@ function _update()
             ba[i] = 0
             score += 10
             alive -= 1
+            lex = ex
+            ley = ey
+            let = 12          -- show the burst here for 12 frames
             sfx(0)
           end
         end
@@ -143,38 +160,41 @@ function _draw()
   -- (no cls — the tile starfield IS the background, drawn by hardware)
 
   if state == 1 then
-    print("YOU WIN!", 88, 60, 11)
-    print("score", 100, 80, 7)
-    print(score, 130, 80, 10)
-    print("press A", 96, 100, 12)
+    print("YOU WIN!", 128, 90, 11)
+    print("score", 128, 110, 7)
+    print(score, 176, 110, 10)
+    print("press O", 132, 130, 12)
     return
   end
   if state == 2 then
-    print("GAME OVER", 84, 60, 8)
-    print("score", 100, 80, 7)
-    print(score, 130, 80, 10)
-    print("press A", 96, 100, 12)
+    print("GAME OVER", 124, 90, 8)
+    print("score", 128, 110, 7)
+    print(score, 176, 110, 10)
+    print("press O", 132, 130, 12)
     return
   end
 
   -- HUD
   print("score", 4, 4, 7)
   print(score, 44, 4, 10)
-  print("lives", 170, 4, 7)
-  print(lives, 210, 4, 8)
+  print("lives", 250, 4, 7)
+  print(lives, 290, 4, 8)
 
   -- the player ship
   spr(0, px, py, 2, 2)
 
-  -- bullets (small 8x8 sprites — tile 8 = a sub-tile; use spr8 for a bullet look)
+  -- shots: the green diamond (cells 6-7 / 14-15)
   for i=1,8 do
-    if ba[i] != 0 then spr8(2, bx[i], by[i]) end
+    if ba[i] != 0 then spr(6, bx[i], by[i], 2, 2) end
   end
 
-  -- enemies
+  -- enemies: the red invader (cells 2-3 / 10-11)
   for e=1,12 do
     if eal[e] != 0 then
-      spr(1, enx[e] + edx, eny[e] + (scrolly \ 8), 2, 2)
+      spr(2, enx[e] + edx, eny[e] + (scrolly \ 8), 2, 2)
     end
   end
+
+  -- the kill burst (cells 4-5 / 12-13)
+  if let > 0 then spr(4, lex, ley, 2, 2) end
 end
