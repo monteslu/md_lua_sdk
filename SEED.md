@@ -193,3 +193,13 @@ mdlua fork copied curated files (SEED origin map) and added: the FINAL REMAP
 PASS (fixes gbalua's unlinkable gt_p8_rnd_int class), the CRAM-shadow palette
 flush (mid-frame PAL_setColor races the DMA queue), and the generated-SGDK
 direct-call table (the 100%-coverage engine) - candidates for the shared core.
+
+### Post-v0.1.0 fix: the generated table shipped EMPTY (caught on re-verify)
+The v0.1.0 commit captured builtins-sgdk.js as the EMPTY stub (0 SGDK verbs),
+not the generated 724 - so real coverage was 0%, while the ledger (a seed-time
+snapshot) still claimed 100%. sgdk_direct stopped compiling. Root cause: nothing
+tied the generated FILE to the generator; a regen-then-commit-wrong-moment
+desynced them. FIX: regenerated + added coverage-test gate (d) - builtins-sgdk
+must be non-stale (>500 entries) and every generated verb must resolve in the
+merged BUILTINS. Negative-tested (fires on the empty stub). Lesson for the
+lua-c extraction: generated artifacts need a sync gate, not just a ledger.
