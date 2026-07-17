@@ -78,6 +78,14 @@ export const BUILTINS = {
   // Genesis pal(): REAL runtime CRAM writes — the headline. pal(c0,c1) remaps
   // P8 color c0's CRAM slot to P8 color c1's RGB; pal() resets all 16.
   pal:       { params: [["int", true], ["int", true]], ret: "void", c: "gt_pal", mdOnly: true },
+  // SRAM save/load: (slot, array8, count) — battery-backed, the gbalua contract.
+  save:      { params: [["int", false], ["array8", false], ["int", false]], ret: "void", c: "gt_save", mdOnly: true },
+  load:      { params: [["int", false], ["array8", false], ["int", false]], ret: "int",  c: "gt_load", mdOnly: true },
+  // the VDP WINDOW plane: hud(rows) claims the top N tile rows as a fixed HUD
+  // strip (unscrolled, above plane A); hud(0) releases it.
+  hud:       { params: [["int", false]], ret: "void", c: "gt_hud", mdOnly: true },
+  // shadow/highlight mode: the Genesis blend-ish unit (3 levels, honest).
+  shade_mode:{ params: [["flip", false]], ret: "void", c: "gt_shade_mode", mdOnly: true },
   // fade(amount[, to_white]): CRAM brightness scale — the classic Genesis fade.
   // Scales every CRAM entry toward black (or white) from the palette shadow.
   fade:      { params: [["num", false], ["flip", true]], ret: "void", c: "gt_fade", mdOnly: true },

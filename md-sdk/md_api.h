@@ -23,7 +23,6 @@ void md_clip(int x, int y, int w, int h);
 // palette / screen
 void md_pal(int c0, int c1);
 void md_backdrop(int c);
-void md_fade(long amount, int to_white);
 void md_screen_off(void);
 void md_screen_on(void);
 
@@ -79,5 +78,12 @@ int  md_anim_once(int slot, int first, int last, long fps);
 int  md_anim_pingpong(int slot, int first, int last, long fps);
 void md_anim_reset(int slot);
 int  md_anim_done(int slot);
+
+// Phase 2
+void md_save(int slot, const unsigned char *arr, int n);
+int  md_load(int slot, unsigned char *arr, int n);
+void md_hud(int rows);
+void md_shade_mode(int on);
+void md_fade(long amount, int to_white);
 
 #endif

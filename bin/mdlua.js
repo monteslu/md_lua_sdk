@@ -17,7 +17,8 @@ if (cmd === "build") {
   const out = oi >= 0 ? rest[oi + 1] : path.join(path.dirname(entry), "game.bin");
   const flag = (name) => { const i = rest.indexOf(name); return i >= 0 ? rest[i + 1] : undefined; };
   try {
-    const r = await buildMd(entry, out, { sheetPath: flag("--sheet"), mapPath: flag("--map") });
+    const sfxArg = flag("--sfx");
+    const r = await buildMd(entry, out, { sheetPath: flag("--sheet"), mapPath: flag("--map"), sfxPaths: sfxArg ? sfxArg.split(",") : undefined });
     const { statSync } = await import("node:fs");
     console.log(`${r.outPath} (${statSync(r.outPath).size} bytes)`);
   } catch (e) { fail(String(e.message ?? e)); }

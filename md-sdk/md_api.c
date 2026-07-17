@@ -53,6 +53,8 @@ static u16 bmp_on = 0;               // BMP engine active (bitmap verbs used)
 static u16 cur_color = 7;            // color() state for optional color args
 static u16 cur_col_t, cur_row_t;     // print cursor (tile coords)
 static s16 clip_x0 = 0, clip_y0 = 0, clip_x1 = 319, clip_y1 = 223;
+static u16 hud_rows;               // WINDOW-plane HUD strip (md_hud)
+static u16 xgm_up = 0;                 // XGM2 driver loaded (music/pcm sfx)
 static s16 txt_cache[2] = { -1, -1 };
 static u16 txt_next = 0;
 // CRAM shadow: mid-frame direct PAL_setColor RACES the vblank DMA queue (the
@@ -333,9 +335,10 @@ static u16 text_pal_for(int color) {
     return PAL3;
 }
 void md_print(const char *s, int x, int y, int color) {
-    if (bmp_on) { BMP_drawText(s, (u16)(x >> 3), (u16)(y >> 3)); return; }
+    u16 row = (u16)(y >> 3);
+    if (bmp_on) { BMP_drawText(s, (u16)(x >> 3), row); return; }
     VDP_setTextPalette(text_pal_for(color));
-    VDP_drawTextBG(BG_A, s, (u16)(x >> 3), (u16)(y >> 3));
+    VDP_drawTextBG(hud_rows && row < hud_rows ? WINDOW : BG_A, s, (u16)(x >> 3), row);
 }
 static void itoa10(int v, char *out) {
     char tmp[12]; int i = 0, j = 0; unsigned int u = (v < 0) ? (unsigned int)(-v) : (unsigned int)v;
@@ -369,18 +372,32 @@ void md_run(void) { SYS_hardReset(); }
 
 // ---- audio ----------------------------------------------------------------------
 extern const u8 md_song_0[];
-static u16 xgm_up = 0;
 void md_music(int n, int loop) {
     (void)n; (void)loop;
     if (!xgm_up) { XGM2_loadDriver(TRUE); xgm_up = 1; }
     XGM2_play(md_song_0);
 }
-// sfx: PSG blips until PCM lands (Phase 2). n picks pitch; ch picks channel.
+// sfx: PCM samples through XGM2 (channels 2-4; music may own 1) when a --sfx
+// bank exists; PSG blip fallback otherwise. 8-bit signed 13.3 kHz, 256-aligned.
+extern const unsigned char *const md_sfx_bank[];
+extern const unsigned long md_sfx_len[];
+extern const int md_sfx_count;
 void md_sfx(int n, int ch) {
-    u16 chan = (ch >= 0 && ch < 3) ? (u16)ch : 0;
-    u16 freq = 200 + ((u16)(n & 15)) * 120;
-    PSG_setFrequency(chan, freq);
-    PSG_setEnvelope(chan, PSG_ENVELOPE_MAX);
+    if (md_sfx_count > 0) {
+        SoundPCMChannel chan = (ch >= 2 && ch <= 4) ? (SoundPCMChannel)ch : SOUND_PCM_CH3;
+        int idx = n;
+        if (idx < 0) idx = 0;
+        if (idx >= md_sfx_count) idx = md_sfx_count - 1;
+        if (!xgm_up) { XGM2_loadDriver(TRUE); xgm_up = 1; }
+        XGM2_playPCM(md_sfx_bank[idx], md_sfx_len[idx], chan);
+        return;
+    }
+    {
+        u16 chan = (ch >= 0 && ch < 3) ? (u16)ch : 0;
+        u16 freq = 200 + ((u16)(n & 15)) * 120;
+        PSG_setFrequency(chan, freq);
+        PSG_setEnvelope(chan, PSG_ENVELOPE_MAX);
+    }
 }
 
 // ---- frame harness ------------------------------------------------------------
@@ -435,3 +452,40 @@ void md_endframe(void) {
     md_time_tick();
     SYS_doVBlankProcess();
 }
+
+// ---- Phase 2: SRAM, window-plane HUD, shadow/highlight ------------------------
+
+// save/load: (slot, array8, count) — 256-byte slots in battery SRAM, the
+// cross-SDK contract (gbalua's shape). SRAM on MD is byte-wide on odd addresses;
+// SGDK's SRAM_* handles the addressing.
+void md_save(int slot, const unsigned char *arr, int n) {
+    int i;
+    u32 base = (u32)(slot & 0xFF) << 8;
+    if (n > 256) n = 256;
+    SRAM_enable();
+    for (i = 0; i < n; i++) SRAM_writeByte(base + (u32)i, arr[i]);
+    SRAM_disable();
+}
+int md_load(int slot, unsigned char *arr, int n) {
+    int i;
+    u32 base = (u32)(slot & 0xFF) << 8;
+    if (n > 256) n = 256;
+    SRAM_enableRO();
+    for (i = 0; i < n; i++) arr[i] = SRAM_readByte(base + (u32)i);
+    SRAM_disable();
+    return n;
+}
+
+// hud(rows): the VDP WINDOW plane replaces plane A for the top N tile rows —
+// a rock-solid unscrolled HUD strip (the classic Genesis status bar). Text
+// lands there automatically when its tile row is inside the strip.
+void md_hud(int rows) {
+    if (rows < 0) rows = 0;
+    if (rows > 27) rows = 27;
+    hud_rows = (u16)rows;
+    VDP_setWindowVPos(FALSE, (u16)rows);   // window covers rows ABOVE `rows`
+}
+
+// shadow/highlight: VDP mode bit. In this mode, low-priority planes shadow;
+// PAL3 colors 14/15 act as hilight/shadow operators on sprites (documented).
+void md_shade_mode(int on) { VDP_setHilightShadow(on ? TRUE : FALSE); }

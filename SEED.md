@@ -105,3 +105,14 @@ P8 buttons: 0-3 = dpad, 4 O→BUTTON_B, 5 X→BUTTON_C.
 ### Phase-1 remaining (tracked): more examples, num8 decision, docs
 ### Phase 2 next: window plane, shadow/highlight, 6-button, SRAM, DMA verbs,
 ### PCM SFX, cheatsheets. Phase 3: coverage harness -> 100% SGDK grind.
+
+### Phase 2 — verbs landed 2026-07-16
+- save/load (slot, array8, n): battery SRAM, gbalua's exact contract.
+- hud(rows): the VDP WINDOW plane as an unscrolled top HUD strip; print()
+  auto-routes into it when the row falls inside. The classic status bar.
+- shade_mode(on): VDP shadow/highlight bit (the honest 3-level "blend").
+- fade(amount[,to_white]): CRAM scale from a true-palette snapshot.
+- PCM SFX: --sfx a.wav,b.wav -> 8-bit signed 13.3kHz 256-aligned bank
+  (minimal WAV reader + linear resample in build-md); md_sfx plays XGM2 PCM
+  channels 2-4, PSG blip fallback when no bank. Music+SFX share the driver.
+- 6-button pad: btn(8..11) = X/Y/Z/MODE.
