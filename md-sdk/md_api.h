@@ -23,6 +23,7 @@ void md_clip(int x, int y, int w, int h);
 // palette / screen
 void md_pal(int c0, int c1);
 void md_backdrop(int c);
+void md_fade(long amount, int to_white);
 void md_screen_off(void);
 void md_screen_on(void);
 
@@ -45,7 +46,7 @@ void md_spr_prio(int p);
 
 // tilemap (plane B)
 void md_map(const unsigned char *m, int mapw, int cx, int cy, int sx, int sy, int cw, int ch);
-void md_map_show(void);
+void md_map_show(int layer);
 int  md_mget(int layer, int col, int row);
 void md_mset(int layer, int col, int row, int tile);
 void md_layer_scroll(int layer, int x, int y);

@@ -85,3 +85,23 @@ P8 buttons: 0-3 = dpad, 4 O→BUTTON_B, 5 X→BUTTON_C.
   parity beats my simpler 3-arg draft; ported gba_anim.c wholesale.
 - MVP example (real critter.png sheet): text colors + animated sprite +
   flipped sprite + input, 8 colors on screen, screenshot-verified.
+
+### Phase 1 — CORE COMPLETE 2026-07-16
+- Tests: 20/20 (compile-level; incl. the md_rnd_int remap regression gbalua
+  carries, no-GameTank-residue sweep, pal/hscroll/music emission, slot anim,
+  map special routing, pool SoA intact).
+- `mdlua run` ported from gtlua-run.mjs over romdev-core-gpgx (320x224 3x,
+  keyboard Z/X/C = Genesis A/B/C via gpgx's Y/B/A libretro mapping).
+- fade(amount[,to_white]) added: CRAM brightness scale from a TRUE-palette
+  snapshot, rides the queued flush; fade(0) restores exact. The MD-native
+  answer to the GBA's hardware fade.
+- **starfall ported VERBATIM** (the gbalua example's main.lua, unchanged) —
+  builds with --sheet shmup_sheet.png --map space_bg.png and PLAYS: formation,
+  shots, score/lives HUD, input. Cross-SDK parity is real.
+- Palette lines settled: PAL0=P8 16, PAL1=sheet, PAL2=asset map, PAL3.15=
+  text-color cache (white on PAL0.15 + 1 cached color; documented limit).
+- map_show(layer) arity aligned to the cross-SDK contract.
+
+### Phase-1 remaining (tracked): more examples, num8 decision, docs
+### Phase 2 next: window plane, shadow/highlight, 6-button, SRAM, DMA verbs,
+### PCM SFX, cheatsheets. Phase 3: coverage harness -> 100% SGDK grind.

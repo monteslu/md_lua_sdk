@@ -21,6 +21,23 @@ if (cmd === "build") {
     const { statSync } = await import("node:fs");
     console.log(`${r.outPath} (${statSync(r.outPath).size} bytes)`);
   } catch (e) { fail(String(e.message ?? e)); }
+} else if (cmd === "run") {
+  const target = rest.find((a) => !a.startsWith("-"));
+  if (!target) fail("usage: mdlua run <main.lua|game.bin>");
+  let rom = target;
+  if (target.endsWith(".lua")) {
+    const flag = (name) => { const i = rest.indexOf(name); return i >= 0 ? rest[i + 1] : undefined; };
+    const out = path.join(path.dirname(target), "game.bin");
+    await buildMd(target, out, { sheetPath: flag("--sheet"), mapPath: flag("--map") });
+    rom = out;
+  }
+  try {
+    const { runRom } = await import("./mdlua-run.mjs");
+    await runRom(rom);
+  } catch (e) {
+    if (e.code === "SDL_UNAVAILABLE") fail("@kmamal/sdl not available - install it or run the .bin in any Genesis emulator");
+    fail(String(e.message ?? e));
+  }
 } else if (cmd === "c") {
   if (!rest[0]) fail("usage: mdlua c <main.lua>");
   const src = await readFile(rest[0], "utf8");
@@ -28,5 +45,5 @@ if (cmd === "build") {
   if (!res.ok) fail(formatDiagnostics(res.diagnostics.filter((d) => d.severity === "error")));
   process.stdout.write(res.c + "\n");
 } else {
-  fail("usage: mdlua build <main.lua> [--sheet s.png] [--map m.png] [-o game.bin]\n       mdlua c <main.lua>");
+  fail("usage: mdlua build <main.lua> [--sheet s.png] [--map m.png] [-o game.bin]\n       mdlua run   <main.lua|game.bin>\n       mdlua c <main.lua>");
 }

@@ -96,6 +96,35 @@ void md_pal(int c0, int c1) {
     cram_set((u16)(c0 & 15), RGB24_TO_VDPCOLOR(P8_RGB[c1 & 15]));
 }
 void md_backdrop(int c) { VDP_setBackgroundColor((u8)(c & 63)); }
+
+// fade(amount 0..1, to_white): scale every CRAM entry from the UNfaded shadow.
+// The shadow keeps the true palette; fading writes a scaled copy each call, so
+// fade(0) restores exactly. Rides the queued endframe flush (race-free).
+static u16 cram_true[64];
+static u16 cram_true_valid = 0;
+void md_fade(long amount, int to_white) {
+    u16 i;
+    long a = amount;
+    if (a < 0) a = 0;
+    if (a > 0x10000L) a = 0x10000L;
+    if (!cram_true_valid) { for (i = 0; i < 64; i++) cram_true[i] = cram_shadow[i]; cram_true_valid = 1; }
+    for (i = 0; i < 64; i++) {
+        u16 v = cram_true[i];
+        long r = (v >> 1) & 7, g = (v >> 5) & 7, b = (v >> 9) & 7;
+        if (to_white) {
+            r = r + (((7 - r) * a) >> 16);
+            g = g + (((7 - g) * a) >> 16);
+            b = b + (((7 - b) * a) >> 16);
+        } else {
+            r = r - ((r * a) >> 16);
+            g = g - ((g * a) >> 16);
+            b = b - ((b * a) >> 16);
+        }
+        cram_shadow[i] = (u16)((b << 9) | (g << 5) | (r << 1));
+    }
+    cram_dirty = 1;
+    if (a == 0) cram_true_valid = 0;   // fully restored: re-snapshot on next fade
+}
 void md_screen_off(void) { VDP_setEnable(FALSE); }
 void md_screen_on(void)  { VDP_setEnable(TRUE); }
 
@@ -239,7 +268,8 @@ void md_map(const unsigned char *m, int mapw, int cx, int cy, int sx, int sy, in
 #ifdef MD_HAVE_MAP
 static u16 map_ram[64 * 32];          // plane-size shadow for tget/tset
 #endif
-void md_map_show(void) {
+void md_map_show(int layer) {
+    (void)layer;   // single asset map on plane B (multi-layer maps: Phase 2)
 #ifdef MD_HAVE_MAP
     u16 x, y;
     u16 w = map_cols > 64 ? 64 : map_cols;
@@ -248,7 +278,7 @@ void md_map_show(void) {
         for (x = 0; x < w; x++) {
             u16 t = map_data[y * map_cols + x];
             map_ram[y * 64 + x] = t;
-            VDP_setTileMapXY(BG_B, TILE_ATTR_FULL(PAL1, 0, 0, 0, T_MAP + t), x, y);
+            VDP_setTileMapXY(BG_B, TILE_ATTR_FULL(PAL2, 0, 0, 0, T_MAP + t), x, y);
         }
 #endif
 }
@@ -266,7 +296,7 @@ void md_mset(int layer, int col, int row, int tile) {
 #ifdef MD_HAVE_MAP
     if ((unsigned)col < 64u && (unsigned)row < 32u) {
         map_ram[row * 64 + col] = (u16)tile;
-        VDP_setTileMapXY(BG_B, TILE_ATTR_FULL(PAL1, 0, 0, 0, T_MAP + (u16)tile), (u16)col, (u16)row);
+        VDP_setTileMapXY(BG_B, TILE_ATTR_FULL(PAL2, 0, 0, 0, T_MAP + (u16)tile), (u16)col, (u16)row);
     }
 #else
     (void)col; (void)row; (void)tile;
@@ -291,17 +321,16 @@ void md_hscroll(int line, int x) {
 // Color: SGDK text renders with palette index 15 of the selected text palette
 // line — PAL0.15 is P8 white; PAL2/PAL3 idx15 cache the 2 most recent other
 // colors (LRU). 3 simultaneous text colors; the 4th evicts the oldest.
+// text color: PAL0.15 = white; PAL3.15 caches ONE other color (PAL2 belongs
+// to the map's palette line). Two simultaneous text colors; documented.
 static u16 text_pal_for(int color) {
-    u16 line;
     u16 c = resolve_color(color);
     if (c == 7) return PAL0;
-    if (txt_cache[0] == (s16)c) return PAL2;
-    if (txt_cache[1] == (s16)c) return PAL3;
-    txt_cache[txt_next] = (s16)c;
-    line = txt_next ? PAL3 : PAL2;
-    cram_set((u16)(line * 16 + 15), RGB24_TO_VDPCOLOR(P8_RGB[c]));
-    txt_next ^= 1;
-    return line;
+    if (txt_cache[0] != (s16)c) {
+        txt_cache[0] = (s16)c;
+        cram_set(63, RGB24_TO_VDPCOLOR(P8_RGB[c]));
+    }
+    return PAL3;
 }
 void md_print(const char *s, int x, int y, int color) {
     if (bmp_on) { BMP_drawText(s, (u16)(x >> 3), (u16)(y >> 3)); return; }
@@ -370,9 +399,8 @@ void md_init(void) {
 #endif
 #ifdef MD_HAVE_MAP
     VDP_loadTileData((const u32 *)map_tiles, T_MAP, MAPT_N, DMA);
-#ifndef MD_HAVE_SHEET
-    PAL_setColors(16, (const u16 *)map_pal, 16, DMA);
-#endif
+    for (i = 0; i < 16; i++) cram_shadow[32 + i] = map_pal[i];   // PAL2 = the map's line
+    PAL_setColors(32, (const u16 *)map_pal, 16, DMA);
 #endif
     spr_count = 0; spr_last = 0;
     joy_cur[0] = joy_cur[1] = joy_prev[0] = joy_prev[1] = 0;

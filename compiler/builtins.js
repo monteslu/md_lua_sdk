@@ -78,6 +78,9 @@ export const BUILTINS = {
   // Genesis pal(): REAL runtime CRAM writes — the headline. pal(c0,c1) remaps
   // P8 color c0's CRAM slot to P8 color c1's RGB; pal() resets all 16.
   pal:       { params: [["int", true], ["int", true]], ret: "void", c: "gt_pal", mdOnly: true },
+  // fade(amount[, to_white]): CRAM brightness scale — the classic Genesis fade.
+  // Scales every CRAM entry toward black (or white) from the palette shadow.
+  fade:      { params: [["num", false], ["flip", true]], ret: "void", c: "gt_fade", mdOnly: true },
   // per-scanline horizontal scroll of plane B — the Genesis raster signature.
   hscroll:   { params: [["int", false], ["int", false]], ret: "void", c: "gt_hscroll", mdOnly: true },
   // hgradient(table): per-scanline BACKDROP gradient via the HBlank IRQ. `table` is
