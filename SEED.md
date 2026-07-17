@@ -373,3 +373,13 @@ shots are native 320x224 x3. The web IDE canvas is aspect-ratio 320/224
 square-pixel. VERIFIED numbers: BMP engine is 256x160 (BMP_WIDTH=1<<(5+3)=256,
 BMP_HEIGHT=20*8=160), centered in the 320x224 screen; sprites+tiles get the
 full 320x224.
+
+### TWO SDK BUGS found while building GEM DASH (examples/platformer) - TO FIX
+1. COMPILER: a 2-arg helper function whose body is PURE `if ... return`
+   (e.g. `function solid(col,row) if tget(0,col,row) ~= 0 then return 1 end return 0 end`)
+   emits a BROKEN standalone C definition that references undeclared md_p0/md_p1
+   (the param temporaries). Workaround: inline the check at the call site.
+   Root cause likely in emit.js param-lowering for early-return-only fn bodies.
+2. RUNTIME: cls(0) offsets all plane-A text on this runtime (text drifts).
+   Using backdrop() instead of cls() avoids it. The BMP cls path vs the
+   tile-mode text plane interact badly for color 0. Both reproducible.
