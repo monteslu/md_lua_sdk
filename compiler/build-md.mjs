@@ -79,6 +79,10 @@ function wavToXgm2Pcm(buf) {
 
 export async function buildMd(entryLua, outPath, opts = {}) {
   const src = await readFile(entryLua, "utf8");
+  // num8 (8.8): emit supports it; the RUNTIME does not yet (16.16 sin table,
+  // time, print_num). Wire the flag only when md_math grows -DMD_NUM8 paths -
+  // shipping it now would be silently wrong math. (68000 is 16-bit-native, so
+  // num8 is worth measuring in the Phase-3 perf pass.)
   const res = compile(src, path.basename(entryLua), { target: "md" });
   const warnings = res.diagnostics.filter((d) => d.severity === "warning");
   if (warnings.length) process.stderr.write(formatDiagnostics(warnings) + "\n");

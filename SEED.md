@@ -134,3 +134,9 @@ P8 buttons: 0-3 = dpad, 4 O→BUTTON_B, 5 X→BUTTON_C.
 ### handles for Sprite*/Map*; static-named callbacks - flat ROM makes them
 ### safe; N/A ledger honest). Genre examples: port the 10 romdev C templates
 ### to Lua. Then version 0.1.0, tag, HOLD for monteslu's npm publish.
+
+### num8 decision (2026-07-16): DEFERRED, honestly
+emit's 8.8 path works (strength-reduction verified) but md_math is 16.16-only
+(sin table, time, print_num) - wiring --num8 now = silently wrong math. Wire
+it when md_math grows -DMD_NUM8 tables; measure on the 16-bit-native 68000 in
+the Phase-3 perf pass. (Same state gbalua shipped in, but DOCUMENTED here.)

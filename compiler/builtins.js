@@ -10,6 +10,13 @@
 //           optional -> -1 sentinel (keep current draw color)
 // Ret kinds: fixed | int | bool | void | same (polymorphic with args)
 
+// Phase-3 coverage: the GENERATED direct-call table (tools/gen-sgdk-builtins)
+// exposes SGDK functions under their OWN names (VDP_setTileMapXY, SPR_addSprite,
+// ...) so every SGDK tutorial translates 1:1. Scalar args ride the int kind
+// (fixed args floor); pointers ride opaque int handles. Merged LAST so the
+// curated PICO-8 verbs above always win a name clash.
+import { SGDK_BUILTINS } from "./builtins-sgdk.js";
+
 export const BUILTINS = {
   // ---- graphics -------------------------------------------------------------
   cls:      { params: [["color", true]], ret: "void", c: "gt_p8_cls" },
@@ -229,6 +236,7 @@ export const BUILTINS = {
   print: { params: [], ret: "int", special: "print" },
   add:  { params: [], ret: "void", special: "add" },
   del:  { params: [], ret: "void", special: "del" },
+  ...SGDK_BUILTINS,
 };
 
 export const CALLBACKS = ["_init", "_update", "_update60", "_draw"];
