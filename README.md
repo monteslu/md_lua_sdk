@@ -91,10 +91,12 @@ mdlua run starfall.bin
 
 The build runs the WASM toolchain in-process (`cc1-m68k` → `as` → `ld` →
 `objcopy`), pads the ROM, and writes the header checksum strict loaders
-demand. `mdlua run` uses the bundled
-[`romdev-core-gpgx`](https://www.npmjs.com/package/romdev-core-gpgx) emulator
-core (the window needs the optional `@kmamal/sdl`; without it, run the `.bin`
-in any Genesis emulator).
+demand. `mdlua run` plays the ROM in a window over the bundled
+[`romdev-core-gpgx`](https://www.npmjs.com/package/romdev-core-gpgx) core,
+through [`romdev-core-runner`](https://www.npmjs.com/package/romdev-core-runner)
+- the one SDL host shared across the SDK family and the romdev playtest tool.
+The window needs `@kmamal/sdl` (an *optional* dependency of the runner); without
+it, build the `.bin` and run it in any Genesis emulator.
 
 ## The screen and the two draw paths
 
