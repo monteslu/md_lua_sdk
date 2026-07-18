@@ -25,40 +25,13 @@ Genesis (68000).
 
 ## Your first game
 
-A complete Genesis game - one `main.lua`, no assets:
-
-```lua
--- Colors are PICO-8-style indices 0-15 (0 black, 1 dark-blue, 10 yellow, 14 pink).
-function _draw()
-  cls(1)                                -- dark blue background
-
-  print("hello genesis", 88, 16, 14)    -- title text, pink, near the top
-
-  circfill(128, 88, 38, 10)             -- head: a big yellow circle
-  rectfill(114, 72, 121, 82, 0)         -- left eye: a black square
-  rectfill(135, 72, 142, 82, 0)         -- right eye
-  circfill(128, 100, 11, 0)             -- mouth: a black circle
-end
-```
+This is `examples/starfall` - a complete little shmup (hardware sprites, a
+scrolling starfield, FM music + sfx, a HUD, win/lose states) written in one
+`main.lua`. That's what this SDK is for:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/monteslu/md_lua_sdk/main/docs/img/hello.png" width="640" alt="a yellow smiley face and 'hello genesis' text on a dark blue 320x224 screen">
+  <img src="https://raw.githubusercontent.com/monteslu/md_lua_sdk/main/examples/starfall/screenshot.png" width="640" alt="the starfall shmup: a player ship firing at a formation of alien sprites over a starfield, with a score/lives HUD, on the Genesis">
 </p>
-
-Build it to a ROM and run it:
-
-```sh
-mdlua build main.lua -o hello.bin
-mdlua run hello.bin
-```
-
-`mdlua run` opens an emulator window (bundled Genesis Plus GX core): arrows =
-d-pad, `Z`/`X`/`C` = the A/B/C buttons, Enter = START. The same `.bin` runs
-in any Genesis emulator or on a flashcart. That's the whole loop: write
-`main.lua`, build the `.bin`, ship it.
-
-For the real thing, build the flagship example - a complete shmup with a
-scrolling starfield, sprites, score/lives HUD, and FM music:
 
 ```sh
 mdlua build examples/starfall/main.lua \
@@ -66,6 +39,45 @@ mdlua build examples/starfall/main.lua \
   --map examples/starfall/space_bg.png -o starfall.bin
 mdlua run starfall.bin
 ```
+
+Start smaller, though. Here's `examples/hello` - a hardware sprite you move
+with the d-pad, plus a greeting, no asset files at all. `_update60` runs the
+movement 60 times a second; `_draw` redraws the sprite every frame:
+
+```lua
+-- The screen is 320x224. spr uses the built-in default sheet, so no art file
+-- is needed. Colors are PICO-8-style indices 0-15 (1 dark-blue, 14 pink).
+local x, y = 152, 104
+
+function _update60()               -- 60fps input + movement
+  if (btn(1)) then x += 2 end      -- right
+  if (btn(0)) then x -= 2 end      -- left
+  if (btn(3)) then y += 2 end      -- down
+  if (btn(2)) then y -= 2 end      -- up
+end
+
+function _draw()
+  cls(1)                              -- dark-blue background plane
+  print("hello genesis", 116, 32, 14) -- greeting near the top, pink
+  spr(0, x, y, 2, 2)                  -- the hardware sprite, redrawn every frame
+end
+```
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/monteslu/md_lua_sdk/main/examples/hello/screenshot.png" width="640" alt="a red-and-yellow hardware sprite and 'hello genesis' text on a dark blue 320x224 Genesis screen">
+</p>
+
+Build it to a ROM and run it:
+
+```sh
+mdlua build examples/hello/main.lua -o hello.bin
+mdlua run hello.bin
+```
+
+`mdlua run` opens an emulator window (bundled Genesis Plus GX core): arrows =
+d-pad, `Z`/`X`/`C` = the A/B/C buttons, Enter = START. The same `.bin` runs
+in any Genesis emulator or on a flashcart. That's the whole loop: write
+`main.lua`, build the `.bin`, ship it.
 
 ## Requirements
 

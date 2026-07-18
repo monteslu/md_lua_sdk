@@ -2,16 +2,33 @@
 #include "md_api.h"
 #include "md_math.h"
 
+static void lcl__update60(void);
 static void lcl__draw(void);
+
+int lcl_x = 152;
+int lcl_y = 104;
+
+static void lcl__update60(void)
+{
+    if (md_btn(1, 0)) {
+        lcl_x = (lcl_x + 2);
+    }
+    if (md_btn(0, 0)) {
+        lcl_x = (lcl_x - 2);
+    }
+    if (md_btn(3, 0)) {
+        lcl_y = (lcl_y + 2);
+    }
+    if (md_btn(2, 0)) {
+        lcl_y = (lcl_y - 2);
+    }
+}
 
 static void lcl__draw(void)
 {
     md_cls(1);
     md_print("hello genesis", 116, 32, 14);
-    md_circfill(128, 80, 44, 10);
-    md_rectfill(112, 60, 120, 74, 0);
-    md_rectfill(136, 60, 144, 74, 0);
-    md_circfill(128, 98, 13, 0);
+    md_spr(0, lcl_x, lcl_y, 2, 2, 0 | (0 << 1));
 }
 
 int main(bool hard)
@@ -20,6 +37,7 @@ int main(bool hard)
     md_init();
     for (;;) {
         md_vsync();
+        lcl__update60();
         lcl__draw();
         md_endframe();
     }
