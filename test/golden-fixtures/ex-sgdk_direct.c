@@ -2,43 +2,43 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__init(void);
-static void gtl__update60(void);
-static void gtl__draw(void);
+static void lcl__init(void);
+static void lcl__update60(void);
+static void lcl__draw(void);
 
-int gtl_ti = 0;
+int lcl_ti = 0;
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
     VDP_setTextPalette(0);
 }
 
-static void gtl__update60(void)
+static void lcl__update60(void)
 {
-    gtl_ti = (gtl_ti + 1);
+    lcl_ti = (lcl_ti + 1);
     PAL_setColor(15, VDP_getReg(0));
-    if ((((gtl_ti) % (60)) == 0)) {
-        VDP_setBackgroundColor(((int)((long)((((long long)(((long)gtl_ti << 16))) << 16) / (3932160L)) >> 16) & 7));
+    if ((((lcl_ti) % (60)) == 0)) {
+        VDP_setBackgroundColor(((int)((long)((((long long)(((long)lcl_ti << 16))) << 16) / (3932160L)) >> 16) & 7));
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_cls(1);
     VDP_drawText(0, 12, 4);
     md_print("+ pico-8 verbs", 8, 48, 10);
-    md_print_int(gtl_ti, 8, 56, 7);
+    md_print_int(lcl_ti, 8, 56, 7);
 }
 
 int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     for (;;) {
         md_vsync();
-        gtl__update60();
-        gtl__draw();
+        lcl__update60();
+        lcl__draw();
         md_endframe();
     }
     return 0;

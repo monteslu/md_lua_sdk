@@ -2,53 +2,53 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl_on_frame_change(void);
-static void gtl__init(void);
-static void gtl__update60(void);
-static void gtl__draw(void);
+static void lcl_on_frame_change(void);
+static void lcl__init(void);
+static void lcl__update60(void);
+static void lcl__draw(void);
 
-int gtl_hits[2];
-int gtl_frames = 0;
-int gtl_spr = 0;
+int lcl_hits[2];
+int lcl_frames = 0;
+int lcl_spr = 0;
 
-static void gtl_on_frame_change(void)
+static void lcl_on_frame_change(void)
 {
-    gtl_hits[-1] = (gtl_hits[-1] + 1);
+    lcl_hits[-1] = (lcl_hits[-1] + 1);
 }
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
-    gtl_hits[-1] = 0;
+    lcl_hits[-1] = 0;
     SPR_init();
-    gtl_spr = (int)SPR_addSprite((void*)(md_demo_sprite()), 120, 100, 0);
-    SPR_setFrameChangeCallback((void*)(gtl_spr), (void*)&gtl_on_frame_change);
-    SPR_setAnim((void*)(gtl_spr), 0);
-    SPR_setAutoAnimation((void*)(gtl_spr), ((1) ? 1 : 0));
+    lcl_spr = (int)SPR_addSprite((void*)(md_demo_sprite()), 120, 100, 0);
+    SPR_setFrameChangeCallback((void*)(lcl_spr), (void*)&lcl_on_frame_change);
+    SPR_setAnim((void*)(lcl_spr), 0);
+    SPR_setAutoAnimation((void*)(lcl_spr), ((1) ? 1 : 0));
 }
 
-static void gtl__update60(void)
+static void lcl__update60(void)
 {
-    gtl_frames = (gtl_frames + 1);
+    lcl_frames = (lcl_frames + 1);
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_print("sprite callback", 8, 8, 7);
     md_print("hits:", 8, 28, 6);
-    md_print_int(gtl_hits[-1], 56, 28, 11);
+    md_print_int(lcl_hits[-1], 56, 28, 11);
     md_print("frame:", 8, 40, 6);
-    md_print_int(gtl_frames, 56, 40, 10);
+    md_print_int(lcl_frames, 56, 40, 10);
 }
 
 int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     for (;;) {
         md_vsync();
-        gtl__update60();
-        gtl__draw();
+        lcl__update60();
+        lcl__draw();
         md_endframe();
     }
     return 0;

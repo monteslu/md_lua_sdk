@@ -2,19 +2,19 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__update(void);
-static void gtl__draw(void);
+static void lcl__update(void);
+static void lcl__draw(void);
 
-int gtl_a[16];
-unsigned char gtl_b[8];
+int lcl_a[16];
+unsigned char lcl_b[8];
 
-static void gtl__update(void)
+static void lcl__update(void)
 {
-    gtl_a[0] = 5;
-    gtl_b[0] = 2;
+    lcl_a[0] = 5;
+    lcl_b[0] = 2;
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
 }
 
@@ -26,10 +26,10 @@ int main(bool hard)
     for (;;) {
         md_vsync();
         if (_md_odd == 0) {
-            gtl__update();
+            lcl__update();
         }
         _md_odd ^= 1;
-        gtl__draw();
+        lcl__draw();
         md_endframe();
     }
     return 0;

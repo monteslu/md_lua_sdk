@@ -2,22 +2,22 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__update(void);
-static void gtl__draw(void);
+static void lcl__update(void);
+static void lcl__draw(void);
 
-static void gtl__update(void)
+static void lcl__update(void)
 {
-    { int gtl_a = (((unsigned char)1 < (unsigned char)2) ? (1) : (2));
-        { int gtl_b = (((unsigned char)3 > (unsigned char)4) ? (3) : (4));
-            { int gtl_c = (((unsigned char)1 < (unsigned char)2) ? (((unsigned char)2 < (unsigned char)3) ? (2) : (((unsigned char)1 < (unsigned char)3) ? (3) : (1))) : (((unsigned char)1 < (unsigned char)3) ? (1) : (((unsigned char)2 < (unsigned char)3) ? (3) : (2))));
-                { int gtl_d = md_absi((-5));
+    { int lcl_a = (((unsigned char)1 < (unsigned char)2) ? (1) : (2));
+        { int lcl_b = (((unsigned char)3 > (unsigned char)4) ? (3) : (4));
+            { int lcl_c = (((unsigned char)1 < (unsigned char)2) ? (((unsigned char)2 < (unsigned char)3) ? (2) : (((unsigned char)1 < (unsigned char)3) ? (3) : (1))) : (((unsigned char)1 < (unsigned char)3) ? (1) : (((unsigned char)2 < (unsigned char)3) ? (3) : (2))));
+                { int lcl_d = md_absi((-5));
                 }
             }
         }
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
 }
 
@@ -29,10 +29,10 @@ int main(bool hard)
     for (;;) {
         md_vsync();
         if (_md_odd == 0) {
-            gtl__update();
+            lcl__update();
         }
         _md_odd ^= 1;
-        gtl__draw();
+        lcl__draw();
         md_endframe();
     }
     return 0;

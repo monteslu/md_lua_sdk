@@ -2,49 +2,49 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl_on_vblank(void);
-static void gtl__init(void);
-static void gtl__update60(void);
-static void gtl__draw(void);
+static void lcl_on_vblank(void);
+static void lcl__init(void);
+static void lcl__update60(void);
+static void lcl__draw(void);
 
-int gtl_vints[2];
-int gtl_frames = 0;
+int lcl_vints[2];
+int lcl_frames = 0;
 
-static void gtl_on_vblank(void)
+static void lcl_on_vblank(void)
 {
-    gtl_vints[-1] = (gtl_vints[-1] + 1);
+    lcl_vints[-1] = (lcl_vints[-1] + 1);
 }
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
-    gtl_vints[-1] = 0;
-    SYS_setVIntCallback((void*)&gtl_on_vblank);
+    lcl_vints[-1] = 0;
+    SYS_setVIntCallback((void*)&lcl_on_vblank);
 }
 
-static void gtl__update60(void)
+static void lcl__update60(void)
 {
-    gtl_frames = (gtl_frames + 1);
+    lcl_frames = (lcl_frames + 1);
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_cls(1);
     md_print("vint callback", 8, 8, 7);
     md_print("vints:", 8, 28, 6);
-    md_print_int(gtl_vints[-1], 64, 28, 11);
+    md_print_int(lcl_vints[-1], 64, 28, 11);
     md_print("frame:", 8, 40, 6);
-    md_print_int(gtl_frames, 64, 40, 10);
+    md_print_int(lcl_frames, 64, 40, 10);
 }
 
 int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     for (;;) {
         md_vsync();
-        gtl__update60();
-        gtl__draw();
+        lcl__update60();
+        lcl__draw();
         md_endframe();
     }
     return 0;

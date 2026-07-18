@@ -57,7 +57,7 @@ test("NO GameTank residue in emitted C (banking/zp/gt_ names)", () => {
 test("flr(rnd(n)) emits md_rnd_int (the raw-template name is remapped)", () => {
   const c = cOf("local x = 0\nfunction _update60()\n  x = flr(rnd(10))\nend\n" + "function _draw()\nend\n");
   assert.match(c, /md_rnd_int\(10\)/);
-  assert.doesNotMatch(c, /gt_p8_rnd_int/);   // the exact symbol gbalua fails to link
+  assert.doesNotMatch(c, /lc_rnd_int/);   // the raw schema name must be remapped, not leaked
 });
 
 test("abs/sgn emit md_* helpers; fixed mid calls md_midf (int mid inlines)", () => {
@@ -130,7 +130,7 @@ test("spr flips pack into one arg (bit0 X, bit1 Y)", () => {
 test("map() special routes the __p8map hexdata array to md_map", () => {
   const src = 'local __p8map = hexdata("0102")\n' + "function _update60()\nend\nfunction _draw()\n  map(0, 0, 0, 0, 2, 1)\nend\n";
   const c = cOf(src);
-  assert.match(c, /md_map\(gtl___p8map, 128, 0, 0, 0, 0, 2, 1\)/);
+  assert.match(c, /md_map\(lcl___p8map, 128, 0, 0, 0, 0, 2, 1\)/);
 });
 
 test("btn/btnp with player arg", () => {
@@ -168,20 +168,20 @@ test("int-param helper functions emit real C params (no zp-fastcall on md)", () 
     "function solid(col, row)\n  if col < 0 then return 1 end\n  return 0\nend\n" +
     "function _update60()\nend\nfunction _draw()\n  if solid(2, 3) == 1 then print(\"x\", 8, 8, 7) end\nend\n"
   );
-  assert.match(c, /gtl_solid\(int gtl_col, int gtl_row\)/);   // real params
+  assert.match(c, /lcl_solid\(int lcl_col, int lcl_row\)/);   // real params
   assert.doesNotMatch(c, /\bmd_p[0-9]\b/);                    // no zp param globals
 });
 
 // ---- SGDK coroutines (task.h) via the "fn" callback kind ---------------------
 
-test("callback kind: TSK_userSet(fn) emits &gtl_<name> and keeps the function", () => {
+test("callback kind: TSK_userSet(fn) emits &lcl_<name> and keeps the function", () => {
   const c = cOf(
     "local n = 0\nfunction worker()\n  n += 1\nend\n" +
     "function _init()\n  TSK_init()\n  TSK_userSet(worker)\nend\n" +
     "function _update60()\n  TSK_userYield()\nend\nfunction _draw()\nend\n"
   );
-  assert.match(c, /TSK_userSet\(\(void\*\)&gtl_worker\)/);   // address-of, not a call
-  assert.match(c, /gtl_worker\(void\)\s*\{/);                 // NOT dead-code eliminated
+  assert.match(c, /TSK_userSet\(\(void\*\)&lcl_worker\)/);   // address-of, not a call
+  assert.match(c, /lcl_worker\(void\)\s*\{/);                 // NOT dead-code eliminated
   assert.match(c, /TSK_init\(\)/);
   assert.match(c, /TSK_userYield\(\)/);
 });
@@ -202,7 +202,7 @@ test("callback function is NOT rejected as a value at the call site", () => {
     "t.lua", { target: "md" }
   );
   assert.equal(r.ok, true, JSON.stringify(r.diagnostics, null, 2));
-  assert.match(r.c, /SYS_setVIntCallback\(\(void\*\)&gtl_cb\)/);
+  assert.match(r.c, /SYS_setVIntCallback\(\(void\*\)&lcl_cb\)/);
 });
 
 test("SYS_setVIntCallback: installs a Lua fn as the vblank hook, keeps it live", () => {
@@ -213,8 +213,8 @@ test("SYS_setVIntCallback: installs a Lua fn as the vblank hook, keeps it live",
     "function _init()\n  v[0] = 0\n  SYS_setVIntCallback(on_vblank)\nend\n" +
     "function _update60()\nend\nfunction _draw()\n  print(v[0], 8, 8, 7)\nend\n"
   );
-  assert.match(c, /SYS_setVIntCallback\(\(void\*\)&gtl_on_vblank\)/);  // address-of
-  assert.match(c, /gtl_on_vblank\(void\)\s*\{/);                        // NOT eliminated
+  assert.match(c, /SYS_setVIntCallback\(\(void\*\)&lcl_on_vblank\)/);  // address-of
+  assert.match(c, /lcl_on_vblank\(void\)\s*\{/);                        // NOT eliminated
 });
 
 test("SPR_setFrameChangeCallback: sprite-engine callback + pointer-return handle", () => {
@@ -227,8 +227,8 @@ test("SPR_setFrameChangeCallback: sprite-engine callback + pointer-return handle
     "function _update60()\n  SPR_update()\nend\nfunction _draw()\nend\n"
   );
   assert.match(c, /s = \(int\)SPR_addSprite\(/);                        // pointer return -> (int)
-  assert.match(c, /SPR_setFrameChangeCallback\(\(void\*\)\(gtl_s\), \(void\*\)&gtl_on_frame\)/);
-  assert.match(c, /gtl_on_frame\(void\)\s*\{/);                         // callback kept live
+  assert.match(c, /SPR_setFrameChangeCallback\(\(void\*\)\(lcl_s\), \(void\*\)&lcl_on_frame\)/);
+  assert.match(c, /lcl_on_frame\(void\)\s*\{/);                         // callback kept live
 });
 
 test("pointer-returning SGDK calls cast to int (retptr, assigns cleanly)", () => {

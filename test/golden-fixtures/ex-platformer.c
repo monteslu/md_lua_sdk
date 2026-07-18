@@ -2,55 +2,55 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static int gtl_box_hits(long gtl_bx, long gtl_by);
-static void gtl__init(void);
-static void gtl_move_x(void);
-static void gtl_move_y(void);
-static void gtl_respawn(void);
-static void gtl__update60(void);
-static void gtl__draw(void);
+static int lcl_box_hits(long lcl_bx, long lcl_by);
+static void lcl__init(void);
+static void lcl_move_x(void);
+static void lcl_move_y(void);
+static void lcl_respawn(void);
+static void lcl__update60(void);
+static void lcl__draw(void);
 
-long gtl_RUN_ACC = 32768L; /* 0.5 */
-long gtl_RUN_MAX = 163840L; /* 2.5 */
-long gtl_FRICTION = 39322L; /* 0.6 */
-long gtl_GRAVITY = 22938L; /* 0.35 */
-long gtl_JUMP_VEL = -406323L; /* -6.2 */
-int gtl_MAX_FALL = 6;
-int gtl_WORLD_W = 512;
-long gtl_px = 1572864L; /* 24 */
-long gtl_py = 11534336L; /* 176 */
-long gtl_vx = 0L; /* 0 */
-long gtl_vy = 0L; /* 0 */
-int gtl_grounded = 0;
-int gtl_facing = 0;
-int gtl_camx = 0;
-int gtl_score = 0;
-int gtl_state = 0;
-int gtl_fadet = 30;
-int gtl_gx[6];
-int gtl_gy[6];
-unsigned char gtl_ga[6];
-int gtl_flagx = 488;
-int gtl_flagy = 160;
+long lcl_RUN_ACC = 32768L; /* 0.5 */
+long lcl_RUN_MAX = 163840L; /* 2.5 */
+long lcl_FRICTION = 39322L; /* 0.6 */
+long lcl_GRAVITY = 22938L; /* 0.35 */
+long lcl_JUMP_VEL = -406323L; /* -6.2 */
+int lcl_MAX_FALL = 6;
+int lcl_WORLD_W = 512;
+long lcl_px = 1572864L; /* 24 */
+long lcl_py = 11534336L; /* 176 */
+long lcl_vx = 0L; /* 0 */
+long lcl_vy = 0L; /* 0 */
+int lcl_grounded = 0;
+int lcl_facing = 0;
+int lcl_camx = 0;
+int lcl_score = 0;
+int lcl_state = 0;
+int lcl_fadet = 30;
+int lcl_gx[6];
+int lcl_gy[6];
+unsigned char lcl_ga[6];
+int lcl_flagx = 488;
+int lcl_flagy = 160;
 
-static int gtl_box_hits(long gtl_bx, long gtl_by)
+static int lcl_box_hits(long lcl_bx, long lcl_by)
 {
-    { int gtl_c0 = ((int)(gtl_bx >> 16) >> 3);
-        { int gtl_c1 = (((int)(gtl_bx >> 16) + 15) >> 3);
-            { int gtl_r0 = ((int)(gtl_by >> 16) >> 3);
-                { int gtl_r1 = (((int)(gtl_by >> 16) + 15) >> 3);
-                    { int gtl_c = gtl_c0;
-                        while (((gtl_c - (gtl_c1)) <= 0)) {
-                            { int gtl_r = gtl_r0;
-                                while (((gtl_r - (gtl_r1)) <= 0)) {
-                                    if (((((gtl_c >= 0) && (gtl_c <= 63)) && (gtl_r >= 0)) && (gtl_r <= 31))) {
-                                        if ((md_mget(0, gtl_c, gtl_r) != 0)) {
+    { int lcl_c0 = ((int)(lcl_bx >> 16) >> 3);
+        { int lcl_c1 = (((int)(lcl_bx >> 16) + 15) >> 3);
+            { int lcl_r0 = ((int)(lcl_by >> 16) >> 3);
+                { int lcl_r1 = (((int)(lcl_by >> 16) + 15) >> 3);
+                    { int lcl_c = lcl_c0;
+                        while (((lcl_c - (lcl_c1)) <= 0)) {
+                            { int lcl_r = lcl_r0;
+                                while (((lcl_r - (lcl_r1)) <= 0)) {
+                                    if (((((lcl_c >= 0) && (lcl_c <= 63)) && (lcl_r >= 0)) && (lcl_r <= 31))) {
+                                        if ((md_mget(0, lcl_c, lcl_r) != 0)) {
                                             return 1;
                                         }
                                     }
-                                    gtl_r = (gtl_r + 1);
+                                    lcl_r = (lcl_r + 1);
                                 }
-                                gtl_c = (gtl_c + 1);
+                                lcl_c = (lcl_c + 1);
                             }
                         }
                         return 0;
@@ -61,146 +61,146 @@ static int gtl_box_hits(long gtl_bx, long gtl_by)
     }
 }
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
     md_map_show(0);
     md_hud(3);
     md_music(0, 1);
-    gtl_gx[0] = 72;
-    gtl_gy[0] = 180;
-    gtl_gx[1] = 100;
-    gtl_gy[1] = 148;
-    gtl_gx[2] = 232;
-    gtl_gy[2] = 180;
-    gtl_gx[3] = 264;
-    gtl_gy[3] = 132;
-    gtl_gx[4] = 320;
-    gtl_gy[4] = 108;
-    gtl_gx[5] = 440;
-    gtl_gy[5] = 128;
-    { unsigned char gtl_i = 1; unsigned char L_lim0 = 6;
-        for (; gtl_i <= L_lim0; ++gtl_i) {
-            (gtl_ga - 1)[gtl_i] = 1;
+    lcl_gx[0] = 72;
+    lcl_gy[0] = 180;
+    lcl_gx[1] = 100;
+    lcl_gy[1] = 148;
+    lcl_gx[2] = 232;
+    lcl_gy[2] = 180;
+    lcl_gx[3] = 264;
+    lcl_gy[3] = 132;
+    lcl_gx[4] = 320;
+    lcl_gy[4] = 108;
+    lcl_gx[5] = 440;
+    lcl_gy[5] = 128;
+    { unsigned char lcl_i = 1; unsigned char L_lim0 = 6;
+        for (; lcl_i <= L_lim0; ++lcl_i) {
+            (lcl_ga - 1)[lcl_i] = 1;
         }
     }
 }
 
-static void gtl_move_x(void)
+static void lcl_move_x(void)
 {
-    gtl_px = (gtl_px + gtl_vx);
-    if (((gtl_vx > 0L) && (gtl_box_hits(gtl_px, gtl_py) != 0))) {
-        gtl_px = ((long)(((int)(gtl_px >> 16) >> 3) * 8) << 16);
-        gtl_vx = 0L;
+    lcl_px = (lcl_px + lcl_vx);
+    if (((lcl_vx > 0L) && (lcl_box_hits(lcl_px, lcl_py) != 0))) {
+        lcl_px = ((long)(((int)(lcl_px >> 16) >> 3) * 8) << 16);
+        lcl_vx = 0L;
     }
-    if (((gtl_vx < 0L) && (gtl_box_hits(gtl_px, gtl_py) != 0))) {
-        gtl_px = ((long)((((int)(gtl_px >> 16) >> 3) + 1) * 8) << 16);
-        gtl_vx = 0L;
+    if (((lcl_vx < 0L) && (lcl_box_hits(lcl_px, lcl_py) != 0))) {
+        lcl_px = ((long)((((int)(lcl_px >> 16) >> 3) + 1) * 8) << 16);
+        lcl_vx = 0L;
     }
-    if ((gtl_px < 0L)) {
-        gtl_px = 0L;
-        gtl_vx = 0L;
+    if ((lcl_px < 0L)) {
+        lcl_px = 0L;
+        lcl_vx = 0L;
     }
-    if ((gtl_px > ((long)(gtl_WORLD_W - 16) << 16))) {
-        gtl_px = ((long)(gtl_WORLD_W - 16) << 16);
-        gtl_vx = 0L;
+    if ((lcl_px > ((long)(lcl_WORLD_W - 16) << 16))) {
+        lcl_px = ((long)(lcl_WORLD_W - 16) << 16);
+        lcl_vx = 0L;
     }
 }
 
-static void gtl_move_y(void)
+static void lcl_move_y(void)
 {
-    gtl_py = (gtl_py + gtl_vy);
-    gtl_grounded = 0;
-    if (((gtl_vy > 0L) && (gtl_box_hits(gtl_px, gtl_py) != 0))) {
-        gtl_py = ((long)(((int)(gtl_py >> 16) >> 3) * 8) << 16);
-        gtl_vy = 0L;
-        gtl_grounded = 1;
+    lcl_py = (lcl_py + lcl_vy);
+    lcl_grounded = 0;
+    if (((lcl_vy > 0L) && (lcl_box_hits(lcl_px, lcl_py) != 0))) {
+        lcl_py = ((long)(((int)(lcl_py >> 16) >> 3) * 8) << 16);
+        lcl_vy = 0L;
+        lcl_grounded = 1;
     }
-    if (((gtl_vy < 0L) && (gtl_box_hits(gtl_px, gtl_py) != 0))) {
-        gtl_py = ((long)((((int)(gtl_py >> 16) >> 3) + 1) * 8) << 16);
-        gtl_vy = 0L;
+    if (((lcl_vy < 0L) && (lcl_box_hits(lcl_px, lcl_py) != 0))) {
+        lcl_py = ((long)((((int)(lcl_py >> 16) >> 3) + 1) * 8) << 16);
+        lcl_vy = 0L;
     }
 }
 
-static void gtl_respawn(void)
+static void lcl_respawn(void)
 {
-    gtl_px = 1572864L;
-    gtl_py = 11534336L;
-    gtl_vx = 0L;
-    gtl_vy = 0L;
-    gtl_camx = 0;
-    gtl_fadet = 30;
+    lcl_px = 1572864L;
+    lcl_py = 11534336L;
+    lcl_vx = 0L;
+    lcl_vy = 0L;
+    lcl_camx = 0;
+    lcl_fadet = 30;
 }
 
-static void gtl__update60(void)
+static void lcl__update60(void)
 {
-    if ((gtl_fadet > 0)) {
-        gtl_fadet = (gtl_fadet - 1);
+    if ((lcl_fadet > 0)) {
+        lcl_fadet = (lcl_fadet - 1);
     }
-    if ((gtl_state != 0)) {
-        md_fade((long)(((long long)(md_midf(0L, (long)((((long long)(((long)(30 - gtl_fadet) << 16))) << 16) / (1966080L)), 65536L)) * (32768L /* 0.5 */)) >> 16), ((0) ? 1 : 0));
+    if ((lcl_state != 0)) {
+        md_fade((long)(((long long)(md_midf(0L, (long)((((long long)(((long)(30 - lcl_fadet) << 16))) << 16) / (1966080L)), 65536L)) * (32768L /* 0.5 */)) >> 16), ((0) ? 1 : 0));
         if (md_btnp(4, 0)) {
             md_run();
         }
         return;
     }
-    if ((gtl_fadet > 0)) {
-        md_fade((long)((((long long)(((long)gtl_fadet << 16))) << 16) / (1966080L)), ((0) ? 1 : 0));
+    if ((lcl_fadet > 0)) {
+        md_fade((long)((((long long)(((long)lcl_fadet << 16))) << 16) / (1966080L)), ((0) ? 1 : 0));
     }
-    { int gtl_moving = 0;
+    { int lcl_moving = 0;
         if (md_btn(0, 0)) {
-            gtl_vx = (gtl_vx - gtl_RUN_ACC);
-            gtl_facing = 1;
-            gtl_moving = 1;
+            lcl_vx = (lcl_vx - lcl_RUN_ACC);
+            lcl_facing = 1;
+            lcl_moving = 1;
         }
         if (md_btn(1, 0)) {
-            gtl_vx = (gtl_vx + gtl_RUN_ACC);
-            gtl_facing = 0;
-            gtl_moving = 1;
+            lcl_vx = (lcl_vx + lcl_RUN_ACC);
+            lcl_facing = 0;
+            lcl_moving = 1;
         }
-        if ((gtl_moving == 0)) {
-            if ((gtl_vx > gtl_FRICTION)) {
-                gtl_vx = (gtl_vx - gtl_FRICTION);
-            } else if ((gtl_vx < (-gtl_FRICTION))) {
-                gtl_vx = (gtl_vx + gtl_FRICTION);
+        if ((lcl_moving == 0)) {
+            if ((lcl_vx > lcl_FRICTION)) {
+                lcl_vx = (lcl_vx - lcl_FRICTION);
+            } else if ((lcl_vx < (-lcl_FRICTION))) {
+                lcl_vx = (lcl_vx + lcl_FRICTION);
             } else {
-                gtl_vx = 0L;
+                lcl_vx = 0L;
             }
         }
-        if ((gtl_vx > gtl_RUN_MAX)) {
-            gtl_vx = gtl_RUN_MAX;
+        if ((lcl_vx > lcl_RUN_MAX)) {
+            lcl_vx = lcl_RUN_MAX;
         }
-        if ((gtl_vx < (-gtl_RUN_MAX))) {
-            gtl_vx = (-gtl_RUN_MAX);
+        if ((lcl_vx < (-lcl_RUN_MAX))) {
+            lcl_vx = (-lcl_RUN_MAX);
         }
-        gtl_move_x();
-        if ((md_btnp(4, 0) && (gtl_grounded == 1))) {
-            gtl_vy = gtl_JUMP_VEL;
+        lcl_move_x();
+        if ((md_btnp(4, 0) && (lcl_grounded == 1))) {
+            lcl_vy = lcl_JUMP_VEL;
             md_sfx(0, -1);
         }
-        gtl_vy = (gtl_vy + gtl_GRAVITY);
-        if ((gtl_vy > ((long)gtl_MAX_FALL << 16))) {
-            gtl_vy = ((long)gtl_MAX_FALL << 16);
+        lcl_vy = (lcl_vy + lcl_GRAVITY);
+        if ((lcl_vy > ((long)lcl_MAX_FALL << 16))) {
+            lcl_vy = ((long)lcl_MAX_FALL << 16);
         }
-        gtl_move_y();
-        if ((gtl_py > 15204352L)) {
-            gtl_respawn();
+        lcl_move_y();
+        if ((lcl_py > 15204352L)) {
+            lcl_respawn();
         }
-        gtl_camx = ((int)(gtl_px >> 16) - 152);
-        if ((gtl_camx < 0)) {
-            gtl_camx = 0;
+        lcl_camx = ((int)(lcl_px >> 16) - 152);
+        if ((lcl_camx < 0)) {
+            lcl_camx = 0;
         }
-        if (((gtl_camx - ((gtl_WORLD_W - 320))) > 0)) {
-            gtl_camx = (gtl_WORLD_W - 320);
+        if (((lcl_camx - ((lcl_WORLD_W - 320))) > 0)) {
+            lcl_camx = (lcl_WORLD_W - 320);
         }
-        md_camera(gtl_camx, 0);
-        { unsigned char gtl_i = 1; unsigned char L_lim1 = 6;
-            for (; gtl_i <= L_lim1; ++gtl_i) {
-                if (((unsigned char)(gtl_ga - 1)[gtl_i] != (unsigned char)0)) {
-                    { long gtl_dx = (((long)(gtl_gx - 1)[gtl_i] << 16) - gtl_px);
-                        { long gtl_dy = (((long)(gtl_gy - 1)[gtl_i] << 16) - gtl_py);
-                            if (((((gtl_dx > ((long)(-14) << 16)) && (gtl_dx < 917504L)) && (gtl_dy > ((long)(-14) << 16))) && (gtl_dy < 917504L))) {
-                                (gtl_ga - 1)[gtl_i] = 0;
-                                gtl_score = (gtl_score + 10);
+        md_camera(lcl_camx, 0);
+        { unsigned char lcl_i = 1; unsigned char L_lim1 = 6;
+            for (; lcl_i <= L_lim1; ++lcl_i) {
+                if (((unsigned char)(lcl_ga - 1)[lcl_i] != (unsigned char)0)) {
+                    { long lcl_dx = (((long)(lcl_gx - 1)[lcl_i] << 16) - lcl_px);
+                        { long lcl_dy = (((long)(lcl_gy - 1)[lcl_i] << 16) - lcl_py);
+                            if (((((lcl_dx > ((long)(-14) << 16)) && (lcl_dx < 917504L)) && (lcl_dy > ((long)(-14) << 16))) && (lcl_dy < 917504L))) {
+                                (lcl_ga - 1)[lcl_i] = 0;
+                                lcl_score = (lcl_score + 10);
                                 md_sfx(1, -1);
                             }
                         }
@@ -208,43 +208,43 @@ static void gtl__update60(void)
                 }
             }
         }
-        if ((((((((long)gtl_flagx << 16) - gtl_px) > ((long)(-16) << 16)) && ((((long)gtl_flagx << 16) - gtl_px) < 1048576L)) && ((((long)gtl_flagy << 16) - gtl_py) > ((long)(-24) << 16))) && ((((long)gtl_flagy << 16) - gtl_py) < 1572864L))) {
-            gtl_state = 1;
-            gtl_fadet = 30;
+        if ((((((((long)lcl_flagx << 16) - lcl_px) > ((long)(-16) << 16)) && ((((long)lcl_flagx << 16) - lcl_px) < 1048576L)) && ((((long)lcl_flagy << 16) - lcl_py) > ((long)(-24) << 16))) && ((((long)lcl_flagy << 16) - lcl_py) < 1572864L))) {
+            lcl_state = 1;
+            lcl_fadet = 30;
             md_music((-1), 1);
         }
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_backdrop(12);
     md_print("gem dash", 8, 0, 7);
     md_print("score", 8, 8, 7);
-    md_print_int(gtl_score, 64, 8, 10);
-    { int gtl_cl = (((gtl_camx >> 1)) % (400));
-        md_spr(12, (((40 - gtl_cl) + 400) + gtl_camx), 40, 2, 2, 0 | (0 << 1));
-        md_spr(12, ((220 - gtl_cl) + gtl_camx), 60, 2, 2, 0 | (0 << 1));
-        md_spr(12, ((380 - gtl_cl) + gtl_camx), 32, 2, 2, 0 | (0 << 1));
-        { unsigned char gtl_i = 1; unsigned char L_lim2 = 6;
-            for (; gtl_i <= L_lim2; ++gtl_i) {
-                if (((unsigned char)(gtl_ga - 1)[gtl_i] != (unsigned char)0)) {
-                    md_spr(8, (gtl_gx - 1)[gtl_i], ((gtl_gy - 1)[gtl_i] + (int)((md_fsin((md_time() + ((long)gtl_i << 16))) << 1) >> 16)), 2, 2, 0 | (0 << 1));
+    md_print_int(lcl_score, 64, 8, 10);
+    { int lcl_cl = (((lcl_camx >> 1)) % (400));
+        md_spr(12, (((40 - lcl_cl) + 400) + lcl_camx), 40, 2, 2, 0 | (0 << 1));
+        md_spr(12, ((220 - lcl_cl) + lcl_camx), 60, 2, 2, 0 | (0 << 1));
+        md_spr(12, ((380 - lcl_cl) + lcl_camx), 32, 2, 2, 0 | (0 << 1));
+        { unsigned char lcl_i = 1; unsigned char L_lim2 = 6;
+            for (; lcl_i <= L_lim2; ++lcl_i) {
+                if (((unsigned char)(lcl_ga - 1)[lcl_i] != (unsigned char)0)) {
+                    md_spr(8, (lcl_gx - 1)[lcl_i], ((lcl_gy - 1)[lcl_i] + (int)((md_fsin((md_time() + ((long)lcl_i << 16))) << 1) >> 16)), 2, 2, 0 | (0 << 1));
                 }
             }
         }
-        md_spr(10, gtl_flagx, gtl_flagy, 2, 2, 0 | (0 << 1));
-        { int gtl_frame = 0;
-            if ((gtl_grounded == 0)) {
-                gtl_frame = 6;
-            } else if ((md_absf(gtl_vx) > 19661L /* 0.3 */)) {
-                gtl_frame = ((md_anim(0, 0, 1, 524288L) * 2) + 2);
+        md_spr(10, lcl_flagx, lcl_flagy, 2, 2, 0 | (0 << 1));
+        { int lcl_frame = 0;
+            if ((lcl_grounded == 0)) {
+                lcl_frame = 6;
+            } else if ((md_absf(lcl_vx) > 19661L /* 0.3 */)) {
+                lcl_frame = ((md_anim(0, 0, 1, 524288L) * 2) + 2);
             }
-            md_spr(gtl_frame, (int)(gtl_px >> 16), (int)(gtl_py >> 16), 2, 2, ((gtl_facing) ? 1 : 0) | (0 << 1));
-            if ((gtl_state != 0)) {
+            md_spr(lcl_frame, (int)(lcl_px >> 16), (int)(lcl_py >> 16), 2, 2, ((lcl_facing) ? 1 : 0) | (0 << 1));
+            if ((lcl_state != 0)) {
                 md_print("you  win", 128, 96, 10);
                 md_print("score", 132, 112, 7);
-                md_print_int(gtl_score, 184, 112, 10);
+                md_print_int(lcl_score, 184, 112, 10);
                 md_print("press o", 132, 128, 7);
             }
         }
@@ -255,11 +255,11 @@ int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     for (;;) {
         md_vsync();
-        gtl__update60();
-        gtl__draw();
+        lcl__update60();
+        lcl__draw();
         md_endframe();
     }
     return 0;

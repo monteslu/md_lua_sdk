@@ -2,47 +2,47 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__init(void);
-static void gtl__update60(void);
-static void gtl__draw(void);
+static void lcl__init(void);
+static void lcl__update60(void);
+static void lcl__draw(void);
 
-int gtl_x = 60;
-int gtl_y = 60;
-int gtl_dx = 1;
-int gtl_dy = 1;
+int lcl_x = 60;
+int lcl_y = 60;
+int lcl_dx = 1;
+int lcl_dy = 1;
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
 }
 
-static void gtl__update60(void)
+static void lcl__update60(void)
 {
-    gtl_x = (gtl_x + gtl_dx);
-    gtl_y = (gtl_y + gtl_dy);
-    if (((gtl_x < 4) || (gtl_x > 300))) {
-        gtl_dx = (-gtl_dx);
+    lcl_x = (lcl_x + lcl_dx);
+    lcl_y = (lcl_y + lcl_dy);
+    if (((lcl_x < 4) || (lcl_x > 300))) {
+        lcl_dx = (-lcl_dx);
     }
-    if (((gtl_y < 20) || (gtl_y > 200))) {
-        gtl_dy = (-gtl_dy);
+    if (((lcl_y < 20) || (lcl_y > 200))) {
+        lcl_dy = (-lcl_dy);
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_cls(1);
     md_print("parity", 8, 8, 7);
-    md_spr(0, gtl_x, gtl_y, 2, 2, 0 | (0 << 1));
+    md_spr(0, lcl_x, lcl_y, 2, 2, 0 | (0 << 1));
 }
 
 int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     for (;;) {
         md_vsync();
-        gtl__update60();
-        gtl__draw();
+        lcl__update60();
+        lcl__draw();
         md_endframe();
     }
     return 0;

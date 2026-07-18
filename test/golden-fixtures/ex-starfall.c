@@ -2,63 +2,63 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__init(void);
-static void gtl_fire(void);
-static void gtl__update(void);
-static void gtl__draw(void);
+static void lcl__init(void);
+static void lcl_fire(void);
+static void lcl__update(void);
+static void lcl__draw(void);
 
-int gtl_px = 152;
-int gtl_py = 194;
-int gtl_pcool = 0;
-int gtl_bx[8];
-int gtl_by[8];
-unsigned char gtl_ba[8];
-int gtl_enx[12];
-int gtl_eny[12];
-unsigned char gtl_eal[12];
-int gtl_edir = 1;
-int gtl_edx = 0;
-int gtl_alive = 12;
-int gtl_lex = 0;
-int gtl_ley = 0;
-int gtl_let = 0;
-int gtl_score = 0;
-int gtl_lives = 3;
-int gtl_state = 0;
-int gtl_scrolly = 0;
-int gtl_fadet = 0;
-int gtl_endt = 0;
+int lcl_px = 152;
+int lcl_py = 194;
+int lcl_pcool = 0;
+int lcl_bx[8];
+int lcl_by[8];
+unsigned char lcl_ba[8];
+int lcl_enx[12];
+int lcl_eny[12];
+unsigned char lcl_eal[12];
+int lcl_edir = 1;
+int lcl_edx = 0;
+int lcl_alive = 12;
+int lcl_lex = 0;
+int lcl_ley = 0;
+int lcl_let = 0;
+int lcl_score = 0;
+int lcl_lives = 3;
+int lcl_state = 0;
+int lcl_scrolly = 0;
+int lcl_fadet = 0;
+int lcl_endt = 0;
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
     md_map_show(0);
     md_music(0, 1);
-    { unsigned char gtl_i = 1; unsigned char L_lim0 = 12;
-        for (; gtl_i <= L_lim0; ++gtl_i) {
-            { int gtl_col = (((gtl_i - 1)) % (6));
-                { int gtl_row = (((gtl_i - 1)) / (6));
-                    gtl_enx[gtl_i - 1] = (40 + (((gtl_col) << 5) + ((gtl_col) << 3)));
-                    gtl_eny[gtl_i - 1] = (28 + (((gtl_row) << 4) + ((gtl_row) << 3) + ((gtl_row) << 2)));
-                    (gtl_eal - 1)[gtl_i] = 1;
+    { unsigned char lcl_i = 1; unsigned char L_lim0 = 12;
+        for (; lcl_i <= L_lim0; ++lcl_i) {
+            { int lcl_col = (((lcl_i - 1)) % (6));
+                { int lcl_row = (((lcl_i - 1)) / (6));
+                    lcl_enx[lcl_i - 1] = (40 + (((lcl_col) << 5) + ((lcl_col) << 3)));
+                    lcl_eny[lcl_i - 1] = (28 + (((lcl_row) << 4) + ((lcl_row) << 3) + ((lcl_row) << 2)));
+                    (lcl_eal - 1)[lcl_i] = 1;
                 }
             }
         }
     }
-    { unsigned char gtl_i = 1; unsigned char L_lim1 = 8;
-        for (; gtl_i <= L_lim1; ++gtl_i) {
-            (gtl_ba - 1)[gtl_i] = 0;
+    { unsigned char lcl_i = 1; unsigned char L_lim1 = 8;
+        for (; lcl_i <= L_lim1; ++lcl_i) {
+            (lcl_ba - 1)[lcl_i] = 0;
         }
     }
 }
 
-static void gtl_fire(void)
+static void lcl_fire(void)
 {
-    { unsigned char gtl_i = 1; unsigned char L_lim2 = 8;
-        for (; gtl_i <= L_lim2; ++gtl_i) {
-            if (((unsigned char)(gtl_ba - 1)[gtl_i] == (unsigned char)0)) {
-                gtl_bx[gtl_i - 1] = gtl_px;
-                gtl_by[gtl_i - 1] = (gtl_py - 12);
-                (gtl_ba - 1)[gtl_i] = 1;
+    { unsigned char lcl_i = 1; unsigned char L_lim2 = 8;
+        for (; lcl_i <= L_lim2; ++lcl_i) {
+            if (((unsigned char)(lcl_ba - 1)[lcl_i] == (unsigned char)0)) {
+                lcl_bx[lcl_i - 1] = lcl_px;
+                lcl_by[lcl_i - 1] = (lcl_py - 12);
+                (lcl_ba - 1)[lcl_i] = 1;
                 md_sfx(0, -1);
                 return;
             }
@@ -66,86 +66,86 @@ static void gtl_fire(void)
     }
 }
 
-static void gtl__update(void)
+static void lcl__update(void)
 {
-    if ((gtl_state != 0)) {
-        if ((gtl_endt < 30)) {
-            gtl_endt = (gtl_endt + 1);
+    if ((lcl_state != 0)) {
+        if ((lcl_endt < 30)) {
+            lcl_endt = (lcl_endt + 1);
         }
-        md_fade((long)(((long long)((long)((((long long)(((long)gtl_endt << 16))) << 16) / (1966080L))) * (45875L /* 0.7 */)) >> 16), 0);
+        md_fade((long)(((long long)((long)((((long long)(((long)lcl_endt << 16))) << 16) / (1966080L))) * (45875L /* 0.7 */)) >> 16), 0);
         if (md_btnp(4, 0)) {
             md_run();
         }
         return;
     }
-    if ((gtl_fadet < 30)) {
-        gtl_fadet = (gtl_fadet + 1);
-        md_fade((65536L - (long)((((long long)(((long)gtl_fadet << 16))) << 16) / (1966080L))), 0);
+    if ((lcl_fadet < 30)) {
+        lcl_fadet = (lcl_fadet + 1);
+        md_fade((65536L - (long)((((long long)(((long)lcl_fadet << 16))) << 16) / (1966080L))), 0);
     }
-    gtl_scrolly = (gtl_scrolly + 1);
-    VDP_setVerticalScroll(1, (-(gtl_scrolly >> 1)));
+    lcl_scrolly = (lcl_scrolly + 1);
+    VDP_setVerticalScroll(1, (-(lcl_scrolly >> 1)));
     if (md_btn(0, 0)) {
-        gtl_px = (gtl_px - 3);
+        lcl_px = (lcl_px - 3);
     }
     if (md_btn(1, 0)) {
-        gtl_px = (gtl_px + 3);
+        lcl_px = (lcl_px + 3);
     }
-    if ((gtl_px < 4)) {
-        gtl_px = 4;
+    if ((lcl_px < 4)) {
+        lcl_px = 4;
     }
-    if ((gtl_px > 300)) {
-        gtl_px = 300;
+    if ((lcl_px > 300)) {
+        lcl_px = 300;
     }
-    if ((gtl_pcool > 0)) {
-        gtl_pcool = (gtl_pcool - 1);
+    if ((lcl_pcool > 0)) {
+        lcl_pcool = (lcl_pcool - 1);
     }
-    if ((md_btn(4, 0) && (gtl_pcool == 0))) {
-        gtl_fire();
-        gtl_pcool = 8;
+    if ((md_btn(4, 0) && (lcl_pcool == 0))) {
+        lcl_fire();
+        lcl_pcool = 8;
     }
-    { unsigned char gtl_i = 1; unsigned char L_lim3 = 8;
-        for (; gtl_i <= L_lim3; ++gtl_i) {
-            if (((unsigned char)(gtl_ba - 1)[gtl_i] != (unsigned char)0)) {
-                gtl_by[gtl_i - 1] = ((gtl_by - 1)[gtl_i] - 6);
-                if ((((gtl_by - 1)[gtl_i] - ((-16))) < 0)) {
-                    (gtl_ba - 1)[gtl_i] = 0;
+    { unsigned char lcl_i = 1; unsigned char L_lim3 = 8;
+        for (; lcl_i <= L_lim3; ++lcl_i) {
+            if (((unsigned char)(lcl_ba - 1)[lcl_i] != (unsigned char)0)) {
+                lcl_by[lcl_i - 1] = ((lcl_by - 1)[lcl_i] - 6);
+                if ((((lcl_by - 1)[lcl_i] - ((-16))) < 0)) {
+                    (lcl_ba - 1)[lcl_i] = 0;
                 }
             }
         }
     }
-    gtl_edx = (gtl_edx + gtl_edir);
-    if ((gtl_edx > 24)) {
-        gtl_edir = (-1);
+    lcl_edx = (lcl_edx + lcl_edir);
+    if ((lcl_edx > 24)) {
+        lcl_edir = (-1);
     }
-    if (((gtl_edx - ((-24))) < 0)) {
-        gtl_edir = 1;
+    if (((lcl_edx - ((-24))) < 0)) {
+        lcl_edir = 1;
     }
-    if ((gtl_let > 0)) {
-        gtl_let = (gtl_let - 1);
+    if ((lcl_let > 0)) {
+        lcl_let = (lcl_let - 1);
     }
-    { unsigned char gtl_e = 1; unsigned char L_lim4 = 12;
-        for (; gtl_e <= L_lim4; ++gtl_e) {
-            if (((unsigned char)(gtl_eal - 1)[gtl_e] != (unsigned char)0)) {
-                { int gtl_ex = ((gtl_enx - 1)[gtl_e] + gtl_edx);
-                    { int gtl_ey = ((gtl_eny - 1)[gtl_e] + (gtl_scrolly >> 3));
-                        if ((gtl_ey > 180)) {
-                            gtl_state = 2;
+    { unsigned char lcl_e = 1; unsigned char L_lim4 = 12;
+        for (; lcl_e <= L_lim4; ++lcl_e) {
+            if (((unsigned char)(lcl_eal - 1)[lcl_e] != (unsigned char)0)) {
+                { int lcl_ex = ((lcl_enx - 1)[lcl_e] + lcl_edx);
+                    { int lcl_ey = ((lcl_eny - 1)[lcl_e] + (lcl_scrolly >> 3));
+                        if ((lcl_ey > 180)) {
+                            lcl_state = 2;
                             md_music((-1), 1);
                             return;
                         }
-                        { unsigned char gtl_i = 1; unsigned char L_lim5 = 8;
-                            for (; gtl_i <= L_lim5; ++gtl_i) {
-                                if (((unsigned char)(gtl_ba - 1)[gtl_i] != (unsigned char)0)) {
-                                    { int gtl_dx = ((gtl_bx - 1)[gtl_i] - gtl_ex);
-                                        { int gtl_dy = ((gtl_by - 1)[gtl_i] - gtl_ey);
-                                            if ((((((gtl_dx - ((-12))) > 0) && (gtl_dx < 12)) && ((gtl_dy - ((-12))) > 0)) && (gtl_dy < 12))) {
-                                                (gtl_eal - 1)[gtl_e] = 0;
-                                                (gtl_ba - 1)[gtl_i] = 0;
-                                                gtl_score = (gtl_score + 10);
-                                                gtl_alive = (gtl_alive - 1);
-                                                gtl_lex = gtl_ex;
-                                                gtl_ley = gtl_ey;
-                                                gtl_let = 12;
+                        { unsigned char lcl_i = 1; unsigned char L_lim5 = 8;
+                            for (; lcl_i <= L_lim5; ++lcl_i) {
+                                if (((unsigned char)(lcl_ba - 1)[lcl_i] != (unsigned char)0)) {
+                                    { int lcl_dx = ((lcl_bx - 1)[lcl_i] - lcl_ex);
+                                        { int lcl_dy = ((lcl_by - 1)[lcl_i] - lcl_ey);
+                                            if ((((((lcl_dx - ((-12))) > 0) && (lcl_dx < 12)) && ((lcl_dy - ((-12))) > 0)) && (lcl_dy < 12))) {
+                                                (lcl_eal - 1)[lcl_e] = 0;
+                                                (lcl_ba - 1)[lcl_i] = 0;
+                                                lcl_score = (lcl_score + 10);
+                                                lcl_alive = (lcl_alive - 1);
+                                                lcl_lex = lcl_ex;
+                                                lcl_ley = lcl_ey;
+                                                lcl_let = 12;
                                                 md_sfx(0, -1);
                                             }
                                         }
@@ -158,49 +158,49 @@ static void gtl__update(void)
             }
         }
     }
-    if ((gtl_alive <= 0)) {
-        gtl_state = 1;
+    if ((lcl_alive <= 0)) {
+        lcl_state = 1;
         md_music((-1), 1);
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
-    if ((gtl_state == 1)) {
+    if ((lcl_state == 1)) {
         md_print("YOU WIN!", 128, 90, 11);
         md_print("score", 128, 110, 7);
-        md_print_int(gtl_score, 176, 110, 10);
+        md_print_int(lcl_score, 176, 110, 10);
         md_print("press O", 132, 130, 12);
         return;
     }
-    if ((gtl_state == 2)) {
+    if ((lcl_state == 2)) {
         md_print("GAME OVER", 124, 90, 8);
         md_print("score", 128, 110, 7);
-        md_print_int(gtl_score, 176, 110, 10);
+        md_print_int(lcl_score, 176, 110, 10);
         md_print("press O", 132, 130, 12);
         return;
     }
     md_print("score", 4, 4, 7);
-    md_print_int(gtl_score, 44, 4, 10);
+    md_print_int(lcl_score, 44, 4, 10);
     md_print("lives", 250, 4, 7);
-    md_print_int(gtl_lives, 290, 4, 8);
-    md_spr(0, gtl_px, gtl_py, 2, 2, 0 | (0 << 1));
-    { unsigned char gtl_i = 1; unsigned char L_lim6 = 8;
-        for (; gtl_i <= L_lim6; ++gtl_i) {
-            if (((unsigned char)(gtl_ba - 1)[gtl_i] != (unsigned char)0)) {
-                md_spr(6, (gtl_bx - 1)[gtl_i], (gtl_by - 1)[gtl_i], 2, 2, 0 | (0 << 1));
+    md_print_int(lcl_lives, 290, 4, 8);
+    md_spr(0, lcl_px, lcl_py, 2, 2, 0 | (0 << 1));
+    { unsigned char lcl_i = 1; unsigned char L_lim6 = 8;
+        for (; lcl_i <= L_lim6; ++lcl_i) {
+            if (((unsigned char)(lcl_ba - 1)[lcl_i] != (unsigned char)0)) {
+                md_spr(6, (lcl_bx - 1)[lcl_i], (lcl_by - 1)[lcl_i], 2, 2, 0 | (0 << 1));
             }
         }
     }
-    { unsigned char gtl_e = 1; unsigned char L_lim7 = 12;
-        for (; gtl_e <= L_lim7; ++gtl_e) {
-            if (((unsigned char)(gtl_eal - 1)[gtl_e] != (unsigned char)0)) {
-                md_spr(2, ((gtl_enx - 1)[gtl_e] + gtl_edx), ((gtl_eny - 1)[gtl_e] + (gtl_scrolly >> 3)), 2, 2, 0 | (0 << 1));
+    { unsigned char lcl_e = 1; unsigned char L_lim7 = 12;
+        for (; lcl_e <= L_lim7; ++lcl_e) {
+            if (((unsigned char)(lcl_eal - 1)[lcl_e] != (unsigned char)0)) {
+                md_spr(2, ((lcl_enx - 1)[lcl_e] + lcl_edx), ((lcl_eny - 1)[lcl_e] + (lcl_scrolly >> 3)), 2, 2, 0 | (0 << 1));
             }
         }
     }
-    if ((gtl_let > 0)) {
-        md_spr(4, gtl_lex, gtl_ley, 2, 2, 0 | (0 << 1));
+    if ((lcl_let > 0)) {
+        md_spr(4, lcl_lex, lcl_ley, 2, 2, 0 | (0 << 1));
     }
 }
 
@@ -208,15 +208,15 @@ int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     unsigned char _md_odd = 0;
     for (;;) {
         md_vsync();
         if (_md_odd == 0) {
-            gtl__update();
+            lcl__update();
         }
         _md_odd ^= 1;
-        gtl__draw();
+        lcl__draw();
         md_endframe();
     }
     return 0;

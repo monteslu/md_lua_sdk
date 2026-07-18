@@ -23,24 +23,24 @@ import { SGDK_BUILTINS } from "./builtins-sgdk.js";
 // make every generated verb look "already taken" and wipe the table).
 export const CURATED_BUILTINS = {
   // ---- graphics -------------------------------------------------------------
-  cls:      { params: [["color", true]], ret: "void", c: "gt_p8_cls" },
-  camera:   { params: [["coord", true], ["coord", true]], ret: "void", c: "gt_p8_camera" },
-  color:    { params: [["color", false]], ret: "void", c: "gt_p8_color" },
-  pset:     { params: [["coord", false], ["coord", false], ["color", true]], ret: "void", c: "gt_p8_pset" },
-  rect:     { params: [["coord", false], ["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "gt_p8_rect" },
-  rectfill: { params: [["coord", false], ["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "gt_p8_rectfill" },
-  circ:     { params: [["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "gt_p8_circ" },
-  circfill: { params: [["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "gt_p8_circfill" },
-  line:     { params: [["coord", false], ["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "gt_p8_line" },
+  cls:      { params: [["color", true]], ret: "void", c: "lc_cls" },
+  camera:   { params: [["coord", true], ["coord", true]], ret: "void", c: "lc_camera" },
+  color:    { params: [["color", false]], ret: "void", c: "lc_color" },
+  pset:     { params: [["coord", false], ["coord", false], ["color", true]], ret: "void", c: "lc_pset" },
+  rect:     { params: [["coord", false], ["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "lc_rect" },
+  rectfill: { params: [["coord", false], ["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "lc_rectfill" },
+  circ:     { params: [["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "lc_circ" },
+  circfill: { params: [["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "lc_circfill" },
+  line:     { params: [["coord", false], ["coord", false], ["coord", false], ["coord", false], ["color", true]], ret: "void", c: "lc_line" },
   // clip(x,y,w,h): restrict all subsequent bitmap drawing to a rectangle (HUD
   // panels, masked regions). clip() with no args resets to full screen; cls()
   // also resets it. PICO-8 semantics.
-  clip:     { params: [["coord", true], ["coord", true], ["coord", true], ["coord", true]], ret: "void", c: "gt_clip", mdOnly: true },
+  clip:     { params: [["coord", true], ["coord", true], ["coord", true], ["coord", true]], ret: "void", c: "lc_clip", mdOnly: true },
   // pget(x,y): read a bitmap pixel (color 0..255). sset(x,y,[c]): paint a pixel
   // into the loaded sprite sheet at runtime (0..15). Read-modify-write bitmap /
   // procedural sprite art.
-  pget:     { params: [["coord", false], ["coord", false]], ret: "int", c: "gt_pget", mdOnly: true },
-  spr:      { params: [["int", false], ["coord", false], ["coord", false], ["int", true], ["int", true], ["flip", true], ["flip", true]], ret: "void", c: "gt_p8_spr" },
+  pget:     { params: [["coord", false], ["coord", false]], ret: "int", c: "lc_pget", mdOnly: true },
+  spr:      { params: [["int", false], ["coord", false], ["coord", false], ["int", true], ["int", true], ["flip", true], ["flip", true]], ret: "void", c: "lc_spr" },
   // GBA-only: rotated+scaled hardware sprite. sprr(n, x, y, angle, [scale]).
   // angle is PICO-8 turns (0..1, like sin/cos); scale is a fixed multiplier
   // (default 1.0). Uses a real OBJ affine matrix — the GBA affine hardware the
@@ -48,10 +48,10 @@ export const CURATED_BUILTINS = {
   // the gba target.)
   // sprr2(n,x,y,angle,sx,sy): rotated + NON-uniform scale (squash/stretch, spinning coin).
   // spr8(t,x,y,[flip]): an 8x8 sprite from raw tile index t (bullets, pickups).
-  spr8:     { params: [["int", false], ["coord", false], ["coord", false], ["flip", true]], ret: "void", c: "gt_spr8", mdOnly: true },
+  spr8:     { params: [["int", false], ["coord", false], ["coord", false], ["flip", true]], ret: "void", c: "lc_spr8", mdOnly: true },
   // per-sprite modifiers for the next spr()/spr8() this frame (reset each frame):
-  spr_pal:  { params: [["int", false]], ret: "void", c: "gt_spr_pal", mdOnly: true },
-  spr_prio: { params: [["int", false]], ret: "void", c: "gt_spr_prio", mdOnly: true },
+  spr_pal:  { params: [["int", false]], ret: "void", c: "lc_spr_pal", mdOnly: true },
+  spr_prio: { params: [["int", false]], ret: "void", c: "lc_spr_prio", mdOnly: true },
   // spr_blend()/spr_blend_off(): next spr() translucent (uses blend weights) or opaque.
   // spr_window(): next spr() is a shaped OBJ-window mask (pair with window_obj).
   // spr_mosaic(on): apply the mosaic() grid to the next spr().
@@ -62,15 +62,15 @@ export const CURATED_BUILTINS = {
   // Lua game just shows/scrolls/edits layers — no giant arrays in Lua source.
   // map_show(layer): display the build-bundled tilemap on a layer (loads its
   //   tiles + map, enables it). Call once (usually _init).
-  map_show:  { params: [["int", true]], ret: "void", c: "gt_map_show", mdOnly: true },
-  layer_show:{ params: [["int", false], ["flip", false]], ret: "void", c: "gt_layer_show", mdOnly: true },
-  layer_pri: { params: [["int", false], ["int", false]], ret: "void", c: "gt_layer_priority", mdOnly: true },
+  map_show:  { params: [["int", true]], ret: "void", c: "lc_map_show", mdOnly: true },
+  layer_show:{ params: [["int", false], ["flip", false]], ret: "void", c: "lc_layer_show", mdOnly: true },
+  layer_pri: { params: [["int", false], ["int", false]], ret: "void", c: "lc_layer_priority", mdOnly: true },
   // camera(x,y) already exists (PICO-8) and maps to gba_camera — hardware scroll.
-  layer_scroll:{ params: [["int", false], ["coord", false], ["coord", false]], ret: "void", c: "gt_layer_scroll", mdOnly: true },
+  layer_scroll:{ params: [["int", false], ["coord", false], ["coord", false]], ret: "void", c: "lc_layer_scroll", mdOnly: true },
   // tget/tset: read/set a tile in a layer's map at (col,row). (Distinct from the
   // GameTank mget/mset above, which have a different 2-arg signature.)
-  tget:      { params: [["int", false], ["int", false], ["int", false]], ret: "int", c: "gt_mget", mdOnly: true },
-  tset:      { params: [["int", false], ["int", false], ["int", false], ["int", false]], ret: "void", c: "gt_mset", mdOnly: true },
+  tget:      { params: [["int", false], ["int", false], ["int", false]], ret: "int", c: "lc_mget", mdOnly: true },
+  tset:      { params: [["int", false], ["int", false], ["int", false], ["int", false]], ret: "void", c: "lc_mset", mdOnly: true },
 
   // ---- color effects (hardware blend unit — free, composites in the PPU) ----
   // blend(layer, alpha): draw a layer semi-transparent over the scene behind it
@@ -81,27 +81,27 @@ export const CURATED_BUILTINS = {
   // mosaic(n)/mosaic2(bh,bv): hardware pixelate (0=off..15). Dissolve/hit-flash/heat.
   // backdrop(color): the void behind all layers (PICO-8 index or raw). screen_off/on:
   // force-blank the display instantly (hide a mid-frame rebuild, instant cut).
-  backdrop:   { params: [["color", false]], ret: "void", c: "gt_backdrop", mdOnly: true },
-  screen_off: { params: [], ret: "void", c: "gt_screen_off", mdOnly: true },
-  screen_on:  { params: [], ret: "void", c: "gt_screen_on", mdOnly: true },
+  backdrop:   { params: [["color", false]], ret: "void", c: "lc_backdrop", mdOnly: true },
+  screen_off: { params: [], ret: "void", c: "lc_screen_off", mdOnly: true },
+  screen_on:  { params: [], ret: "void", c: "lc_screen_on", mdOnly: true },
   // pal(i,r,g,b) / spr_col(i,r,g,b): set a BG / OBJ palette color at runtime (0..255
   // components). Palette swap, day/night, animated cycling (rotate entries each frame).
   // Genesis pal(): REAL runtime CRAM writes — the headline. pal(c0,c1) remaps
   // P8 color c0's CRAM slot to P8 color c1's RGB; pal() resets all 16.
-  pal:       { params: [["int", true], ["int", true]], ret: "void", c: "gt_pal", mdOnly: true },
+  pal:       { params: [["int", true], ["int", true]], ret: "void", c: "lc_pal", mdOnly: true },
   // SRAM save/load: (slot, array8, count) — battery-backed, the gbalua contract.
-  save:      { params: [["int", false], ["array8", false], ["int", false]], ret: "void", c: "gt_save", mdOnly: true },
-  load:      { params: [["int", false], ["array8", false], ["int", false]], ret: "int",  c: "gt_load", mdOnly: true },
+  save:      { params: [["int", false], ["array8", false], ["int", false]], ret: "void", c: "lc_save", mdOnly: true },
+  load:      { params: [["int", false], ["array8", false], ["int", false]], ret: "int",  c: "lc_load", mdOnly: true },
   // the VDP WINDOW plane: hud(rows) claims the top N tile rows as a fixed HUD
   // strip (unscrolled, above plane A); hud(0) releases it.
-  hud:       { params: [["int", false]], ret: "void", c: "gt_hud", mdOnly: true },
+  hud:       { params: [["int", false]], ret: "void", c: "lc_hud", mdOnly: true },
   // shadow/highlight mode: the Genesis blend-ish unit (3 levels, honest).
-  shade_mode:{ params: [["flip", false]], ret: "void", c: "gt_shade_mode", mdOnly: true },
+  shade_mode:{ params: [["flip", false]], ret: "void", c: "lc_shade_mode", mdOnly: true },
   // fade(amount[, to_white]): CRAM brightness scale — the classic Genesis fade.
   // Scales every CRAM entry toward black (or white) from the palette shadow.
-  fade:      { params: [["num", false], ["flip", true]], ret: "void", c: "gt_fade", mdOnly: true },
+  fade:      { params: [["num", false], ["flip", true]], ret: "void", c: "lc_fade", mdOnly: true },
   // per-scanline horizontal scroll of plane B — the Genesis raster signature.
-  hscroll:   { params: [["int", false], ["int", false]], ret: "void", c: "gt_hscroll", mdOnly: true },
+  hscroll:   { params: [["int", false], ["int", false]], ret: "void", c: "lc_hscroll", mdOnly: true },
   // hgradient(table): per-scanline BACKDROP gradient via the HBlank IRQ. `table` is
   // an array of 160 raw BGR555 colors (fill with rgb()/color numbers, one per line):
   // sunset skies, underwater bands, a fire glow. Pass it once/frame; nil/0 = off.
@@ -115,8 +115,8 @@ export const CURATED_BUILTINS = {
   // game loop (so a slow _draw makes them drift); these tick in a VCOUNT IRQ at a
   // true 60 Hz regardless — use them to pace things by wall-clock (auto-advance,
   // timeouts). realframes = frame count; realsecs = seconds (16.16).
-  realframes: { params: [], ret: "int", c: "gt_realframes", mdOnly: true },
-  realsecs:   { params: [], ret: "num", c: "gt_realsecs",   mdOnly: true },
+  realframes: { params: [], ret: "int", c: "lc_realframes", mdOnly: true },
+  realsecs:   { params: [], ret: "num", c: "lc_realsecs",   mdOnly: true },
 
   // ---- Mode 7: affine background (rotate/scale/scroll a plane in hardware) ----
   // mode7(): show the bundled --mode7 plane on BG2 (call once in _init).
@@ -159,11 +159,11 @@ export const CURATED_BUILTINS = {
   //   goes true at the end. For explosions / one-shots.
   // anim_pingpong(...): bounce first..last..first.
   // anim_reset(slot): restart. anim_done(slot): 1 if a once-anim finished.
-  anim:          { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "gt_anim", mdOnly: true },
-  anim_once:     { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "gt_anim_once", mdOnly: true },
-  anim_pingpong: { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "gt_anim_pingpong", mdOnly: true },
-  anim_reset:    { params: [["int", false]], ret: "void", c: "gt_anim_reset", mdOnly: true },
-  anim_done:     { params: [["int", false]], ret: "int", c: "gt_anim_done", mdOnly: true },
+  anim:          { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "lc_anim", mdOnly: true },
+  anim_once:     { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "lc_anim_once", mdOnly: true },
+  anim_pingpong: { params: [["int", false], ["int", false], ["int", false], ["num", false]], ret: "int", c: "lc_anim_pingpong", mdOnly: true },
+  anim_reset:    { params: [["int", false]], ret: "void", c: "lc_anim_reset", mdOnly: true },
+  anim_done:     { params: [["int", false]], ret: "int", c: "lc_anim_done", mdOnly: true },
   // PICO-8 tilemap: map(cx,cy, sx,sy, cw,ch) draws a cw x ch block of the cart's
   // __map__ (imported as a byte array) starting at cell (cx,cy) to screen pixel
   // (sx,sy), one 8x8 sheet sprite per non-zero tile. Software spr()-loop, the
@@ -174,29 +174,29 @@ export const CURATED_BUILTINS = {
   // run()/reset() restart the cart from power-on: a full crt0 reset that reruns
   // copydata (restores every top-level initializer), zeroes BSS, and re-enters
   // main() - not just the game's _init(), which would leave top-level state and
-  // the runtime stale. gt_p8_run() jumps to the reset entry (never returns).
-  run:      { params: [], ret: "void", c: "gt_p8_run" },
-  reset:    { params: [], ret: "void", c: "gt_p8_run" },
+  // the runtime stale. lc_run() jumps to the reset entry (never returns).
+  run:      { params: [], ret: "void", c: "lc_run" },
+  reset:    { params: [], ret: "void", c: "lc_run" },
   // PICO-8 sspr(sx,sy,sw,sh, dx,dy, [dw,dh], [flip_x,flip_y]): scaled sheet blit.
   // dw/dh default to sw/sh (unscaled). Software nearest-neighbor, rounded to an
-  // integer scale and cached in GRAM (see gt_p8_sspr). flips pack into one arg.
+  // integer scale and cached in GRAM (see lc_sspr). flips pack into one arg.
   sspr:     { params: [["int", false], ["int", false], ["int", false], ["int", false],
                        ["coord", false], ["coord", false], ["int", true], ["int", true],
                        ["flip", true], ["flip", true]], ret: "void", special: "sspr" },
 
   // ---- input ---------------------------------------------------------------
-  btn:      { params: [["int", false], ["int", true]], ret: "bool", c: "gt_p8_btn" },
-  btnp:     { params: [["int", false], ["int", true]], ret: "bool", c: "gt_p8_btnp" },
+  btn:      { params: [["int", false], ["int", true]], ret: "bool", c: "lc_btn" },
+  btnp:     { params: [["int", false], ["int", true]], ret: "bool", c: "lc_btnp" },
 
   // ---- sound (maxmod: module music + sample SFX) ---------------------------
   // sfx(n, [ch]) - fire sampled effect n; ch is accepted but ignored.
   // music(n, [loop]) - start module n; music(-1) stops. loop defaults on.
   // `audio` links maxmod + the soundbank at build time.
-  sfx:   { params: [["int", false], ["int", true]], ret: "void", c: "gt_sfx", audio: true },
+  sfx:   { params: [["int", false], ["int", true]], ret: "void", c: "lc_sfx", audio: true },
   // sfx_ex(n, [vol], [pan], [pitch]): per-shot volume 0..1024, pan 0..255 (128=center),
   // pitch 16.16 (1.0=normal). sfx_volume(0..1024): master effect volume.
   // `loop` is a truthy flag (default on): music(0) loops, music(0,false) plays once.
-  music: { params: [["int", false], ["flip", true]], ret: "void", c: "gt_music", audio: true },
+  music: { params: [["int", false], ["flip", true]], ret: "void", c: "lc_music", audio: true },
 
   // ---- raw PCM (SGDK's single-channel SND_PCM driver) ----------------------
   // The --sfx WAV bank ships raw 8-bit signed 13.3kHz PCM blobs (256-aligned).
@@ -231,10 +231,10 @@ export const CURATED_BUILTINS = {
   min:   { params: [["num", false], ["num", true]], ret: "same", c: null, special: "min" },
   max:   { params: [["num", false], ["num", true]], ret: "same", c: null, special: "max" },
   mid:   { params: [["num", false], ["num", false], ["num", false]], ret: "same", c: null, special: "mid" },
-  sqrt:  { params: [["num", false]], ret: "fixed", c: "gt_fsqrt" },
-  sin:   { params: [["num", false]], ret: "fixed", c: "gt_fsin" },
-  cos:   { params: [["num", false]], ret: "fixed", c: "gt_fcos" },
-  atan2: { params: [["num", false], ["num", false]], ret: "fixed", c: "gt_fatan2" },
+  sqrt:  { params: [["num", false]], ret: "fixed", c: "lc_fsqrt" },
+  sin:   { params: [["num", false]], ret: "fixed", c: "lc_fsin" },
+  cos:   { params: [["num", false]], ret: "fixed", c: "lc_fcos" },
+  atan2: { params: [["num", false], ["num", false]], ret: "fixed", c: "lc_fatan2" },
 
   // PICO-8 bitwise FUNCTION forms - exact aliases of the operators gbalua already
   // has (a & b, a | b, ...). Carts use both spellings interchangeably. Emitted
@@ -247,10 +247,10 @@ export const CURATED_BUILTINS = {
   shl:   { params: [["num", false], ["num", false]], ret: "same", c: null, special: "bitop", op: "<<" },
   shr:   { params: [["num", false], ["num", false]], ret: "same", c: null, special: "bitop", op: ">>" },
   lshr:  { params: [["num", false], ["num", false]], ret: "same", c: null, special: "bitop", op: ">>>" },
-  rnd:   { params: [["num", true]], ret: "fixed", c: "gt_p8_rnd" },
-  srand: { params: [["num", false]], ret: "void", c: "gt_p8_srand" },
-  t:     { params: [], ret: "fixed", c: "gt_p8_time", isValue: false },
-  time:  { params: [], ret: "fixed", c: "gt_p8_time" },
+  rnd:   { params: [["num", true]], ret: "fixed", c: "lc_rnd" },
+  srand: { params: [["num", false]], ret: "void", c: "lc_srand" },
+  t:     { params: [], ret: "fixed", c: "lc_time", isValue: false },
+  time:  { params: [], ret: "fixed", c: "lc_time" },
 
   // fixed-capacity numeric array (v0.3): `local pool = array(16)`.
   // Top-level only; 1-based indexing; #a is the capacity. Checker handles it.

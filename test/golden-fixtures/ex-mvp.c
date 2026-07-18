@@ -2,40 +2,40 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__init(void);
-static void gtl__update60(void);
-static void gtl__draw(void);
+static void lcl__init(void);
+static void lcl__update60(void);
+static void lcl__draw(void);
 
-int gtl_x = 120;
-int gtl_y = 80;
+int lcl_x = 120;
+int lcl_y = 80;
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
 }
 
-static void gtl__update60(void)
+static void lcl__update60(void)
 {
     if (md_btn(0, 0)) {
-        gtl_x = (gtl_x - 2);
+        lcl_x = (lcl_x - 2);
     }
     if (md_btn(1, 0)) {
-        gtl_x = (gtl_x + 2);
+        lcl_x = (lcl_x + 2);
     }
     if (md_btn(2, 0)) {
-        gtl_y = (gtl_y - 2);
+        lcl_y = (lcl_y - 2);
     }
     if (md_btn(3, 0)) {
-        gtl_y = (gtl_y + 2);
+        lcl_y = (lcl_y + 2);
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_cls(1);
     md_print("mdlua mvp", 8, 8, 7);
     md_print("arrows move", 8, 16, 10);
     md_print_num(md_time(), 8, 24, 11);
-    md_spr(md_anim(0, 0, 3, 524288L), gtl_x, gtl_y, 2, 2, 0 | (0 << 1));
+    md_spr(md_anim(0, 0, 3, 524288L), lcl_x, lcl_y, 2, 2, 0 | (0 << 1));
     md_spr(0, 40, 120, 2, 2, ((1) ? 1 : 0) | (0 << 1));
 }
 
@@ -43,11 +43,11 @@ int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     for (;;) {
         md_vsync();
-        gtl__update60();
-        gtl__draw();
+        lcl__update60();
+        lcl__draw();
         md_endframe();
     }
     return 0;

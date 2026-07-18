@@ -2,22 +2,22 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static int gtl_helper(int gtl_x, int gtl_y);
-static void gtl__update(void);
-static void gtl__draw(void);
+static int lcl_helper(int lcl_x, int lcl_y);
+static void lcl__update(void);
+static void lcl__draw(void);
 
-static int gtl_helper(int gtl_x, int gtl_y)
+static int lcl_helper(int lcl_x, int lcl_y)
 {
-    return (gtl_x + gtl_y);
+    return (lcl_x + lcl_y);
 }
 
-static void gtl__update(void)
+static void lcl__update(void)
 {
-    { int gtl_z = (((1) + (2)));
+    { int lcl_z = (((1) + (2)));
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
 }
 
@@ -29,10 +29,10 @@ int main(bool hard)
     for (;;) {
         md_vsync();
         if (_md_odd == 0) {
-            gtl__update();
+            lcl__update();
         }
         _md_odd ^= 1;
-        gtl__draw();
+        lcl__draw();
         md_endframe();
     }
     return 0;

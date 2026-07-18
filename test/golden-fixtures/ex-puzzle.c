@@ -2,69 +2,69 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static int gtl_nextcolor(void);
-static int gtl_canplace(void);
-static void gtl_spawn(void);
-static int gtl_scanmatches(void);
-static void gtl_applygravity(void);
-static int gtl_resolve(void);
-static void gtl_lockpiece(void);
-static void gtl_newgame(void);
-static void gtl_clearplane(void);
-static void gtl_paintframe(void);
-static void gtl__init(void);
-static void gtl__update60(void);
-static void gtl_paintboard(void);
-static void gtl__draw(void);
+static int lcl_nextcolor(void);
+static int lcl_canplace(void);
+static void lcl_spawn(void);
+static int lcl_scanmatches(void);
+static void lcl_applygravity(void);
+static int lcl_resolve(void);
+static void lcl_lockpiece(void);
+static void lcl_newgame(void);
+static void lcl_clearplane(void);
+static void lcl_paintframe(void);
+static void lcl__init(void);
+static void lcl__update60(void);
+static void lcl_paintboard(void);
+static void lcl__draw(void);
 
-int gtl_GW = 6;
-int gtl_GH = 12;
-int gtl_ITX = 14;
-int gtl_ITY = 3;
-int gtl_T_EMPTY = 0;
-int gtl_T_WELL = 1;
-int gtl_T_FRAME = 2;
-int gtl_T_GEM0 = 3;
-unsigned char gtl_grid[72];
-unsigned char gtl_mask[72];
-int gtl_px = 3;
-int gtl_py = 0;
-int gtl_c1 = 1;
-int gtl_c2 = 2;
-int gtl_c3 = 3;
-int gtl_score = 0;
-int gtl_level = 1;
-int gtl_cleared = 0;
-int gtl_fallt = 0;
-int gtl_state = 0;
-int gtl_flasht = 0;
-int gtl_dirty = 1;
-int gtl_seed = 137;
-int gtl_qcol = 0;
-int gtl_qrow = 0;
+int lcl_GW = 6;
+int lcl_GH = 12;
+int lcl_ITX = 14;
+int lcl_ITY = 3;
+int lcl_T_EMPTY = 0;
+int lcl_T_WELL = 1;
+int lcl_T_FRAME = 2;
+int lcl_T_GEM0 = 3;
+unsigned char lcl_grid[72];
+unsigned char lcl_mask[72];
+int lcl_px = 3;
+int lcl_py = 0;
+int lcl_c1 = 1;
+int lcl_c2 = 2;
+int lcl_c3 = 3;
+int lcl_score = 0;
+int lcl_level = 1;
+int lcl_cleared = 0;
+int lcl_fallt = 0;
+int lcl_state = 0;
+int lcl_flasht = 0;
+int lcl_dirty = 1;
+int lcl_seed = 137;
+int lcl_qcol = 0;
+int lcl_qrow = 0;
 
-static int gtl_nextcolor(void)
+static int lcl_nextcolor(void)
 {
-    gtl_seed = ((((((gtl_seed) << 3) + ((gtl_seed) << 2) + (gtl_seed)) + 7)) % (251));
-    return (((gtl_seed) % (5)) + 1);
+    lcl_seed = ((((((lcl_seed) << 3) + ((lcl_seed) << 2) + (lcl_seed)) + 7)) % (251));
+    return (((lcl_seed) % (5)) + 1);
 }
 
-static int gtl_canplace(void)
+static int lcl_canplace(void)
 {
-    if ((gtl_qcol < 0)) {
+    if ((lcl_qcol < 0)) {
         return 0;
     }
-    if (((gtl_qcol - (gtl_GW)) >= 0)) {
+    if (((lcl_qcol - (lcl_GW)) >= 0)) {
         return 0;
     }
-    { unsigned char gtl_i = 0; unsigned char L_lim0 = 2;
-        for (; gtl_i <= L_lim0; ++gtl_i) {
-            { int gtl_ry = (gtl_qrow + gtl_i);
-                if (((gtl_ry - (gtl_GH)) >= 0)) {
+    { unsigned char lcl_i = 0; unsigned char L_lim0 = 2;
+        for (; lcl_i <= L_lim0; ++lcl_i) {
+            { int lcl_ry = (lcl_qrow + lcl_i);
+                if (((lcl_ry - (lcl_GH)) >= 0)) {
                     return 0;
                 }
-                if ((gtl_ry >= 0)) {
-                    if (((unsigned char)gtl_grid[((gtl_ry * gtl_GW) + gtl_qcol)] != (unsigned char)0)) {
+                if ((lcl_ry >= 0)) {
+                    if (((unsigned char)lcl_grid[((lcl_ry * lcl_GW) + lcl_qcol)] != (unsigned char)0)) {
                         return 0;
                     }
                 }
@@ -74,84 +74,84 @@ static int gtl_canplace(void)
     return 1;
 }
 
-static void gtl_spawn(void)
+static void lcl_spawn(void)
 {
-    gtl_px = 3;
-    gtl_py = (-2);
-    gtl_c1 = gtl_nextcolor();
-    gtl_c2 = gtl_nextcolor();
-    gtl_c3 = gtl_nextcolor();
-    gtl_qcol = gtl_px;
-    gtl_qrow = 0;
-    if ((gtl_canplace() == 0)) {
-        gtl_state = 1;
+    lcl_px = 3;
+    lcl_py = (-2);
+    lcl_c1 = lcl_nextcolor();
+    lcl_c2 = lcl_nextcolor();
+    lcl_c3 = lcl_nextcolor();
+    lcl_qcol = lcl_px;
+    lcl_qrow = 0;
+    if ((lcl_canplace() == 0)) {
+        lcl_state = 1;
         md_music((-1), 1);
     }
 }
 
-static int gtl_scanmatches(void)
+static int lcl_scanmatches(void)
 {
-    { int gtl_i = 1; int L_lim1 = (gtl_GW * gtl_GH);
-        for (; gtl_i <= L_lim1; ++gtl_i) {
-            gtl_mask[gtl_i - 1] = 0;
+    { int lcl_i = 1; int L_lim1 = (lcl_GW * lcl_GH);
+        for (; lcl_i <= L_lim1; ++lcl_i) {
+            lcl_mask[lcl_i - 1] = 0;
         }
     }
-    { int gtl_count = 0;
-        { int gtl_row = 0; int L_lim2 = (gtl_GH - 1);
-            for (; gtl_row <= L_lim2; ++gtl_row) {
-                { int gtl_col = 0; int L_lim3 = (gtl_GW - 1);
-                    for (; gtl_col <= L_lim3; ++gtl_col) {
-                        { int gtl_v = gtl_grid[((gtl_row * gtl_GW) + gtl_col)];
-                            if ((gtl_v != 0)) {
-                                { unsigned char gtl_d = 0; unsigned char L_lim4 = 3;
-                                    for (; gtl_d <= L_lim4; ++gtl_d) {
-                                        { int gtl_dc = 0;
-                                            { int gtl_dr = 0;
-                                                if (((unsigned char)gtl_d == (unsigned char)0)) {
-                                                    gtl_dc = 1;
-                                                    gtl_dr = 0;
+    { int lcl_count = 0;
+        { int lcl_row = 0; int L_lim2 = (lcl_GH - 1);
+            for (; lcl_row <= L_lim2; ++lcl_row) {
+                { int lcl_col = 0; int L_lim3 = (lcl_GW - 1);
+                    for (; lcl_col <= L_lim3; ++lcl_col) {
+                        { int lcl_v = lcl_grid[((lcl_row * lcl_GW) + lcl_col)];
+                            if ((lcl_v != 0)) {
+                                { unsigned char lcl_d = 0; unsigned char L_lim4 = 3;
+                                    for (; lcl_d <= L_lim4; ++lcl_d) {
+                                        { int lcl_dc = 0;
+                                            { int lcl_dr = 0;
+                                                if (((unsigned char)lcl_d == (unsigned char)0)) {
+                                                    lcl_dc = 1;
+                                                    lcl_dr = 0;
                                                 }
-                                                if (((unsigned char)gtl_d == (unsigned char)1)) {
-                                                    gtl_dc = 0;
-                                                    gtl_dr = 1;
+                                                if (((unsigned char)lcl_d == (unsigned char)1)) {
+                                                    lcl_dc = 0;
+                                                    lcl_dr = 1;
                                                 }
-                                                if (((unsigned char)gtl_d == (unsigned char)2)) {
-                                                    gtl_dc = 1;
-                                                    gtl_dr = 1;
+                                                if (((unsigned char)lcl_d == (unsigned char)2)) {
+                                                    lcl_dc = 1;
+                                                    lcl_dr = 1;
                                                 }
-                                                if (((unsigned char)gtl_d == (unsigned char)3)) {
-                                                    gtl_dc = (-1);
-                                                    gtl_dr = 1;
+                                                if (((unsigned char)lcl_d == (unsigned char)3)) {
+                                                    lcl_dc = (-1);
+                                                    lcl_dr = 1;
                                                 }
-                                                { int gtl_pc = (gtl_col - gtl_dc);
-                                                    { int gtl_pr = (gtl_row - gtl_dr);
-                                                        { int gtl_isstart = 1;
-                                                            if (((((gtl_pc >= 0) && ((gtl_pc - (gtl_GW)) < 0)) && (gtl_pr >= 0)) && ((gtl_pr - (gtl_GH)) < 0))) {
-                                                                if (((gtl_grid[((gtl_pr * gtl_GW) + gtl_pc)] - (gtl_v)) == 0)) {
-                                                                    gtl_isstart = 0;
+                                                { int lcl_pc = (lcl_col - lcl_dc);
+                                                    { int lcl_pr = (lcl_row - lcl_dr);
+                                                        { int lcl_isstart = 1;
+                                                            if (((((lcl_pc >= 0) && ((lcl_pc - (lcl_GW)) < 0)) && (lcl_pr >= 0)) && ((lcl_pr - (lcl_GH)) < 0))) {
+                                                                if (((lcl_grid[((lcl_pr * lcl_GW) + lcl_pc)] - (lcl_v)) == 0)) {
+                                                                    lcl_isstart = 0;
                                                                 }
                                                             }
-                                                            if ((gtl_isstart != 0)) {
-                                                                { int gtl_len = 1;
-                                                                    { int gtl_nc = (gtl_col + gtl_dc);
-                                                                        { int gtl_nr = (gtl_row + gtl_dr);
-                                                                            while ((((((gtl_nc >= 0) && ((gtl_nc - (gtl_GW)) < 0)) && (gtl_nr >= 0)) && ((gtl_nr - (gtl_GH)) < 0)) && ((gtl_grid[((gtl_nr * gtl_GW) + gtl_nc)] - (gtl_v)) == 0))) {
-                                                                                gtl_len = (gtl_len + 1);
-                                                                                gtl_nc = (gtl_nc + gtl_dc);
-                                                                                gtl_nr = (gtl_nr + gtl_dr);
+                                                            if ((lcl_isstart != 0)) {
+                                                                { int lcl_len = 1;
+                                                                    { int lcl_nc = (lcl_col + lcl_dc);
+                                                                        { int lcl_nr = (lcl_row + lcl_dr);
+                                                                            while ((((((lcl_nc >= 0) && ((lcl_nc - (lcl_GW)) < 0)) && (lcl_nr >= 0)) && ((lcl_nr - (lcl_GH)) < 0)) && ((lcl_grid[((lcl_nr * lcl_GW) + lcl_nc)] - (lcl_v)) == 0))) {
+                                                                                lcl_len = (lcl_len + 1);
+                                                                                lcl_nc = (lcl_nc + lcl_dc);
+                                                                                lcl_nr = (lcl_nr + lcl_dr);
                                                                             }
-                                                                            if ((gtl_len >= 3)) {
-                                                                                { int gtl_mc = gtl_col;
-                                                                                    { int gtl_mr = gtl_row;
-                                                                                        { int gtl_k = 1; int L_lim5 = gtl_len;
-                                                                                            for (; gtl_k <= L_lim5; ++gtl_k) {
-                                                                                                { int gtl_idx = (((gtl_mr * gtl_GW) + gtl_mc) + 1);
-                                                                                                    if (((unsigned char)gtl_mask[gtl_idx - 1] == (unsigned char)0)) {
-                                                                                                        gtl_mask[gtl_idx - 1] = 1;
-                                                                                                        gtl_count = (gtl_count + 1);
+                                                                            if ((lcl_len >= 3)) {
+                                                                                { int lcl_mc = lcl_col;
+                                                                                    { int lcl_mr = lcl_row;
+                                                                                        { int lcl_k = 1; int L_lim5 = lcl_len;
+                                                                                            for (; lcl_k <= L_lim5; ++lcl_k) {
+                                                                                                { int lcl_idx = (((lcl_mr * lcl_GW) + lcl_mc) + 1);
+                                                                                                    if (((unsigned char)lcl_mask[lcl_idx - 1] == (unsigned char)0)) {
+                                                                                                        lcl_mask[lcl_idx - 1] = 1;
+                                                                                                        lcl_count = (lcl_count + 1);
                                                                                                     }
-                                                                                                    gtl_mc = (gtl_mc + gtl_dc);
-                                                                                                    gtl_mr = (gtl_mr + gtl_dr);
+                                                                                                    lcl_mc = (lcl_mc + lcl_dc);
+                                                                                                    lcl_mr = (lcl_mr + lcl_dr);
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -175,255 +175,255 @@ static int gtl_scanmatches(void)
                 }
             }
         }
-        return gtl_count;
+        return lcl_count;
     }
 }
 
-static void gtl_applygravity(void)
+static void lcl_applygravity(void)
 {
-    { int gtl_col = 0; int L_lim6 = (gtl_GW - 1);
-        for (; gtl_col <= L_lim6; ++gtl_col) {
-            { int gtl_w = (gtl_GH - 1);
-                { int gtl_row = (gtl_GH - 1); int L_lim7 = 0;
-                    for (; gtl_row >= L_lim7; --gtl_row) {
-                        { int gtl_v = gtl_grid[((gtl_row * gtl_GW) + gtl_col)];
-                            if ((gtl_v != 0)) {
-                                gtl_grid[((gtl_w * gtl_GW) + gtl_col)] = gtl_v;
-                                gtl_w = (gtl_w - 1);
+    { int lcl_col = 0; int L_lim6 = (lcl_GW - 1);
+        for (; lcl_col <= L_lim6; ++lcl_col) {
+            { int lcl_w = (lcl_GH - 1);
+                { int lcl_row = (lcl_GH - 1); int L_lim7 = 0;
+                    for (; lcl_row >= L_lim7; --lcl_row) {
+                        { int lcl_v = lcl_grid[((lcl_row * lcl_GW) + lcl_col)];
+                            if ((lcl_v != 0)) {
+                                lcl_grid[((lcl_w * lcl_GW) + lcl_col)] = lcl_v;
+                                lcl_w = (lcl_w - 1);
                             }
                         }
                     }
                 }
-                while ((gtl_w >= 0)) {
-                    gtl_grid[((gtl_w * gtl_GW) + gtl_col)] = 0;
-                    gtl_w = (gtl_w - 1);
+                while ((lcl_w >= 0)) {
+                    lcl_grid[((lcl_w * lcl_GW) + lcl_col)] = 0;
+                    lcl_w = (lcl_w - 1);
                 }
             }
         }
     }
 }
 
-static int gtl_resolve(void)
+static int lcl_resolve(void)
 {
-    { int gtl_chain = 0;
-        { int gtl_n = gtl_scanmatches();
-            while ((gtl_n > 0)) {
-                gtl_chain = (gtl_chain + 1);
-                { int gtl_i = 1; int L_lim8 = (gtl_GW * gtl_GH);
-                    for (; gtl_i <= L_lim8; ++gtl_i) {
-                        if (((unsigned char)gtl_mask[gtl_i - 1] != (unsigned char)0)) {
-                            gtl_grid[gtl_i - 1] = 0;
+    { int lcl_chain = 0;
+        { int lcl_n = lcl_scanmatches();
+            while ((lcl_n > 0)) {
+                lcl_chain = (lcl_chain + 1);
+                { int lcl_i = 1; int L_lim8 = (lcl_GW * lcl_GH);
+                    for (; lcl_i <= L_lim8; ++lcl_i) {
+                        if (((unsigned char)lcl_mask[lcl_i - 1] != (unsigned char)0)) {
+                            lcl_grid[lcl_i - 1] = 0;
                         }
                     }
                 }
-                { int gtl_amt = (((gtl_n) << 3) + ((gtl_n) << 1));
-                    if ((gtl_chain > 1)) {
-                        gtl_amt = (gtl_amt * gtl_chain);
+                { int lcl_amt = (((lcl_n) << 3) + ((lcl_n) << 1));
+                    if ((lcl_chain > 1)) {
+                        lcl_amt = (lcl_amt * lcl_chain);
                     }
-                    gtl_score = (gtl_score + gtl_amt);
-                    gtl_cleared = (gtl_cleared + gtl_n);
-                    { int gtl_want = (((gtl_cleared) / (12)) + 1);
-                        if ((gtl_want > 9)) {
-                            gtl_want = 9;
+                    lcl_score = (lcl_score + lcl_amt);
+                    lcl_cleared = (lcl_cleared + lcl_n);
+                    { int lcl_want = (((lcl_cleared) / (12)) + 1);
+                        if ((lcl_want > 9)) {
+                            lcl_want = 9;
                         }
-                        gtl_level = gtl_want;
-                        md_sfx((40 + (((gtl_chain) << 2))), -1);
-                        gtl_applygravity();
-                        gtl_n = gtl_scanmatches();
+                        lcl_level = lcl_want;
+                        md_sfx((40 + (((lcl_chain) << 2))), -1);
+                        lcl_applygravity();
+                        lcl_n = lcl_scanmatches();
                     }
                 }
             }
-            return gtl_chain;
+            return lcl_chain;
         }
     }
 }
 
-static void gtl_lockpiece(void)
+static void lcl_lockpiece(void)
 {
-    { unsigned char gtl_i = 0; unsigned char L_lim9 = 2;
-        for (; gtl_i <= L_lim9; ++gtl_i) {
-            { int gtl_ry = (gtl_py + gtl_i);
-                { int gtl_col = 0;
-                    if (((unsigned char)gtl_i == (unsigned char)0)) {
-                        gtl_col = gtl_c1;
+    { unsigned char lcl_i = 0; unsigned char L_lim9 = 2;
+        for (; lcl_i <= L_lim9; ++lcl_i) {
+            { int lcl_ry = (lcl_py + lcl_i);
+                { int lcl_col = 0;
+                    if (((unsigned char)lcl_i == (unsigned char)0)) {
+                        lcl_col = lcl_c1;
                     }
-                    if (((unsigned char)gtl_i == (unsigned char)1)) {
-                        gtl_col = gtl_c2;
+                    if (((unsigned char)lcl_i == (unsigned char)1)) {
+                        lcl_col = lcl_c2;
                     }
-                    if (((unsigned char)gtl_i == (unsigned char)2)) {
-                        gtl_col = gtl_c3;
+                    if (((unsigned char)lcl_i == (unsigned char)2)) {
+                        lcl_col = lcl_c3;
                     }
-                    if ((gtl_ry >= 0)) {
-                        gtl_grid[((gtl_ry * gtl_GW) + gtl_px)] = gtl_col;
+                    if ((lcl_ry >= 0)) {
+                        lcl_grid[((lcl_ry * lcl_GW) + lcl_px)] = lcl_col;
                     }
                 }
             }
         }
     }
     md_sfx(20, -1);
-    gtl_dirty = 1;
-    if ((gtl_py < 0)) {
-        gtl_state = 1;
+    lcl_dirty = 1;
+    if ((lcl_py < 0)) {
+        lcl_state = 1;
         md_music((-1), 1);
         return;
     }
-    { int gtl_chain = gtl_resolve();
-        if ((gtl_chain > 0)) {
-            gtl_flasht = 8;
+    { int lcl_chain = lcl_resolve();
+        if ((lcl_chain > 0)) {
+            lcl_flasht = 8;
         }
-        if ((gtl_state == 0)) {
-            gtl_spawn();
+        if ((lcl_state == 0)) {
+            lcl_spawn();
         }
     }
 }
 
-static void gtl_newgame(void)
+static void lcl_newgame(void)
 {
-    { int gtl_i = 1; int L_lim10 = (gtl_GW * gtl_GH);
-        for (; gtl_i <= L_lim10; ++gtl_i) {
-            gtl_grid[gtl_i - 1] = 0;
+    { int lcl_i = 1; int L_lim10 = (lcl_GW * lcl_GH);
+        for (; lcl_i <= L_lim10; ++lcl_i) {
+            lcl_grid[lcl_i - 1] = 0;
         }
     }
-    gtl_score = 0;
-    gtl_level = 1;
-    gtl_cleared = 0;
-    gtl_fallt = 0;
-    gtl_flasht = 0;
-    gtl_state = 0;
-    gtl_dirty = 1;
-    gtl_spawn();
+    lcl_score = 0;
+    lcl_level = 1;
+    lcl_cleared = 0;
+    lcl_fallt = 0;
+    lcl_flasht = 0;
+    lcl_state = 0;
+    lcl_dirty = 1;
+    lcl_spawn();
 }
 
-static void gtl_clearplane(void)
+static void lcl_clearplane(void)
 {
-    { unsigned char gtl_r = 0; unsigned char L_lim11 = 27;
-        for (; gtl_r <= L_lim11; ++gtl_r) {
-            { unsigned char gtl_c = 0; unsigned char L_lim12 = 39;
-                for (; gtl_c <= L_lim12; ++gtl_c) {
-                    md_mset(0, gtl_c, gtl_r, gtl_T_EMPTY);
+    { unsigned char lcl_r = 0; unsigned char L_lim11 = 27;
+        for (; lcl_r <= L_lim11; ++lcl_r) {
+            { unsigned char lcl_c = 0; unsigned char L_lim12 = 39;
+                for (; lcl_c <= L_lim12; ++lcl_c) {
+                    md_mset(0, lcl_c, lcl_r, lcl_T_EMPTY);
                 }
             }
         }
     }
 }
 
-static void gtl_paintframe(void)
+static void lcl_paintframe(void)
 {
-    { int gtl_x0 = (gtl_ITX - 1);
-        { int gtl_x1 = (gtl_ITX + (((gtl_GW) << 1)));
-            { int gtl_c = gtl_x0; int L_lim13 = gtl_x1;
-                for (; gtl_c <= L_lim13; ++gtl_c) {
-                    md_mset(0, gtl_c, (gtl_ITY - 1), gtl_T_FRAME);
-                    md_mset(0, gtl_c, (gtl_ITY + (((gtl_GH) << 1))), gtl_T_FRAME);
+    { int lcl_x0 = (lcl_ITX - 1);
+        { int lcl_x1 = (lcl_ITX + (((lcl_GW) << 1)));
+            { int lcl_c = lcl_x0; int L_lim13 = lcl_x1;
+                for (; lcl_c <= L_lim13; ++lcl_c) {
+                    md_mset(0, lcl_c, (lcl_ITY - 1), lcl_T_FRAME);
+                    md_mset(0, lcl_c, (lcl_ITY + (((lcl_GH) << 1))), lcl_T_FRAME);
                 }
             }
-            { int gtl_r = gtl_ITY; int L_lim14 = ((gtl_ITY + (((gtl_GH) << 1))) - 1);
-                for (; gtl_r <= L_lim14; ++gtl_r) {
-                    md_mset(0, (gtl_ITX - 1), gtl_r, gtl_T_FRAME);
-                    md_mset(0, (gtl_ITX + (((gtl_GW) << 1))), gtl_r, gtl_T_FRAME);
+            { int lcl_r = lcl_ITY; int L_lim14 = ((lcl_ITY + (((lcl_GH) << 1))) - 1);
+                for (; lcl_r <= L_lim14; ++lcl_r) {
+                    md_mset(0, (lcl_ITX - 1), lcl_r, lcl_T_FRAME);
+                    md_mset(0, (lcl_ITX + (((lcl_GW) << 1))), lcl_r, lcl_T_FRAME);
                 }
             }
         }
     }
 }
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
     md_map_show(0);
     md_music(0, 1);
-    gtl_clearplane();
-    gtl_paintframe();
-    gtl_newgame();
+    lcl_clearplane();
+    lcl_paintframe();
+    lcl_newgame();
 }
 
-static void gtl__update60(void)
+static void lcl__update60(void)
 {
-    if ((gtl_state != 0)) {
+    if ((lcl_state != 0)) {
         if (md_btnp(7, 0)) {
             md_music(0, 1);
-            gtl_newgame();
+            lcl_newgame();
         }
         return;
     }
-    if ((gtl_flasht > 0)) {
-        gtl_flasht = (gtl_flasht - 1);
+    if ((lcl_flasht > 0)) {
+        lcl_flasht = (lcl_flasht - 1);
     }
-    gtl_qrow = gtl_py;
+    lcl_qrow = lcl_py;
     if (md_btnp(0, 0)) {
-        gtl_qcol = (gtl_px - 1);
-        if ((gtl_canplace() != 0)) {
-            gtl_px = (gtl_px - 1);
+        lcl_qcol = (lcl_px - 1);
+        if ((lcl_canplace() != 0)) {
+            lcl_px = (lcl_px - 1);
         }
     }
     if (md_btnp(1, 0)) {
-        gtl_qcol = (gtl_px + 1);
-        if ((gtl_canplace() != 0)) {
-            gtl_px = (gtl_px + 1);
+        lcl_qcol = (lcl_px + 1);
+        if ((lcl_canplace() != 0)) {
+            lcl_px = (lcl_px + 1);
         }
     }
     if (md_btnp(4, 0)) {
-        { int gtl_t = gtl_c3;
-            gtl_c3 = gtl_c2;
-            gtl_c2 = gtl_c1;
-            gtl_c1 = gtl_t;
+        { int lcl_t = lcl_c3;
+            lcl_c3 = lcl_c2;
+            lcl_c2 = lcl_c1;
+            lcl_c1 = lcl_t;
             md_sfx(30, -1);
         }
     }
     if (md_btnp(5, 0)) {
-        gtl_qcol = gtl_px;
-        gtl_qrow = (gtl_py + 1);
-        while ((gtl_canplace() != 0)) {
-            gtl_py = (gtl_py + 1);
-            gtl_qrow = (gtl_py + 1);
+        lcl_qcol = lcl_px;
+        lcl_qrow = (lcl_py + 1);
+        while ((lcl_canplace() != 0)) {
+            lcl_py = (lcl_py + 1);
+            lcl_qrow = (lcl_py + 1);
         }
-        gtl_lockpiece();
+        lcl_lockpiece();
         return;
     }
     if (md_btn(3, 0)) {
-        gtl_fallt = (gtl_fallt + 4);
+        lcl_fallt = (lcl_fallt + 4);
     }
-    gtl_fallt = (gtl_fallt + 1);
-    { int gtl_delay = (33 - (((gtl_level) << 1) + (gtl_level)));
-        if (((gtl_fallt - (gtl_delay)) >= 0)) {
-            gtl_fallt = 0;
-            gtl_qcol = gtl_px;
-            gtl_qrow = (gtl_py + 1);
-            if ((gtl_canplace() != 0)) {
-                gtl_py = (gtl_py + 1);
+    lcl_fallt = (lcl_fallt + 1);
+    { int lcl_delay = (33 - (((lcl_level) << 1) + (lcl_level)));
+        if (((lcl_fallt - (lcl_delay)) >= 0)) {
+            lcl_fallt = 0;
+            lcl_qcol = lcl_px;
+            lcl_qrow = (lcl_py + 1);
+            if ((lcl_canplace() != 0)) {
+                lcl_py = (lcl_py + 1);
             } else {
-                gtl_lockpiece();
+                lcl_lockpiece();
             }
         }
     }
 }
 
-static void gtl_paintboard(void)
+static void lcl_paintboard(void)
 {
-    { int gtl_blink = 0;
-        if (((gtl_flasht > 0) && ((gtl_flasht & 1) == 0))) {
-            gtl_blink = 1;
+    { int lcl_blink = 0;
+        if (((lcl_flasht > 0) && ((lcl_flasht & 1) == 0))) {
+            lcl_blink = 1;
         }
-        { int gtl_row = 0; int L_lim15 = (gtl_GH - 1);
-            for (; gtl_row <= L_lim15; ++gtl_row) {
-                { int gtl_col = 0; int L_lim16 = (gtl_GW - 1);
-                    for (; gtl_col <= L_lim16; ++gtl_col) {
-                        { int gtl_v = gtl_grid[((gtl_row * gtl_GW) + gtl_col)];
-                            if ((((gtl_v != 0) && (gtl_blink != 0)) && ((unsigned char)gtl_mask[((gtl_row * gtl_GW) + gtl_col)] != (unsigned char)0))) {
-                                gtl_v = 0;
+        { int lcl_row = 0; int L_lim15 = (lcl_GH - 1);
+            for (; lcl_row <= L_lim15; ++lcl_row) {
+                { int lcl_col = 0; int L_lim16 = (lcl_GW - 1);
+                    for (; lcl_col <= L_lim16; ++lcl_col) {
+                        { int lcl_v = lcl_grid[((lcl_row * lcl_GW) + lcl_col)];
+                            if ((((lcl_v != 0) && (lcl_blink != 0)) && ((unsigned char)lcl_mask[((lcl_row * lcl_GW) + lcl_col)] != (unsigned char)0))) {
+                                lcl_v = 0;
                             }
-                            { int gtl_tx = (gtl_ITX + (((gtl_col) << 1)));
-                                { int gtl_ty = (gtl_ITY + (((gtl_row) << 1)));
-                                    if ((gtl_v == 0)) {
-                                        md_mset(0, gtl_tx, gtl_ty, gtl_T_WELL);
-                                        md_mset(0, (gtl_tx + 1), gtl_ty, gtl_T_WELL);
-                                        md_mset(0, gtl_tx, (gtl_ty + 1), gtl_T_WELL);
-                                        md_mset(0, (gtl_tx + 1), (gtl_ty + 1), gtl_T_WELL);
+                            { int lcl_tx = (lcl_ITX + (((lcl_col) << 1)));
+                                { int lcl_ty = (lcl_ITY + (((lcl_row) << 1)));
+                                    if ((lcl_v == 0)) {
+                                        md_mset(0, lcl_tx, lcl_ty, lcl_T_WELL);
+                                        md_mset(0, (lcl_tx + 1), lcl_ty, lcl_T_WELL);
+                                        md_mset(0, lcl_tx, (lcl_ty + 1), lcl_T_WELL);
+                                        md_mset(0, (lcl_tx + 1), (lcl_ty + 1), lcl_T_WELL);
                                     } else {
-                                        { int gtl_base = (gtl_T_GEM0 + ((((gtl_v - 1)) << 2)));
-                                            md_mset(0, gtl_tx, gtl_ty, gtl_base);
-                                            md_mset(0, (gtl_tx + 1), gtl_ty, (gtl_base + 1));
-                                            md_mset(0, gtl_tx, (gtl_ty + 1), (gtl_base + 2));
-                                            md_mset(0, (gtl_tx + 1), (gtl_ty + 1), (gtl_base + 3));
+                                        { int lcl_base = (lcl_T_GEM0 + ((((lcl_v - 1)) << 2)));
+                                            md_mset(0, lcl_tx, lcl_ty, lcl_base);
+                                            md_mset(0, (lcl_tx + 1), lcl_ty, (lcl_base + 1));
+                                            md_mset(0, lcl_tx, (lcl_ty + 1), (lcl_base + 2));
+                                            md_mset(0, (lcl_tx + 1), (lcl_ty + 1), (lcl_base + 3));
                                         }
                                     }
                                 }
@@ -436,16 +436,16 @@ static void gtl_paintboard(void)
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_print("gem well", 8, 8, 11);
     md_print("score", 8, 40, 7);
-    md_print_int(gtl_score, 8, 52, 10);
+    md_print_int(lcl_score, 8, 52, 10);
     md_print("level", 8, 80, 7);
-    md_print_int(gtl_level, 8, 92, 9);
+    md_print_int(lcl_level, 8, 92, 9);
     md_print("O cycle", 8, 176, 6);
     md_print("X drop", 8, 188, 6);
-    if ((gtl_state != 0)) {
+    if ((lcl_state != 0)) {
         md_print("GAME OVER", 232, 96, 8);
         md_print("press", 240, 120, 7);
         md_print("START", 240, 132, 12);
@@ -454,28 +454,28 @@ static void gtl__draw(void)
         md_print("     ", 240, 120, 7);
         md_print("     ", 240, 132, 7);
     }
-    if (((gtl_dirty != 0) || (gtl_flasht > 0))) {
-        gtl_paintboard();
-        gtl_dirty = 0;
+    if (((lcl_dirty != 0) || (lcl_flasht > 0))) {
+        lcl_paintboard();
+        lcl_dirty = 0;
     }
-    if ((gtl_state == 0)) {
-        { unsigned char gtl_i = 0; unsigned char L_lim17 = 2;
-            for (; gtl_i <= L_lim17; ++gtl_i) {
-                { int gtl_ry = (gtl_py + gtl_i);
-                    if ((gtl_ry >= 0)) {
-                        { int gtl_col = 0;
-                            if (((unsigned char)gtl_i == (unsigned char)0)) {
-                                gtl_col = gtl_c1;
+    if ((lcl_state == 0)) {
+        { unsigned char lcl_i = 0; unsigned char L_lim17 = 2;
+            for (; lcl_i <= L_lim17; ++lcl_i) {
+                { int lcl_ry = (lcl_py + lcl_i);
+                    if ((lcl_ry >= 0)) {
+                        { int lcl_col = 0;
+                            if (((unsigned char)lcl_i == (unsigned char)0)) {
+                                lcl_col = lcl_c1;
                             }
-                            if (((unsigned char)gtl_i == (unsigned char)1)) {
-                                gtl_col = gtl_c2;
+                            if (((unsigned char)lcl_i == (unsigned char)1)) {
+                                lcl_col = lcl_c2;
                             }
-                            if (((unsigned char)gtl_i == (unsigned char)2)) {
-                                gtl_col = gtl_c3;
+                            if (((unsigned char)lcl_i == (unsigned char)2)) {
+                                lcl_col = lcl_c3;
                             }
-                            { int gtl_sx = ((((gtl_ITX + (((gtl_px) << 1)))) << 3));
-                                { int gtl_sy = ((((gtl_ITY + (((gtl_ry) << 1)))) << 3));
-                                    md_spr(((((gtl_col - 1)) << 1)), gtl_sx, gtl_sy, 2, 2, 0 | (0 << 1));
+                            { int lcl_sx = ((((lcl_ITX + (((lcl_px) << 1)))) << 3));
+                                { int lcl_sy = ((((lcl_ITY + (((lcl_ry) << 1)))) << 3));
+                                    md_spr(((((lcl_col - 1)) << 1)), lcl_sx, lcl_sy, 2, 2, 0 | (0 << 1));
                                 }
                             }
                         }
@@ -490,11 +490,11 @@ int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     for (;;) {
         md_vsync();
-        gtl__update60();
-        gtl__draw();
+        lcl__update60();
+        lcl__draw();
         md_endframe();
     }
     return 0;

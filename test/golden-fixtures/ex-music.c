@@ -2,35 +2,35 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__init(void);
-static void gtl__update60(void);
-static void gtl__draw(void);
+static void lcl__init(void);
+static void lcl__update60(void);
+static void lcl__draw(void);
 
-int gtl_song = 0;
-int gtl_playing = 1;
+int lcl_song = 0;
+int lcl_playing = 1;
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
-    md_music(gtl_song, 1);
+    md_music(lcl_song, 1);
 }
 
-static void gtl__update60(void)
+static void lcl__update60(void)
 {
     if (md_btnp(4, 0)) {
-        gtl_song = (gtl_song + 1);
-        if ((gtl_song > 1)) {
-            gtl_song = 0;
+        lcl_song = (lcl_song + 1);
+        if ((lcl_song > 1)) {
+            lcl_song = 0;
         }
-        md_music(gtl_song, 1);
-        gtl_playing = 1;
+        md_music(lcl_song, 1);
+        lcl_playing = 1;
     }
     if (md_btnp(5, 0)) {
-        if ((gtl_playing == 1)) {
-            gtl_playing = 0;
+        if ((lcl_playing == 1)) {
+            lcl_playing = 0;
             md_music((-1), 1);
         } else {
-            gtl_playing = 1;
-            md_music(gtl_song, 1);
+            lcl_playing = 1;
+            md_music(lcl_song, 1);
         }
     }
     if (md_btnp(7, 0)) {
@@ -38,13 +38,13 @@ static void gtl__update60(void)
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_cls(1);
     md_print("music bank", 8, 8, 7);
     md_print("song:", 8, 28, 6);
-    md_print_int(gtl_song, 48, 28, 11);
-    if ((gtl_playing == 1)) {
+    md_print_int(lcl_song, 48, 28, 11);
+    if ((lcl_playing == 1)) {
         md_print("playing", 8, 40, 11);
     } else {
         md_print("stopped", 8, 40, 8);
@@ -56,11 +56,11 @@ int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     for (;;) {
         md_vsync();
-        gtl__update60();
-        gtl__draw();
+        lcl__update60();
+        lcl__draw();
         md_endframe();
     }
     return 0;

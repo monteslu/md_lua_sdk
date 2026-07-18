@@ -2,33 +2,33 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__init(void);
-static void gtl__update60(void);
-static void gtl__draw(void);
+static void lcl__init(void);
+static void lcl__update60(void);
+static void lcl__draw(void);
 
-int gtl_plays = 0;
+int lcl_plays = 0;
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
     md_pcm_driver();
     md_pcm_play(0, 3, ((0) ? 1 : 0));
-    gtl_plays = 1;
+    lcl_plays = 1;
 }
 
-static void gtl__update60(void)
+static void lcl__update60(void)
 {
     if (md_btnp(4, 0)) {
         SND_PCM_startPlay((void*)(md_pcm_sample(0)), md_pcm_len(0), 3, 128, ((0) ? 1 : 0));
-        gtl_plays = (gtl_plays + 1);
+        lcl_plays = (lcl_plays + 1);
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_cls(1);
     md_print("raw pcm (snd_pcm)", 8, 8, 7);
     md_print("plays:", 8, 28, 6);
-    md_print_int(gtl_plays, 64, 28, 11);
+    md_print_int(lcl_plays, 64, 28, 11);
     md_print("press O to fire", 8, 44, 5);
 }
 
@@ -36,11 +36,11 @@ int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     for (;;) {
         md_vsync();
-        gtl__update60();
-        gtl__draw();
+        lcl__update60();
+        lcl__draw();
         md_endframe();
     }
     return 0;

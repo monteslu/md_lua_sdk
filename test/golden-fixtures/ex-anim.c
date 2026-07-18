@@ -2,23 +2,23 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__init(void);
-static void gtl__update(void);
-static void gtl__draw(void);
+static void lcl__init(void);
+static void lcl__update(void);
+static void lcl__draw(void);
 
-static void gtl__init(void)
+static void lcl__init(void)
 {
     md_map_show(0);
 }
 
-static void gtl__update(void)
+static void lcl__update(void)
 {
     if (md_btnp(4, 0)) {
         md_anim_reset(2);
     }
 }
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_print("animation helpers", 96, 20, 7);
     md_print("loop", 72, 80, 6);
@@ -37,15 +37,15 @@ int main(bool hard)
 {
     (void)hard;
     md_init();
-    gtl__init();
+    lcl__init();
     unsigned char _md_odd = 0;
     for (;;) {
         md_vsync();
         if (_md_odd == 0) {
-            gtl__update();
+            lcl__update();
         }
         _md_odd ^= 1;
-        gtl__draw();
+        lcl__draw();
         md_endframe();
     }
     return 0;

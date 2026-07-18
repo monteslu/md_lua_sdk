@@ -2,9 +2,9 @@
 #include "md_api.h"
 #include "md_math.h"
 
-static void gtl__draw(void);
+static void lcl__draw(void);
 
-static void gtl__draw(void)
+static void lcl__draw(void)
 {
     md_cls(1);
     md_print("hello genesis", 116, 32, 14);
@@ -20,7 +20,7 @@ int main(bool hard)
     md_init();
     for (;;) {
         md_vsync();
-        gtl__draw();
+        lcl__draw();
         md_endframe();
     }
     return 0;
