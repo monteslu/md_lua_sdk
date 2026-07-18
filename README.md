@@ -1,6 +1,6 @@
 # Mega Drive Lua SDK (mdlua)
 
-[![npm version](https://img.shields.io/npm/v/mdlua.svg)](https://www.npmjs.com/package/mdlua) [![npm downloads](https://img.shields.io/npm/dm/mdlua.svg)](https://www.npmjs.com/package/mdlua)
+[![npm version](https://img.shields.io/npm/v/mdlua.svg)](https://www.npmjs.com/package/mdlua)
 
 Make games for the **Sega Mega Drive / Genesis** by writing a
 **PICO-8-flavored Lua** instead of C or 68000 assembly.
