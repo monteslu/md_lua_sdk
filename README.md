@@ -42,7 +42,7 @@ end
 ```
 
 <p align="center">
-  <img src="docs/img/hello.png" width="640" alt="a yellow smiley face and 'hello genesis' text on a dark blue 320x224 screen">
+  <img src="https://raw.githubusercontent.com/monteslu/md_lua_sdk/main/docs/img/hello.png" width="640" alt="a yellow smiley face and 'hello genesis' text on a dark blue 320x224 screen">
 </p>
 
 Build it to a ROM and run it:
@@ -196,7 +196,7 @@ The `examples/` directory shows each subsystem in use:
 | `sprite_callback` | the SGDK sprite engine calling back into Lua |
 
 <p align="center">
-  <img src="docs/img/starfall.png" width="640" alt="the starfall shmup: enemy formation, starfield, score and lives HUD">
+  <img src="https://raw.githubusercontent.com/monteslu/md_lua_sdk/main/docs/img/starfall.png" width="640" alt="the starfall shmup: enemy formation, starfield, score and lives HUD">
 </p>
 
 ## Not-Lua walls (loud, never silent)
