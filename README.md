@@ -5,10 +5,10 @@
 Make games for the **Sega Mega Drive / Genesis** by writing a
 **PICO-8-flavored Lua** instead of C or 68000 assembly.
 
-The SDK compiles your Lua to C, builds it with a bundled m68k toolchain
-against an SGDK runtime, and produces a `.bin` ROM that runs in any Genesis
-emulator and on real hardware via flashcart. No interpreter, no VM: your Lua
-becomes native 68000 machine code.
+The SDK **ahead-of-time compiles** your Lua to C, builds it with a bundled m68k
+toolchain against an SGDK runtime, and produces a `.bin` ROM that runs in any
+Genesis emulator and on real hardware via flashcart. No interpreter, no VM: your
+Lua becomes native 68000 machine code.
 
 If you know PICO-8 you'll feel at home (`spr`/`btn`/`_init`/`_update`/`_draw`,
 Lua syntax) - but this SDK leans into what the Genesis can do that a fantasy
