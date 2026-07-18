@@ -25,24 +25,9 @@ Genesis (68000).
 
 ## Your first game
 
-This is `examples/starfall` - a complete little shmup (hardware sprites, a
-scrolling starfield, FM music + sfx, a HUD, win/lose states) written in one
-`main.lua`. That's what this SDK is for:
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/monteslu/md_lua_sdk/main/examples/starfall/screenshot.png" width="640" alt="the starfall shmup: a player ship firing at a formation of alien sprites over a starfield, with a score/lives HUD, on the Genesis">
-</p>
-
-```sh
-mdlua build examples/starfall/main.lua \
-  --sheet examples/starfall/shmup_sheet.png \
-  --map examples/starfall/space_bg.png -o starfall.bin
-mdlua run starfall.bin
-```
-
-Start smaller, though. Here's `examples/hello` - a hardware sprite you move
-with the d-pad, plus a greeting, no asset files at all. `_update60` runs the
-movement 60 times a second; `_draw` redraws the sprite every frame:
+The whole hello, one `main.lua` with no asset files: a greeting plus a hardware
+sprite you move with the d-pad. `_update60` runs the movement 60 times a second;
+`_draw` redraws the sprite every frame (`examples/hello/main.lua`):
 
 ```lua
 -- The screen is 320x224. spr uses the built-in default sheet, so no art file
@@ -78,6 +63,23 @@ mdlua run hello.bin
 d-pad, `Z`/`X`/`C` = the A/B/C buttons, Enter = START. The same `.bin` runs
 in any Genesis emulator or on a flashcart. That's the whole loop: write
 `main.lua`, build the `.bin`, ship it.
+
+## Featured example: a full shmup
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/monteslu/md_lua_sdk/main/examples/starfall/screenshot.png" width="640" alt="the starfall shmup: a player ship firing at a formation of alien sprites over a starfield, with a score/lives HUD, on the Genesis">
+</p>
+
+[`examples/starfall`](examples/starfall) is a complete little shmup - hardware
+sprites, a scrolling starfield, FM music + sfx, a HUD, win/lose states - in one
+`main.lua`. That's what this SDK is for:
+
+```sh
+mdlua build examples/starfall/main.lua \
+  --sheet examples/starfall/shmup_sheet.png \
+  --map examples/starfall/space_bg.png -o starfall.bin
+mdlua run starfall.bin
+```
 
 ## Requirements
 
