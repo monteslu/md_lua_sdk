@@ -1,6 +1,6 @@
 {
   "name": "mdlua",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "description": "Write Sega Mega Drive / Genesis games in a PICO-8-flavored Lua that compiles to native 68000 via SGDK. Full SGDK API surface, XGM2 music, PCM sfx, PNG asset pipeline, bundled WASM toolchain and emulator - no devkit install.",
   "keywords": [
@@ -66,11 +66,9 @@
     "luacretro": "^0.1.0",
     "romdev-audio-resampler": "0.1.0",
     "romdev-core-gpgx": "0.13.0",
+    "romdev-core-runner": "0.1.0",
     "romdev-toolchain-m68k-gcc": "0.3.0",
     "romdev-xgm2": "0.1.0"
-  },
-  "optionalDependencies": {
-    "@kmamal/sdl": "^0.11.13"
   },
   "scripts": {
     "test": "node --test 'test/**/*.test.js'",
