@@ -75,7 +75,7 @@
     "node": ">=24"
   },
   "dependencies": {
-    "luacretro": "^0.1.0",
+    "luacretro": "^0.1.1",
     "romdev-audio-resampler": "0.1.0",
     "romdev-core-gpgx": "0.13.0",
     "romdev-core-runner": "0.1.0",
