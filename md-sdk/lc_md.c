@@ -22,8 +22,12 @@
 #ifndef MDLUA_AUDIO
 #define MDLUA_AUDIO 1
 #endif
-#ifndef MDLUA_ARENA
-#define MDLUA_ARENA (10 * 1024)   /* SGDK needs ~7.5 KB of RAM left after .bss for its heap */
+/* The Lua heap is taken from SGDK's heap at startup (everything SGDK's init
+ * left free), minus MDLUA_STACK_GAP bytes that stay free just below SGDK's
+ * 2.5 KB stack reservation: the runtime's C stack (MDLUA_CSTACK) is deeper
+ * than that and grows down into the gap. */
+#ifndef MDLUA_STACK_GAP
+#define MDLUA_STACK_GAP 1536
 #endif
 #ifndef MDLUA_VSLOTS
 #define MDLUA_VSLOTS 320
@@ -199,7 +203,6 @@ _Noreturn void lc_plat_fatal(const char *msg) {
   for (;;) lc_plat_present(lc_p8_screenbuf(), lc_p8mem + P8_SCREENPAL, 0);
 }
 
-static uint64_t arena[MDLUA_ARENA / 8];
 static uint64_t vstack[MDLUA_VSLOTS];
 
 int main(bool hard) {
@@ -212,7 +215,12 @@ int main(bool hard) {
   for (int ty = 0; ty < 16; ty++)
     for (int tx = 0; tx < 16; tx++)
       VDP_setTileMapXY(BG_A, TILE_ATTR_FULL(PAL0, 0, 0, 0, TILE_USER_INDEX + ty * 16 + tx), TX0 + tx, TY0 + ty);
-  for (u32 i = 0; i < LC_P8_MEMSIZE; i++) lc_p8mem[i] = 0;
-  lc_p8_run(arena, sizeof arena, vstack, MDLUA_VSLOTS, &base, MDLUA_CSTACK);
+  u16 avail = MEM_getLargestFreeBlock();
+  u16 want = avail > MDLUA_STACK_GAP + 1024 ? (u16)(avail - MDLUA_STACK_GAP) : 1024;
+  uint8_t *raw = MEM_alloc(want);                  /* first fit: the low end, the gap stays on top */
+  if (!raw) lc_plat_fatal("no memory for the lua heap");
+  uint8_t *arena = (uint8_t *)(((uint32_t)raw + 7) & ~7u);
+  size_t asz = (size_t)(want - (arena - raw)) & ~(size_t)7;
+  lc_p8_run(arena, asz, vstack, MDLUA_VSLOTS, &base, MDLUA_CSTACK);
   return 0;
 }
