@@ -69,13 +69,14 @@
     "./docs/*": "./docs/*",
     "./examples/*": "./examples/*",
     "./coverage/ledger.json": "./coverage/ledger.json",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./build-p8": "./compiler/build-p8.mjs"
   },
   "engines": {
     "node": ">=24"
   },
   "dependencies": {
-    "luacretro": "^0.1.1",
+    "luacretro": "file:../luacretro",
     "romdev-audio-resampler": "0.1.0",
     "romdev-core-gpgx": "0.13.0",
     "romdev-core-runner": "0.1.0",
