@@ -8,6 +8,7 @@
 // (no upper memory) and the Lua heap is small: light carts run, heavy ones
 // report "not enough memory". Audio is silent on this target for now.
 
+import { existsSync, readFileSync } from "node:fs";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -41,7 +42,7 @@ function swapTableHeader() {
  */
 export async function buildMdCart(cartPath, outPath, opts = {}) {
   const bytes = new Uint8Array(await readFile(cartPath));
-  const r = compileCart(bytes, path.basename(cartPath), { debugLines: opts.debugLines });
+  const r = compileCart(bytes, path.basename(cartPath), { debugLines: opts.debugLines, resolveInclude: (p) => { const f = path.resolve(path.dirname(cartPath), p); return existsSync(f) ? readFileSync(f) : null; } });
   if (!r.ok) return { ok: false, stage: "compile", diagnostics: r.diagnostics };
   const sources = { "cart.c": r.c, "lc_md.c": await readFile(path.join(SDK_DIR, "lc_md.c"), "utf8") };
   for (const s of RUNTIME_SOURCES) {
