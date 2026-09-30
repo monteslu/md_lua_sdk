@@ -240,7 +240,8 @@ npx mdlua pico8 cart.p8.png -o game.bin
 The 128x128 screen is drawn as tiles on plane A in the middle of the screen.
 PICO-8's sequencer drives the PSG: up to three channels on its square-wave
 voices and noise on its noise channel (waveforms become squares). The Genesis
-has 64 KB of RAM, so the heap is 10 KB and only small carts fit; a cart that
+has 64 KB of RAM: the Lua heap is whatever SGDK leaves free (about 10-16 KB),
+so only small carts fit; a cart that
 runs out stops on a runtime error screen.
 
 See luacretro's DYNAMIC.md for what is supported and known differences.
