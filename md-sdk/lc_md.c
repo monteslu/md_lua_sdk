@@ -19,8 +19,11 @@
 #include "lc_plat.h"
 #include <genesis.h>
 
+#ifndef MDLUA_AUDIO
+#define MDLUA_AUDIO 1
+#endif
 #ifndef MDLUA_ARENA
-#define MDLUA_ARENA (12 * 1024)
+#define MDLUA_ARENA (10 * 1024)   /* SGDK needs ~7.5 KB of RAM left after .bss for its heap */
 #endif
 #ifndef MDLUA_VSLOTS
 #define MDLUA_VSLOTS 320
@@ -64,6 +67,58 @@ static void upload_screen(const uint8_t *screen) {
   }
 }
 
+/* ---- audio: PICO-8's four channels on the PSG ----------------------------------------
+ * The fast synth's sequencer runs without synthesis (lc_p8_audio_advance) and
+ * each frame its voices drive the SN76489: up to three tone channels on the
+ * PSG's squares (waveform is lost), the loudest noise voice on its noise
+ * channel. */
+#if MDLUA_AUDIO
+#ifndef LC_P8SND_RATE
+#define LC_P8SND_RATE 22050
+#endif
+/* PICO-8 volume 0..15 (linear) -> PSG attenuation in 2 dB steps */
+static const u8 att_of_vol[16] = { 15, 12, 9, 7, 6, 5, 4, 3, 3, 2, 2, 1, 1, 1, 0, 0 };
+static u16 audio_frac;
+
+static void audio_frame(void) {
+  u16 per = IS_PAL_SYSTEM ? (u16)(LC_P8SND_RATE / 50) : (u16)(LC_P8SND_RATE / 60);
+  u16 rem = IS_PAL_SYSTEM ? (u16)(LC_P8SND_RATE % 50) : (u16)(LC_P8SND_RATE % 60);
+  u16 hz = IS_PAL_SYSTEM ? 50 : 60;
+  audio_frac += rem;
+  if (audio_frac >= hz) { audio_frac -= hz; per++; }
+  lc_p8_audio_advance(per);
+  lc_p8_voice v[4];
+  lc_p8_audio_voices(v);
+  u8 used = 0, tone = 0;
+  int noise = -1;
+  for (int k = 0; k < 4; k++)
+    if (v[k].active && v[k].volume && v[k].noise && (noise < 0 || v[k].volume > v[noise].volume)) noise = k;
+  for (int t = 0; t < 3; t++) {
+    int best = -1;
+    for (int k = 0; k < 4; k++)
+      if (!(used & (1 << k)) && k != noise && v[k].active && v[k].volume && (best < 0 || v[k].volume > v[best].volume)) best = k;
+    if (best < 0) break;
+    used |= (u8)(1 << best);
+    u32 f = v[best].freq_hz_q8 >> 8;
+    while (f && f < 110) f <<= 1;                /* below the PSG's range: up an octave */
+    if (f > 20000) f = 20000;
+    PSG_setFrequency(t, (u16)f);
+    PSG_setEnvelope(t, att_of_vol[v[best].volume & 15]);
+    tone++;
+  }
+  for (; tone < 3; tone++) PSG_setEnvelope(tone, PSG_ENVELOPE_MIN);
+  if (noise >= 0) {
+    u32 f = v[noise].freq_hz_q8 >> 8;
+    PSG_setNoise(PSG_NOISE_TYPE_WHITE, f > 1000 ? PSG_NOISE_FREQ_CLOCK2 : f > 250 ? PSG_NOISE_FREQ_CLOCK4 : PSG_NOISE_FREQ_CLOCK8);
+    PSG_setEnvelope(3, att_of_vol[v[noise].volume & 15]);
+  } else {
+    PSG_setEnvelope(3, PSG_ENVELOPE_MIN);
+  }
+}
+#else
+static void audio_frame(void) {}
+#endif
+
 void lc_plat_present(const uint8_t *screen, const uint8_t *pal, uint8_t mode) {
   (void)mode;
   u16 cols[16];
@@ -72,11 +127,12 @@ void lc_plat_present(const uint8_t *screen, const uint8_t *pal, uint8_t mode) {
     cols[i] = P8MD[(p & 0x80) ? 16 + (p & 15) : (p & 15)];
   }
   SYS_doVBlankProcess();
+  audio_frame();
   PAL_setColors(0, cols, 16, CPU);
   upload_screen(screen);
 }
 
-void lc_plat_vsync(void) { SYS_doVBlankProcess(); }
+void lc_plat_vsync(void) { SYS_doVBlankProcess(); audio_frame(); }
 
 uint8_t lc_plat_buttons(int player) {
   if (player > 1) return 0;
