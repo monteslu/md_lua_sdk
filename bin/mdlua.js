@@ -21,7 +21,22 @@ const assetOpts = () => ({
   musicPaths: list("--music"),
 });
 
-if (cmd === "build") {
+if (cmd === "pico8") {
+  // a real PICO-8 cart (.p8 / .p8.png, or .lua in the full PICO-8 language)
+  // through luacretro's dynamic tier
+  const entry = rest.find((a, i) => !a.startsWith("-") && rest[i - 1] !== "-o");
+  if (!entry) fail("usage: mdlua pico8 <cart.p8|cart.p8.png|main.lua> [-o game.bin]");
+  const oi = rest.indexOf("-o");
+  const out = oi >= 0 ? rest[oi + 1] : entry.replace(/\.p8(\.png)?$|\.lua$/i, "") + ".bin";
+  const { buildMdCart } = await import("../compiler/build-p8.mjs");
+  const r = await buildMdCart(entry, out);
+  if (!r.ok) {
+    if (r.diagnostics?.length) fail(formatDiagnostics(r.diagnostics));
+    if (r.log) console.error(r.log.split("\n").filter((l) => /error|undefined/i.test(l)).slice(0, 40).join("\n"));
+    fail(`mdlua: pico8 ${r.stage ?? "build"} failed`);
+  }
+  console.log(`${r.outPath} (Genesis ROM, PICO-8 cart)`);
+} else if (cmd === "build") {
   const entry = rest.find((a) => !a.startsWith("-"));
   if (!entry) fail("usage: mdlua build <main.lua> [-o game.bin]");
   const oi = rest.indexOf("-o");
@@ -54,5 +69,5 @@ if (cmd === "build") {
   if (!res.ok) fail(formatDiagnostics(res.diagnostics.filter((d) => d.severity === "error")));
   process.stdout.write(res.c + "\n");
 } else {
-  fail("usage: mdlua build <main.lua> [--sheet s.png] [--map m.png] [--sfx a.wav,b.wav] [--music a.vgm,b.vgm] [-o game.bin]\n       mdlua run   <main.lua|game.bin>\n       mdlua c <main.lua>");
+  fail("usage: mdlua build <main.lua> [--sheet s.png] [--map m.png] [--sfx a.wav,b.wav] [--music a.vgm,b.vgm] [-o game.bin]\n       mdlua pico8 <cart.p8|cart.p8.png> [-o game.bin]\n       mdlua run   <main.lua|game.bin>\n       mdlua c <main.lua>");
 }

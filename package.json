@@ -1,6 +1,6 @@
 {
   "name": "mdlua",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "type": "module",
   "description": "Write Sega Mega Drive / Genesis games in a PICO-8-flavored Lua that compiles to native 68000 via SGDK. Full SGDK API surface, XGM2 music, PCM sfx, PNG asset pipeline, bundled WASM toolchain and emulator - no devkit install.",
   "keywords": [

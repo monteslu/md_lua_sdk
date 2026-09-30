@@ -224,6 +224,25 @@ task API - `TSK_userSet` and friends - covers the background-work use case
 natively; see `examples/coroutine`). Every unsupported feature is a
 compile-time error that says what to write instead.
 
+## Real PICO-8 carts (full language)
+
+`mdlua build` compiles the static PICO-8-flavored dialect described above.
+`mdlua pico8` compiles **unmodified PICO-8 carts** instead: `.p8`,
+`.p8.png`, or a `.lua` file using the whole PICO-8 language (tables,
+closures, metatables, coroutines, strings). The cart goes through luacretro's
+dynamic tier to C and links against luacretro's PICO-8 runtime plus
+`md-sdk/lc_md.c`; there is still no interpreter on the console.
+
+```bash
+npx mdlua pico8 cart.p8.png -o game.bin
+```
+
+The 128x128 screen is drawn as tiles on plane A in the middle of the screen.
+Audio is silent for now. The Genesis has 64 KB of RAM, so the heap is 12 KB
+and only small carts fit; a cart that runs out stops on a runtime error screen.
+
+See luacretro's DYNAMIC.md for what is supported and known differences.
+
 ## Repo layout
 
 `compiler/` the Lua→C compiler + the Genesis build driver (`build-md.mjs`)
